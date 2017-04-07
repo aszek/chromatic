@@ -1,0 +1,294 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{color}              %Farben, f.r \definecolor{}
+\usepackage{amssymb}            %Mathematische Symbole
+\usepackage{amsthm}             %Besseres \newtheorem
+\usepackage{amsmath}           %Mathematische Umgebungen
+\usepackage{mathtools}          %\xRightarrow, etc
+\usepackage{mathrsfs}           %enthaelt \mathscr
+\usepackage{graphicx}
+\usepackage{enumerate}          % in-place numerations def.
+\usepackage{fullpage}
+
+\usepackage{array}
+%\usepackage{multicol}
+%\usepackage[notref,notcite]{showkeys}
+%\usepackage{algorithm,algorithmic}
+\usepackage{color}
+
+\usepackage{graphicx}
+\usepackage{xypic}
+\entrymodifiers={+!!<0pt,\fontdimen22\textfont2>}
+\usepackage[all]{xy}
+
+\newtheoremstyle{myremark} % name
+    {7pt}                    % Space above
+    {7pt}                    % Space below
+    {}  	                 % Body font
+    {}                           % Indent amount
+    {\bf}       	         % Theorem head font
+    {.}                          % Punctuation after theorem head
+    {.5em}                       % Space after theorem head
+    {}  % Theorem head spec (can be left empty, meaning ‘normal’)
+
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}[lemma]{Theorem}
+\newtheorem{fact}[lemma]{Fact}
+\newtheorem{definition}[lemma]{Definition}
+\newtheorem{corollary}[lemma]{Corollary}
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{conjecture}[lemma]{Conjecture}
+\newtheorem{observation}[lemma]{Observation}
+\newtheorem{problem}[lemma]{Problem}
+\newtheorem{notation}[lemma]{Notation}
+\newtheorem*{claim}{Claim}
+
+\theoremstyle{myremark}
+\newtheorem{remark}[lemma]{Remark}
+\newtheorem{example}[lemma]{Example}
+\newtheorem{exercise}[lemma]{Exercise}
+
+%%%%%% EDIT HERE: %%%%%%%%%%%
+\newcommand{\LECTURENUMBER}{3}
+\newcommand{\LECTURETITLE}{Bounds on $\chi(G)$ including Brooks
+Theorem}
+\newcommand{\LECTURESCRIBE}{Rolf C. Jørgensen}
+
+%% Dokument Beginn %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\thispagestyle{empty}
+
+\begin{center}
+	{\Large\bf Graph coloring}\\
+	{\bf Lecture notes, vol. \LECTURENUMBER, \LECTURETITLE}\\
+\end{center}
+Lecturer: Michal Adamaszek \hfill Scribe: \LECTURESCRIBE
+\begin{center}
+\line(1,0){450}
+\end{center}
+
+%%%%%%% EDIT ALSO BELOW: %%%%%%%%%%%%%%%%
+
+\begin{observation}
+Every color class is an independent set.
+\end{observation}
+\begin{proof}
+If $c(x) = c(y)$ then $xy \notin E(G)$.
+\end{proof}
+
+\begin{lemma}
+The following are equivalent:
+\begin{enumerate}[(1)]
+\item $G$ is $k$-colorable
+\item $V(G)$ can be partioned into $k$ independent sets
+\item There exists a graph homomorphism $G \rightarrow K_k$
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+(1) $\Leftrightarrow$ (2): Assume (1) and choose a coloring $c \colon G
+\rightarrow \{1,\ldots,k\}$. Then $c^{-1}(1),\ldots,c^{-1}(k)$
+partitions $G$ into $k$ independent sets. On the other hand if (2) holds
+we can write $V(G) = V_1 \cup \cdots \cup V_k$ where each $V_j$ is an
+independet set and $V_i \cap V_j = \emptyset$ when $i \neq j$. Define a
+coloring $c \colon G \rightarrow \{1,\ldots,k\}$ by $c(v) = i$ if $v \in
+V_i$. Then $c$ is clearly a coloring. So we have that (1)
+$\Leftrightarrow$ (2).
+
+(2) $\Leftrightarrow$ (3): If $f \colon G \rightarrow K_k$ is a
+homomorphism then $f^{-1}(i)$ is an independent set. This shows (3)
+$\Rightarrow$ (2). Suppose $V(G) = V_1 \cup \cdots \cup V_k$, $V_i \cap
+V_j = \emptyset$, with each $V_i$ an independent set. Define $f \colon G
+\rightarrow K_k$ by $f(v) = i$ if $v \in V_i$. If $vw \in E(G)$ then $v
+\in V_i$ and $w \in V_j$ for $i \neq j$. Then $f(v)f(w) = ij \in E(K_k)$
+since $i \neq j$.
+\end{proof}
+
+The next lemma says that ``bigger graphs have bigger chromatic
+numbers''.
+\begin{lemma}
+If $H \subset G$ ($H$ is a subgraph of $G$) then $\chi(H) \le \chi(G)$.
+\end{lemma}
+\begin{proof}
+Any coloring $c \colon V(G) \rightarrow C$ restricts to a coloring $c
+\colon V(H) \rightarrow C$.
+\end{proof}
+
+\section*{Lower bounds on $\chi(G)$}
+\begin{lemma}
+For any graph $G$
+\begin{enumerate}[(1)]
+\item $\chi(G) \ge \omega(G)$
+\item $\chi(G) \ge \frac{|V(G)|}{\alpha(G)}$
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+(1): If $\omega(G) = k$, then $G$ contains a clique on $k$ vertices,
+i.e. $K_k \subset G$. Then $k = \chi(K_k) \le \chi(G)$ by the lemma.
+
+(2): Suppose $\chi(G) = k$. Then some color class has size at least
+$\frac{1}{k}|V(G)|$. Therefore we have an independent set of size $\ge
+\frac{1}{k}|V(G)|$, which means $\alpha(G) \ge \frac{1}{k}|V(G)|$.
+\end{proof}
+
+\begin{example}
+$\chi(C_{2n + 1}) = 3$ although $\omega(C_{2n + 1}) = 2$ for $n \ge 2$.
+So it can happen that $\chi > \omega$.
+\end{example}
+
+\section*{Upper bounds on $\chi(G)$}
+\begin{definition}
+\emph{The greedy coloring} relative to a vertex ordering $v_1, \ldots
+v_n$ of the vertices of $G$ is obtained by coloring in this order
+subject to the rule:
+\[
+c(v_i) = \text{ first available color that does not appear among }
+N(v_i) \cap \{v_1,\ldots v_{i-1}\}
+\]
+\end{definition}
+
+\begin{theorem}
+The greedy algorithm uses at most $\Delta(G) + 1$ colors. In particular
+$\chi(G) \le \Delta(G) + 1$ for any $G$.
+\end{theorem}
+\begin{proof}
+When coloring $v_i$ at most $\Delta(G)$ colors are forbidden, because
+$v_i$ has at most $\Delta(G)$ neighbors, so it has $\le \Delta(G)$
+already colored neighbors. They use $\le \Delta(G)$ different colors, so
+at least one color from $\{1,\ldots,\Delta(G) + 1\}$ is available for
+$v_i$.
+\end{proof}
+\begin{observation}
+There is room for improvement if we choose some special vertex ordering.
+\end{observation}
+\begin{example}
+Order the vertices so that $\deg(v_1) \ge \deg(v_2) \ge \cdots \ge
+\deg(v_n)$.
+\end{example}
+\begin{theorem}
+With respect to the above ordering, the greedy method uses at most $1 +
+\max_i(\min(\deg(v_i),i-1))$ colors. In particular $\chi(G) \le 1 +
+\max_i\min(\deg(v_i),i-1)$.
+\end{theorem}
+\begin{proof}
+$v_i$ has at most $\min(\deg(v_i),i-1)$ neighbors among $v_1,\ldots,v_{i-1}$.
+\end{proof}
+\begin{exercise}
+$\max_i\min(\deg(v_i),i-1) \le \Delta(G)$ so this bound is at least as
+good as $\Delta(G) + 1$ (often much better).
+\end{exercise}
+\begin{example}
+Order the $v_i's$ so that for each $i$, $v_i$ is some vertex of smallest
+degree in $G[\{v_1,\ldots,v_i\}]$ (the sub-graph induced by
+$\{v_1,\ldots,v_i\}$).
+Construction:
+\begin{align*}
+v_n &= \text{ vertex of minimal degree in } G \\
+v_{n-1} &= \text{ vertex of minimal degree in } G-v_n \\
+v_{n-2} &= \text{ vertex of minimal degree in } G-v_n-v_{n-1} \\
+\vdots & 
+\end{align*}
+\end{example}
+
+\begin{theorem}
+With this ordering, the greedy method needs at most $1 + \max_H \delta(H)$ colors, 
+where the maximum is over all induced subgraphs $H$ of $G$.
+\end{theorem}
+\begin{proof}
+$v_i$ has exactly $\deg_{G[\{v_1,\ldots,v_i\}]}(v_i)$ neighbors among
+$v_1,\ldots,v_{i-1}$. But that number is exactly
+$\delta(G[\{v_1,\ldots,v_i\}]) \le \max_H \delta(H)$
+\end{proof}
+
+\begin{example}
+Where $\chi = \Delta + 1$:
+\begin{enumerate}[(1)]
+\item $\chi(K_n) = n = \Delta(K_n) + 1$
+\item $\chi(C_{2n + 1}) = 3 = \Delta(C_{2n+1}) + 1$
+\end{enumerate}
+\end{example}
+
+\begin{theorem}[Brooks]
+If $G$ is a connected graph, which is not complete, nor an odd cycle,
+then $\chi(G) \le \Delta(G)$.
+\end{theorem}
+\begin{proof}
+Let $\Delta = \Delta(G)$. If $\Delta \le 2$ then $G$ is a path or a
+cycle, and the result is easy. Assume $\Delta \ge 3$. Pick any vertex $v
+\in V(G)$ with $\deg(v) = \Delta$. Let $H = G-v$.  The proof is by
+induction on the number of vertices $|V(G)|$. Suppose, for
+contradiction, $G$ is not $\Delta$-colorable. $H$ is a graph with
+$\Delta(H) \le \Delta$. By induction (since $|V(H)| = |V(G)| - 1$) $H$
+is $\Delta(H)$-colorable so in particular $\Delta$-colorable. (Be
+careful: what if $H$ is an odd cycle or a complete graph? We dealt with these cases in the exercises). Fix any
+coloring $c$ of $H$ with $\Delta$ colors. Since $\deg(v) = \Delta$ we can
+assume that all neighbors of $V$ have different colors. Otherwise there is a
+spare color we can assign to $v$ and $G$ would be $\Delta$-colorable.
+Label the vertices in $N(v)$ such that $N(v) =
+\{v_1,\ldots,v_{\Delta}\}$ and $c(v_i) = i$. Define $H_{i,j}$ be the
+subgraph of $H$ induced by vertices of colors $i$ and $j$ ($i \neq j$,
+$i,j \in \{1,\ldots,\Delta\}$).
+\begin{claim}[0]
+$H_{i,j}$ is bipartite and $v_i,v_j \in V(H_{i,j})$.
+\end{claim}
+\begin{proof}
+Obvious.
+\end{proof}
+\begin{claim}[1]
+$v_i,v_j$ are in the same connected component $C_{i,j}$ of $H_{i,j}$
+\end{claim}
+\begin{proof}
+If not then $H_{i,j}$ is the disjoint union of two subgraphs: $H_{i,j} =
+H_{i,j}^{(1)} \cup H_{i,j}^{(1)}$ such that $v_i \in
+H_{i,j}^{(1)}$ and $v_j \in H_{i,j}^{(2)}$. Define a new coloring $c'$ of $H$
+by swapping the colors in $H_{i,j}^{(2)}$ i.e. define $c'(v) = i$ if $c(v) = j$
+and vice versa for all $v \in H_{i,j}^{(2)}$. (The new $c'$ is still a
+coloring). With this new coloring $v_i$ and $v_j$ have the same colors,
+so we have a spare color for $v$ which as before is a contradiction.
+\end{proof}
+\begin{claim}[2]
+$C_{i,j}$ is a path.
+\end{claim}
+\begin{proof}
+First note that $\deg_{H_{i,j}}(v_i) = 1$ because otherwise $v_i$ has
+two neighbors of color $j$. Moreover $\deg_H(v_i) \le \Delta - 1$. Then
+there exist $k \neq i$ such that we can recolor $v_i$ with color $k$ and
+still have a coloring of $H$ and we get a spare color for $v$.
+Analogously we have $\deg_{H_{i,j}}(v_j) = 1$. Let $u$ be a degree $\ge
+3$ vertex in $C_{i,j}$ closest to $v_i$. Then $c(u) = i$ or $c(u) = j$,
+assume $c(u) = i$. Again: $\deg_H(u) \le \Delta$, but neighbors of $u$
+have at most $\Delta - 2$ colors. We can recolor $u$ with some $k
+\neq i,j$. Then $v_i,v_j$ land in different components of $H_{i,j}$
+contrary to claim 1. 
+\end{proof}
+\begin{claim}[3]
+$C_{i,j} \cap C_{i,k} = \{v_i\}$ if $i \neq j \neq k \neq i$.
+\end{claim}
+\begin{proof}
+If not then there is some $u \in C_{i,j} \cap C_{i,k}$ such that $u \neq
+v_i$. $\deg(u) \le \Delta$ and $u$ has two neighbors of color $j$ and
+two of color $k$. Therefore neighbors of $u$ use $\le \Delta - 2$ colors
+and we can recolor $u$ with some color $\neq i,j,k$ and get a proper
+coloring. The new coloring contradicts claim 1.
+\end{proof}
+If all of $v_1,\ldots,v_{\Delta}$ are pairwise adjacent then $G =
+K_{\Delta + 1}$, or otherwise $\Delta(G) \ge \Delta + 1$.  So, assume without
+loss of generality that $v_1v_2 \notin E(G)$. Consider the paths
+$C_{1,2},C_{1,3}$. Let $C_{1,2} = v_1u\cdots v_2$. Flip the colors in
+$C_{1,3}$. We get a proper coloring of $G$. In this new coloring
+$C_{1,2}$ and $C_{3,2}$ both contain $u$ contradicting claim 3.
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{thebibliography}{9}
+\bibitem{west} West, \textit{Introduction to graph theory}
+
+\end{thebibliography}
+
+\end{document}
+
+
+
+

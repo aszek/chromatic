@@ -1,0 +1,231 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{color}              %Farben, f.r \definecolor{}
+\usepackage{amssymb}            %Mathematische Symbole
+\usepackage{amsthm}             %Besseres \newtheorem
+\usepackage{amsmath}           %Mathematische Umgebungen
+\usepackage{mathtools}          %\xRightarrow, etc
+\usepackage{mathrsfs}           %enthaelt \mathscr
+\usepackage{graphicx}
+\usepackage{enumerate}          % in-place numerations def.
+\usepackage{fullpage}
+
+\usepackage{array}
+%\usepackage{multicol}
+%\usepackage[notref,notcite]{showkeys}
+%\usepackage{algorithm,algorithmic}
+\usepackage{color}
+
+\usepackage{graphicx}
+\usepackage{xypic}
+\entrymodifiers={+!!<0pt,\fontdimen22\textfont2>}
+\usepackage[all]{xy}
+
+\newtheoremstyle{myremark} % name
+    {7pt}                    % Space above
+    {7pt}                    % Space below
+    {}  	                 % Body font
+    {}                           % Indent amount
+    {\bf}       	         % Theorem head font
+    {.}                          % Punctuation after theorem head
+    {.5em}                       % Space after theorem head
+    {}  % Theorem head spec (can be left empty, meaning ‘normal’)
+
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}[lemma]{Theorem}
+\newtheorem{fact}[lemma]{Fact}
+\newtheorem{definition}[lemma]{Definition}
+\newtheorem{corollary}[lemma]{Corollary}
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{conjecture}[lemma]{Conjecture}
+\newtheorem{observation}[lemma]{Observation}
+\newtheorem{problem}[lemma]{Problem}
+\newtheorem{notation}[lemma]{Notation}
+\newtheorem*{claim}{Claim}
+
+\theoremstyle{myremark}
+\newtheorem{remark}[lemma]{Remark}
+\newtheorem{example}[lemma]{Example}
+\newtheorem{exercise}[lemma]{Exercise}
+
+%%%%%% EDIT HERE: %%%%%%%%%%%
+\newcommand{\LECTURENUMBER}{11}
+\newcommand{\LECTURETITLE}{Vizing's Theorem. Chromatic Number of
+$\mathbb{R}^k$.}
+\newcommand{\LECTURESCRIBE}{Rolf C. Jørgensen}
+\newcommand{\codt}{\cdot}
+\newcommand{\codts}{\cdots}
+
+%% Dokument Beginn %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\thispagestyle{empty}
+
+\begin{center}
+	{\Large\bf Graph coloring}\\
+	{\bf Lecture notes, vol. \LECTURENUMBER, \LECTURETITLE}\\
+\end{center}
+Lecturer: Michal Adamaszek \hfill Scribe: \LECTURESCRIBE
+\begin{center}
+\line(1,0){450}
+\end{center}
+
+%%%%%%% EDIT ALSO BELOW: %%%%%%%%%%%%%%%%
+
+\begin{theorem} (Vizing)
+For every graph $G$:
+\[
+\Delta(G) \le \chi'(G) \le \Delta(G) + 1.
+\]
+\begin{proof} (Sketch)
+Let $\Delta := \Delta(G)$. We have to show that there is an edge coloring with
+$\Delta + 1$ colors.
+
+If $G = \overline{K_n}$ we are done.
+
+Otherwise choose an edge $e = uv \in E(G)$. Fix $C = \{1, \ldots, \Delta
++ 1\}$. By induction ($\Delta(G-e) \le \Delta$) color the edges of $G -
+e$. Let $f \colon E(G) \setminus \{e\} \rightarrow C$ denote the
+coloring. We need to define a color of $e$, possibly changing some
+existing colors. We say a color $c$:
+\begin{enumerate}
+\item \emph{appears at a vertex $x$} if $f(xy) = c$ for some $xy \in
+E(G)$. 
+\item \emph{is missing at $x$}, otherwise.
+\end{enumerate}
+Since $|C| = \Delta + 1$, each vertex has at
+least one missing color. Define $v_0 := v$ and set $c_0$ to be any color
+missing at $v_0$. If $c_0$ is missing at $u$, then set $f(uv_0) := c_0$
+and we are done. Otherwise if $c_0$ appears at $u$, then set $v_1$ to be
+a vertex such that $f(uv_1) = c_0$ and $c_1$ any color missing at $v_1$.
+If $c_1$ is missing at $u$ shift the colors from $uv_1$ to $uv_0$. If
+$c_1$ appears at $u$ then choose a vertex $v_2$ such that $f(uv_2) =
+c_1$ and any color $c_2$ missing at $v_2$. Recursively we define $v_i$
+as any vertex with $f(uv_i) = c_{i-1}$ and $c_i$ as any missing color at
+$v_i$. This process stops when either 
+\begin{enumerate}
+\item $c_i$ is also missing at $u$, then shift colors from $uv_i$ to
+$uv_0$.
+\item $c_i = c_j$ for $0 \le j < i$.
+\end{enumerate}
+Suppose $c_i = c_j$ for $0 \le j < i$. Let $c$ be some color missing at
+$u$. If $c$ is also missing at $v_i$, set $f(uv_i) = c$ and shift colors
+$uv_i$ to $uv_0$, otherwise $c$ appears at $v_i$. Consider the graph
+$f^{-1}(c) \cup f^{-1}(c_i)$. It contains a path starting at $v_i$.
+Where does it end? If the path ends at $v_j$, shift colors from $uv_j$
+down to $uv_0$ set $f(uv_j) = c$ and flip the colors on the path $v_i
+\rightarrow v_j$. Otherwise it ends at $v_{j+1}$ or somewhere else, and these two cases are left as an exercise.
+\end{proof}
+\end{theorem}
+\begin{remark}
+We only relied on the existence of missing colors at every vertex. We
+can use this observation, for example:
+\end{remark}
+\begin{proposition}
+If $G$ has only one vertex of maximal degree, then $\chi'(G) =
+\Delta(G)$.
+\begin{proof}
+Let $u$ have $\deg(u) = \Delta = \Delta(G)$. Pick an edge $e = uv \in E(G)$. Now
+$\Delta(G - e) \le \Delta - 1$. Color the edges of $G - e$ with $\Delta$
+colors (Vizing). Again every vertex has a missing color. The recoloring
+part of the proof gives now an edge coloring of $G$ with $\Delta$
+colors.
+\end{proof}
+\end{proposition}
+
+\hrule
+\section*{Chromatic number of the Euclidean spaces}
+In this part we will have infinite graphs.
+\begin{definition}
+$\chi(\mathbb{R}^d)$ is the minimal number of colors required to color
+all points in $\mathbb{R}^d$ so that if $d(x,y) = 1$ then $x,y$ have
+different colors for all $x,y \in \mathbb{R}^d$, where 
+\[
+d(x,y) = \sqrt{\sum_i (x_i - y_i)^2}
+\]
+\end{definition}
+\begin{definition}
+For $X \subset \mathbb{R}^d$ define a graph $U_X$ (U for ``unit'') with
+vertex set $X$ and edges
+\[
+x_1x_2 \in E(U_X) \text{ iff } d(x_1,x_2) = 1.
+\]
+\end{definition}
+\begin{observation}
+$\chi(\mathbb{R}^d) = \chi(U_{\mathbb{R}^d})$.
+\end{observation}
+\begin{example}
+$U_{\mathbb{R}}$: $xy \in E(U_{\mathbb{R}})$ iff $|x - y| = 1$.
+$U_{\mathbb{R}}$ is a union of infinitely many (uncountably many)
+bi-infinite paths. $\chi(U_{\mathbb{R}}) = 2 = \chi(\mathbb{R})$.
+\end{example}
+\begin{remark}
+All invariants $(\omega, \chi, \alpha, \Delta, \ldots)$ we defined still
+make sense for infinite graphs, except that they might be equal to
+$\infty$. $\omega(G) \le \chi(G)$ and $H \subset G \Rightarrow \chi(H)
+\le \chi(G)$ etc. still hold.
+\end{remark}
+
+\begin{theorem}
+Suppose $G$ is a graph (which may be infinite).  If every \emph{finite}
+subgraph of $G$ can be colored with $k$ colors, then $G$ can be colored with $k$ colors.
+\begin{proof}
+Let $G = (V,E)$ be a graph and let $X$ be the set of all functions $f
+\colon V \rightarrow \{1,\ldots,k\}$, i.e. $X = \prod_{v \in
+V}\{1,\ldots,k\} = \{1,\ldots,k\}^V$. View $\{1,\ldots,k\}$ as a
+discrete topological space and equip $X$ with the product topology.
+$\{1,\ldots,k\}$ is finite, so it is compact. By Tychonoff's theorem $X$
+is compact. For any $F \subset E$ let $X_F \subset X$ be defined as
+those $f \colon V \rightarrow \{1,\ldots,k\}$ which are proper colorings
+of $(V,F)$.
+\begin{enumerate}
+\item $X_{\{e\}}$ is closed in $X$ since
+\[
+X_{\{e\}} = \bigcup_{i\neq j}\{f \in X : f(u) = i, f(v) = j, e = uv \}
+\]
+is a finite union of closed sets.
+\item $X_{F_1} \cap X_{F_2} = X_{F_1 \cup F_2}$.
+\item For any $F \subset E$, $X_F$ is closed since $X_F = \bigcap_{e \in
+F}X_{\{e\}}$, is an intersection of closed sets, hence closed.
+\end{enumerate}
+Now: Take the family $\mathcal{F} = \{X_F\}_{\stackrel{F \subset E}{F
+\text{ finite}}}$. All sets in $\mathcal{F}$ are closed, and all
+intersections of finitely many from $\mathcal{F}$ are non-empty (second
+claim: $X_{F_1} \cap \codts \cap X_{F_n} = X_{F_1 \cup \codts \cup F_n}
+\neq \emptyset$ because $(V, F_1 \cup \cdots \cup F_n)$ is finite, hence
+$k$-colorable) Then the intersection of all sets in $\mathcal{F}$ is
+non-empty (by compactnes of $X$). $f \in \bigcap_{\stackrel{ F \subset
+E}{|F| < \infty }}X_F$ is a proper coloring on \emph{every} edge of $G$.
+\end{proof}
+\end{theorem}
+
+\subsection*{What about $\chi(\mathbb{R}^2)$}
+\begin{lemma}
+(easy upper-bound) $\chi(\mathbb{R}^2) \le 9$.
+\begin{proof}
+Take the $3 \times 3$-square where the length of the diagonals in each
+little square is $0.99$. Color every such square with $9$ colors (choose
+any neighboring color on the commom edges). Use this square to tile the
+plane. Take two points $x,y$ of the same color. Then
+\begin{enumerate}
+\item $x,y$ are in the same small square and so $d(x,y) \le 0.99$, or
+\item $x,y$ are in two different big squares and $d(x,y) \ge 2 \cdot
+0.99 \cdot 1/\sqrt{2} > 1$
+\end{enumerate}
+so $d(x,y) \neq 1$.
+\end{proof}
+\end{lemma}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{thebibliography}{9}
+\bibitem{west} West, \textit{Introduction to graph theory}
+
+\end{thebibliography}
+
+\end{document}
+
+
+
+

@@ -1,0 +1,65 @@
+%
+\documentclass[a4paper]{article}
+
+
+\usepackage{color}              %Farben, f.r \definecolor{}
+\usepackage{amssymb}            %Mathematische Symbole
+\usepackage{amsthm}             %Besseres \newtheorem
+\usepackage{amsmath}           %Mathematische Umgebungen
+\usepackage{mathtools}          %\xRightarrow, etc
+\usepackage{mathrsfs}           %enthaelt \mathscr
+\usepackage[matrix,arrow,curve]{xy}     %Diagramme
+\usepackage{graphicx}
+\usepackage{enumerate}          % in-place numerations def.
+\usepackage{fullpage}
+
+%% Dokument Beginn %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\pagestyle{empty}
+\begin{center}
+	{\Large\bf Graph coloring}\\
+	{\large\bf Graph coloring game}\\
+	\line(1,0){330}
+\end{center}
+
+\subsection*{Rules}
+\medskip
+
+We fix a graph $G$ and a set of colors $C$.
+
+Two players, Alice and Bob, take turns coloring one vertex of $G$ at a time, using a color from $C$, and so that any adjacent vertices which are already colored have different colors. Alice starts. 
+
+Alice wins when all vertices of $G$ are colored (her aim is to color the whole graph). Bob wins if some player has no legal move (he is an adversary trying to stop Alice).
+
+\subsection*{Some games to play}
+\medskip
+
+Who has a winning strategy?
+\begin{itemize}
+\item $G=P_3$, $C=\{1,2\}$
+\item $G=P_6$, $C=\{1,2\}$
+\item $G=C_6$, $C=\{1,2\}$
+\item $G=C_8$, $C=\{1,2,3\}$
+\item $G=Q_3$, $C=\{1,2,3,4\}$
+\item $G=Q_3$, $C=\{1,2,3\}$
+\item $G$ is the tree below, and $C=\{1,2,3\}$
+\begin{center}
+\includegraphics[scale=0.5]{mf4.png}
+\end{center}
+\item Come up with your own pair $(G,C)$, where Bob has a winning strategy, and you think this strategy is not easy to find.
+\end{itemize}
+
+\subsection*{Questions}
+\medskip
+Let $\chi_g(G)$ be the smallest number of colors $k$ for which Alice has a winning strategy in the coloring game on the graph $G$ with $k$ available colors.
+
+\begin{itemize}
+\item Prove that $\chi(G)\leq \chi_g(G)\leq \Delta(G)+1$.
+\item Find bipartite graphs with arbitrarily large $\chi_g$.
+\item Describe all graphs with $\chi_g(G)\leq 2$.
+\end{itemize}
+\end{document}
+
+
+
+

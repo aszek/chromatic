@@ -1,0 +1,60 @@
+%
+\documentclass[a4paper]{article}
+
+
+\usepackage{color}              %Farben, f.r \definecolor{}
+\usepackage{amssymb}            %Mathematische Symbole
+\usepackage{amsthm}             %Besseres \newtheorem
+\usepackage{amsmath}           %Mathematische Umgebungen
+\usepackage{mathtools}          %\xRightarrow, etc
+\usepackage{mathrsfs}           %enthaelt \mathscr
+\usepackage[matrix,arrow,curve]{xy}     %Diagramme
+\usepackage{graphicx}
+\usepackage{enumerate}          % in-place numerations def.
+\usepackage{fullpage}
+
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+
+%% Dokument Beginn %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\pagestyle{empty}
+\begin{center}
+	{\Large\bf Graph coloring}\\
+	{\large\bf Exercise class problems - volume 7}\\
+	\line(1,0){330}
+\end{center}
+
+In the last lecture we defined the ``generalized cube'' graph $Q_d(u)$ as follows:
+\begin{itemize}
+\item The vertices are all binary sequences $(x_1,\ldots,x_d)\in\{0,1\}^d$. 
+\item There is an edge from $\overline{x}=(x_1,\ldots,x_d)$ to $\overline{y}=(y_1,\ldots,y_d)$ if and only if $\overline{x}$ and $\overline{y}$ differ in exactly $u$ positions.
+\end{itemize}
+
+Show that the following are equivalent definitions of $Q_d(u)$:
+
+\begin{enumerate}
+\item The vertices are all vertices of $Q_d$. Two vertices are adjacent if their distance in $Q_d$ is exactly $u$.
+\item The vertices are all subsets of $\{1,\ldots,d\}$. Two subsets $A,B$ are adjacent if $|A\triangle B|=u$, where $\triangle$ is the symmetric difference $A\triangle B=(A\cup B)\setminus (A\cap B)$
+\item The vertices are all integers in $\{0,\ldots,2^d-1\}$. Two numbers $x,y$ are adjacent if $x\oplus y$ has exactly $u$ nonzero digits in base $2$, where $\oplus$ is bitwise XOR.
+\item The vertices are the vertices of the cube $[0,1]^d\subseteq \RR^d$. Two of them are adjacent if their Euclidean distance is $\sqrt{u}$.
+\end{enumerate}
+
+Implement your favorite definition in SAGE. Now check (and later prove) that
+\begin{itemize}
+\item If $u$ is odd then $Q_d(u)$ is bipartite (hence $\chi(Q_d(u))=2$).
+\item If $u$ is even then $Q_d(u)$ has at least two connected components.
+\end{itemize}
+
+If $Q_d(u)$ has two components, we denote any of them by $Q'_d(u)$.
+
+\begin{itemize}
+\item Compute $\chi(Q'_5(2))$ and show that $\chi(\RR^5)\geq 8$ (this is one off the best known bound $\chi(\RR^5)\geq 9$).
+\item Compute $\alpha(Q'_{10}(4))$ and show that $\chi(\RR^{10})\geq 26$ (this is the best known bound). 
+\end{itemize}
+
+\end{document}
+
+
+
+

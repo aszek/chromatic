@@ -1,0 +1,44 @@
+%
+\documentclass[a4paper]{article}
+
+
+\usepackage{color}              %Farben, f.r \definecolor{}
+\usepackage{amssymb}            %Mathematische Symbole
+\usepackage{amsthm}             %Besseres \newtheorem
+\usepackage{amsmath}           %Mathematische Umgebungen
+\usepackage{mathtools}          %\xRightarrow, etc
+\usepackage{mathrsfs}           %enthaelt \mathscr
+\usepackage[matrix,arrow,curve]{xy}     %Diagramme
+\usepackage{graphicx}
+\usepackage{enumerate}          % in-place numerations def.
+\usepackage{fullpage}
+
+%% Dokument Beginn %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\pagestyle{empty}
+\begin{center}
+	{\Large\bf Graph coloring}\\
+	{\large\bf Exercise class problems - volume 5}\\
+	\line(1,0){330}
+\end{center}
+
+Chromatic polynomials ctd.
+\begin{enumerate}
+\item $P_G(t)=(t-1)^n+(-1)^n(t-1)$ implies that $G$ is the $n$-cycle $C_n$.
+\end{enumerate}
+
+Edge-chromatic numbers.
+
+\begin{enumerate}
+\item If $G$ is connected and $L(G)$ is isomorphic to $G$ then $G$ is a cycle.
+\item Suppose that $G$ has $n$ vertices and $m$ edges. Show that $\chi'(G)\geq m/\lfloor n/2\rfloor$. Use it to show that the $5$-vertex graph from the lecture has no $3$-edge-coloring. Reprove that $\chi'(K_{2k-1})=2k-1$.
+\item We observed that $\omega(L(G))\geq\Delta(G)$. Find an exact formula for $\omega(L(G))$.
+\item Suppose $G$ is $r$-regular with an odd number of vertices. Prove that $r$ is even and that $\chi'(G)=r+1$.
+\item Find the edge-chromatic number of the Petersen graph.
+\end{enumerate}
+
+\end{document}
+
+
+
+

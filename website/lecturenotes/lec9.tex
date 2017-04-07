@@ -1,0 +1,641 @@
+\documentclass[a4paper]{article}
+\usepackage{color}              %Farben, f.r \definecolor{}
+\usepackage{amssymb}            %Mathematische Symbole
+\usepackage{amsthm}             %Besseres \newtheorem
+\usepackage{amsmath}           %Mathematische Umgebungen
+\usepackage{mathtools}          %\xRightarrow, etc
+\usepackage{mathrsfs}           %enthaelt \mathscr
+\usepackage{graphicx}
+\usepackage{enumerate}          % in-place numerations def.
+\usepackage{enumitem}
+\usepackage{fullpage}
+\usepackage{glossaries}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+%\usepackage{multicol}
+%\usepackage[notref,notcite]{showkeys}
+%\usepackage{algorithm,algorithmic}
+\usepackage{color}
+
+\usepackage{graphicx}
+\usepackage{xypic}
+\entrymodifiers={+!!<0pt,\fontdimen22\textfont2>}
+\usepackage[all]{xy}
+
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{tikz,fullpage}
+\usetikzlibrary{arrows,%
+                petri,%
+                topaths}%
+\usepackage{tkz-berge}
+\usepackage[position=top]{subfig}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{matrix}
+\usetikzlibrary{positioning,shapes,fit,arrows}
+\newtheoremstyle{myremark} % name
+    {7pt}                    % Space above
+    {7pt}                    % Space below
+    {}  	                 % Body font
+    {}                           % Indent amount
+    {\bf}       	         % Theorem head font
+    {.}                          % Punctuation after theorem head
+    {.5em}                       % Space after theorem head
+    {}  % Theorem head spec (can be left empty, meaning ‘normal’)
+
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}[lemma]{Theorem}
+\newtheorem{fact}[lemma]{Fact}
+\newtheorem{definition}[lemma]{Definition}
+\newtheorem{corollary}[lemma]{Corollary}
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{conjecture}[lemma]{Conjecture}
+\newtheorem{observation}[lemma]{Observation}
+\newtheorem{problem}[lemma]{Problem}
+\newtheorem{notation}[lemma]{Notation}
+\newtheorem*{claim}{Claim}
+
+\theoremstyle{myremark}
+\newtheorem{remark}[lemma]{Remark}
+\newtheorem{example}[lemma]{Example}
+\newtheorem{exercise}[lemma]{Exercise}
+\newtheorem{algorithm}[lemma]{Algorithm}
+\newtheorem{application}[lemma]{Application}
+\newtheorem*{goal}{Goal}
+
+%%%%%% EDIT HERE: %%%%%%%%%%%
+\newcommand{\LECTURENUMBER}{0}
+\newcommand{\LECTURETITLE}{Short title}
+\newcommand{\LECTURESCRIBE}{Your name}
+
+%% Dokument Beginn %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\thispagestyle{empty}
+
+\begin{center}
+	{\Large\bf Graph coloring}\\
+	{\bf Lecture notes, vol.9 \\ Edge Coloring}\\
+\end{center}
+Lecturer: Michal Adamaszek \hfill Scribe: Sokratis Theodoridis
+\begin{center}
+\line(1,0){450}
+\end{center}
+
+%%%%%%% EDIT ALSO BELOW: %%%%%%%%%%%%%%%%
+
+In the next pages, $G$ is always a graph, $V(G)$ its set of vertices and $E(G)$ its set of edges.
+\begin{definition}
+An \emph{edge coloring} of $G$ is a function $f:E(G)\rightarrow C$ (for some set of colors $C$) such that if $e_1e_2$ have a common endpoint then $f(e_1)\neq f(e_2)$. The \emph{edge chromatic number} (\emph{chromatic index}) $\chi'(G)$ is the smallest $k$ such that $G$ has an edge-coloring with colors $\{1,\dots,k\}$.
+\end{definition}
+\begin{center}
+\begin{tikzpicture} 
+    \draw  
+        node[fill=black,circle,inner sep=0pt,minimum size=3pt] (1) at (0,0) {}
+        node[fill=black,circle,inner sep=0pt,minimum size=3pt] (2) at (0,-2) {}
+        node[fill=black,circle,inner sep=0pt,minimum size=3pt] (3) at (2,0) {}
+        node[fill=black,circle,inner sep=0pt,minimum size=3pt] (4) at (-2,-1) {}
+        node[fill=black,circle,inner sep=0pt,minimum size=3pt] (5) at (2,-2) {}
+  ; 
+    \draw [color=blue] (1) -- (2) node {} (0,-1) node [text=blue,right] {$a$};
+    \draw [color=red] (1) -- (3) node {} (1,0) node [text=red,above] {$b$};
+    \draw [color=green] (1) -- (4) node {} (-1,-0.9) node [text=green,above] {$c$};
+    \draw [color=blue] (3) -- (5) node {} (2,-1) node [text=blue,right] {$a$};
+    \draw [color=green] (5) -- (2) node {} (1,-2) node [text=green,below] {$c$};
+    \draw [color=red] (2) -- (4) node {} (-1,-1.5) node [text=red,below] {$b$};
+\end{tikzpicture}
+\end{center}
+\begin {example}
+\begin {itemize}
+\item $\chi'(C_n)=$
+$\begin {cases}
+2\:\:\: , 2|n\\
+3\:\:\: ,2\not|n\\
+\end {cases}$
+\begin {center}
+\begin {tikzpicture}
+\draw 
+node[fill=black,circle,inner sep=0pt,minimum size=3pt] (1) at (0,0) {}
+node[fill=black,circle,inner sep=0pt,minimum size=3pt] (2) at (0,-1) {}
+node[fill=black,circle,inner sep=0pt,minimum size=3pt] (3) at (1,0) {}
+node[fill=black,circle,inner sep=0pt,minimum size=3pt] (4) at (1,-1) {}
+;
+\draw [color=red] (1) -- (2) node {}  ;
+\draw [color=red] (3) -- (4) node {}  ;
+\draw [color=green] (2) -- (4) node {}  ;
+\draw [color=green] (3) -- (1) node {}  ;
+\end {tikzpicture}
+\begin {tikzpicture}
+\draw
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n1) at (0,1) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n2) at (1.25,0) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n3) at (0.75,-1) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n4) at (-0.75,-1) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n5) at (-1.25,0) {}
+;
+\draw [color=red] (n1) -- (n2) node {}  ;
+\draw [color=red] (n3) -- (n4) node {}  ;
+\draw [color=blue] (n5) -- (n4) node {}  ;
+\draw [color=green] (n3) -- (n2) node {}  ;
+\draw [color=green] (n5) -- (n1) node {}  ;
+\end{tikzpicture}
+\end{center}
+\item $G$ is a bipartite graph, $V(G)=Classes \cup Teachers$.
+\newline
+There is an edge $tc$ if $t$ is supposed to teach $c$\
+\begin {center}
+\begin {tikzpicture}
+\draw
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n1) at (1,0) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n2) at (2.5,0){}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n3) at (4,0) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n4) at (5.5,0) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n5) at (7,0) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n6) at (8.5,0) {};
+\draw (9,0) node [text=black,right] {classes};
+\draw
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n7) at (1,-2) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n8) at (2.5,-2){}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n9) at (4,-2) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n10) at (7,-2) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n11) at (8.5,-2) {}
+;
+\draw (1,-2) node [text=black,below] {Math};
+\draw (2.5,-2) node [text=black,below] {Physics};
+\draw (4,-2) node [text=black,below] {P.E.};
+\draw (7,-2) node [text=black,below] {Geometry};
+\draw (8.5,-2) node [text=black,below] {etc.};
+\draw (9,-2) node [text=black,right] {teachers};
+\draw [color=blue] (n1) -- (n7) node {}  ;
+\draw [color=green] (n2) -- (n7) node {}  ;
+\draw [color=blue] (n2) -- (n8) node {}  ;
+\draw [color=green] (n3) -- (n8) node {}  ;
+\draw [color=red] (n3) -- (n7) node {}  ;
+\draw [color=red] (n4) -- (n8) node {}  ;
+\draw [color=red] (n4) -- (n10) node {}  ;
+\draw [color=blue] (n5) -- (n10) node {}  ;
+\draw [color=green] (n6) -- (n10) node {}  ;
+\end{tikzpicture}
+\end{center}
+How many time slots do we need to schedule all lessons?
+\newline
+Answer: $\chi'(G)$. $Colors \equiv$ time slots
+\item
+$\chi'(K_{12})=11$
+\begin {proof}
+\begin{minipage}{\textwidth}
+Season schedule of the Danish soccer league (figures for the case of $K_6$, $6$ teams)
+\begin {center}
+\begin {tikzpicture}
+\draw
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n1) at (0,0) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n2) at (-2,-1) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n3) at (2,-1) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n4) at (2,-2.5) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n5) at (-2,-2.5) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n6) at (0,-3.5) {};
+\draw [color=green] (n1) -- (n3) node {}  ;
+\draw [color=purple] (n1) -- (n2) node {}  ;
+\draw [color=purple] (n5) -- (n6) node {}  ;
+\draw [color=blue] (n1) -- (n4) node {}  ;
+\draw [color=red] (n1) -- (n6) node {}  ;
+\draw [color=blue] (n3) -- (n6) node {} ;
+\draw [color=green] (n3) -- (n5) node {};
+\draw [color=green] (n4) -- (n6) node {} ;
+\draw [color=red] (n2) -- (n5) node {} ;
+\draw [color=red] (n3) -- (n4) node {} ;
+\draw [color=blue] (n1) -- (n5) node {}  ;
+\end {tikzpicture}
+\end {center}
+$colors \equiv$ weeks, $color\: classes \equiv$ list of pairs playing that week
+\end{minipage}
+{\color {purple} first week} {\color {green} second week} {\color {red} third week} etc.
+\newline
+{\color {blue} (fourth week) \color {black} is not correct because some team is scheduled two games}
+\begin {center}
+\begin {tikzpicture}
+\draw
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n1) at (0,0) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n2) at (-2,-1) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n3) at (2,-1) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n4) at (2,-2.5) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n5) at (-2,-2.5) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n6) at (0,-3.5) {};
+\draw [color=green] (n1) -- (n3) node {}  ;
+\draw [color=orange] (n3) -- (n4) node {}  ;
+\draw [color=green] (n4) -- (n6) node {}  ;
+\draw [color=orange] (n6) -- (n5) node {}  ;
+\draw [color=green] (n5) -- (n2) node {}  ;
+\draw [color=orange] (n2) -- (n1) node {}  ;
+\draw [color=red] (n1) -- (n4) node {}  ;
+\draw [color=blue] (n1) -- (n6) node {}  ;
+\draw [color=blue] (n2) -- (n3) node {}  ;
+\draw [color=blue] (n5) -- (n4) node {}  ;
+\draw [color=red] (n3) -- (n5) node {}  ;
+\draw [color=red] (n2) -- (n6) node {}  ;
+\draw [color=yellow] (n1) -- (n5) node {}  ;
+\draw [color=yellow] (n2) -- (n4) node {}  ;
+\draw [color=yellow] (n3) -- (n6) node {}  ;
+\end {tikzpicture}
+\end {center}
+\end {proof}
+\end {itemize}
+\end {example}
+\begin {lemma}
+$\chi'(K_n)=$
+$\begin {cases}
+n-1\:\:\: , 2|n\\
+n\:\:\:, 2\not|n\\
+\end {cases}$
+\begin {tikzpicture}
+\draw
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n1) at (0,0) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n2) at (2,0) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n3) at (4,0) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n4) at (6,0) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n5) at (5,1) {};
+\draw (1,0) node [text=black,below] {$\chi'(K_2)=1$};
+\draw (5,0) node [text=black,below] {$\chi'(K_3)=3$};
+\draw [color=black] (n1) -- (n2) node {}  ;
+\draw [color=blue] (n3) -- (n4) node {};
+\draw [color=red] (n5) -- (n3) node {};
+\draw [color=green] (n5) -- (n4) node {};
+\end {tikzpicture}
+\end {lemma}
+\begin {proof}
+\underline {$n=2k-1$}
+Arrange vertices into a regular $n$-gon. Choose a color class consisting of $k$ parallel edges (one vertex is left out). This color class has $n$ possible rotations. These rotations cover all edges of $K_n$. This is an edge-coloring with $n$ colors,so $\chi'(K_n) \leq n$.
+
+Upper bound: take any edge-coloring of $K_n$. The color class 1 must miss some vertex v (because $2\not|n$). Then, $deg(v)=n-1$, and all edges incident to $v$ require $n-1$ colors.Total $\# colors \geq 1+(n-1)=n$
+\newline
+
+
+\underline {$n=2k$}
+$deg(v)=n-1$, so we need at least $n-1$ colors, $\chi'(K_n) \geq n-1$. To construct a coloring with $n-1$ colors take the $n-1$ rotations of the following color class: $n-1$ vertices are arranged in a regular $(n-1)$-gon, and one vertex is in the origin. Use $k-1$ parallel edges and one edge from the origin to the vertex on the perimeter being left out.
+\end {proof}
+\begin {lemma} 
+$\chi'(G) \geq \Delta(G)$
+\end {lemma}
+\begin {proof}
+We need at least $\Delta(G)$ colors just to color the edges incident to the vertex of maximum degree.
+\end {proof}
+\begin {example}
+$\Delta(G)=3$, but there is no 3-edge coloring (checked in excercises). There is one with 4 colors, so $\chi'(G)=4$
+\end {example}
+\begin {center}
+\begin {tikzpicture}
+\draw
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n1) at (0,0) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n2) at (2,0) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n3) at (0,-2) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n4) at (2,-2) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n5) at (1,-1) {};
+\draw [color=black] (n1) -- (n2) node {}  ;
+\draw [color=black] (n2) -- (n4) node {}  ;
+\draw [color=black] (n4) -- (n3) node {}  ;
+\draw [color=black] (n3) -- (n1) node {}  ;
+\draw [color=black] (n5) -- (n2) node {}  ;
+\draw [color=black] (n5) -- (n4) node {}  ;
+\draw [color=black] (n5) -- (n1) node {}  ;
+\end {tikzpicture}
+\end {center}
+\begin {definition}
+A \emph {matching} in G is a set of edges, no two of which have a common endpoint [equivalently, 1-regular (every vertex has deg.1) subgraph of $G$].
+\end {definition} 
+\begin {observation}\begin{minipage}[t]{\linewidth}
+\begin {itemize}
+\item If $f$ is an edge-coloring then every color class $f^{-1}(c)$ is a matching.
+\item An edge-coloring with $k$ colors is the same as a partition of $E(G)$ into $k$ matchings
+\item For any two colors $c_1,c_2\in C,\:c_1\neq c_2$,\:$f^{-1}(c_1)\cup f^{-1}(c_2)$ is a disjoint union of cycles and paths.
+\end {itemize}
+\end {minipage}
+\end {observation}
+\begin {center}
+%\begin {tikzpicture}
+%\draw node[fill,circle,inner sep=0pt,minimum size=3pt] (n1) at (0,0) {}
+%	node[fill,circle,inner sep=0pt,minimum size=3pt] (n2) at (-1,-1) {}
+%	node[fill,circle,inner sep=0pt,minimum size=3pt] (n3) at (0,-2) {}
+%	node[fill,circle,inner sep=0pt,minimum size=3pt] (n4) at (1,-1) {}
+%	node[fill,circle,inner sep=0pt,minimum size=3pt] (n5) at (0,-1) {}
+%	node[fill,circle,inner sep=0pt,minimum size=0pt] (n6) at (-1.2,-1) {}
+%	node[fill,circle,inner sep=0pt,minimum size=0pt] (n7) at (-0.2,-2) {}
+%	node[fill,circle,inner sep=0pt,minimum size=0pt] (n8) at (0.2,-2) {}
+%	node[fill,circle,inner sep=0pt,minimum size=0pt] (n9) at (0.2,-1.3) {}
+%	node[fill,circle,inner sep=0pt,minimum size=0pt] (n10) at (0.4,-1.2) {}
+%	node[fill,circle,inner sep=0pt,minimum size=0pt] (n11) at (1.2,-1.2) {}
+%	node[fill,circle,inner sep=0pt,minimum size=0pt] (n12) at (1.2,-0.8) {}
+%	node[fill,circle,inner sep=0pt,minimum size=0pt] (n13) at (0.2,0.2) {} ;
+%\draw [color=blue] (n1) -- (n4) node {}  ;
+%\draw [color=green] (n4) -- (n3) node {}  ;
+%\draw [color=red] (n3) -- (n2) node {}  ;
+%\draw [color=black] (n2) -- (n1) node {}  ;
+%\draw [color=green] (n1) -- (n5) node {}  ;
+%\draw [color=red] (n5) -- (n4) node {}  ;
+%\draw [color=blue] (n5) -- (n3) node {}  ;
+% \draw [line width = 1 pt, black, -, ] (n6) edge node {} (n7);
+% \draw [line width = 1 pt, black, -, bend right] (n7) edge node {} (n8);
+%\draw  [line width = 1 pt, black, -, ] (n8) edge node {} (n9);
+% \draw [line width = 1 pt, black, -, bend right] (n7) edge node {} (n8);
+% \draw [line width = 1 pt, black, -, bend left] (n9) edge node {} (n10);
+% \draw [line width = 1 pt, black, -,] (n10) edge node {} (n11);
+% \draw [line width = 1 pt, black, -, bend right] (n11) edge node {} (n12);
+% \draw [line width = 1 pt, black, -,] (n12) edge node {} (n13);
+%\draw (0.5,0) node [text=black,right] {path};
+%\end {tikzpicture}
+\begin {tikzpicture}
+\draw node[fill,circle,inner sep=0pt,minimum size=3pt] (n1) at (0,0) {}
+	node[fill,circle,inner sep=0pt,minimum size=3pt] (n2) at (-1,-1) {}
+	node[fill,circle,inner sep=0pt,minimum size=3pt] (n3) at (0,-2) {}
+	node[fill,circle,inner sep=0pt,minimum size=3pt] (n4) at (1,-1) {}
+	node[fill,circle,inner sep=0pt,minimum size=3pt] (n5) at (0,-1) {}
+	node[fill,circle,inner sep=0pt,minimum size=0pt] (n6) at (-1.2,-1) {}
+	node[fill,circle,inner sep=0pt,minimum size=0pt] (n7) at (-0.2,-2) {}
+	node[fill,circle,inner sep=0pt,minimum size=0pt] (n8) at (0.2,-2) {}
+	node[fill,circle,inner sep=0pt,minimum size=0pt] (n9) at (0.2,-1.3) {}
+	node[fill,circle,inner sep=0pt,minimum size=0pt] (n10) at (0.4,-1.2) {}
+	node[fill,circle,inner sep=0pt,minimum size=0pt] (n11) at (1.2,-1.2) {}
+	node[fill,circle,inner sep=0pt,minimum size=0pt] (n12) at (1.2,-0.8) {}
+	node[fill,circle,inner sep=0pt,minimum size=0pt] (n13) at (0.2,0.2) {}
+	node[fill,circle,inner sep=0pt,minimum size=0pt] (n14) at (-0.2,0.2) {} ;
+\draw [color=blue] (n1) -- (n4) node {}  ;
+\draw [color=green] (n4) -- (n3) node {}  ;
+\draw [color=red] (n3) -- (n2) node {}  ;
+\draw [color=black] (n2) -- (n1) node {}  ;
+\draw [color=green] (n1) -- (n5) node {}  ;
+\draw [color=red] (n5) -- (n4) node {}  ;
+\draw [color=blue] (n5) -- (n3) node {}  ;
+\draw [line width = 1 pt, black, -, bend right] (n7) edge node {} (n8);
+\draw [line width = 1 pt, black, -,] (n8) edge node {} (n11);
+\draw [line width = 1 pt, black, -, bend right] (n11) edge node {} (n12);
+\draw [line width = 1 pt, black, -, ] (n12) edge node {} (n13);
+\draw [line width = 1 pt, black, -, bend right] (n13) edge node {} (n14);
+\draw [line width = 1 pt, black, -, ] (n14) edge node {} (n7);
+\draw (0.5,0) node [text=black,right] {cycle};
+\end {tikzpicture}
+\end {center}
+\begin {proof}
+The first two parts are clear. For part 3, note that in $f^{-1}(c_1)\cup f^{-1}(c_2)$ every vertex is of degree $\leqslant2$.
+\end {proof}
+\begin {definition}
+The \emph {line graph} $G$ is the graph $L(G)$ which keeps track of incidences between edges of $G$.
+\newline
+Formally:
+$V(L(G))=E(G)$ 
+\newline
+$e_1e_2 \in E(L(G))$ if $e_1,e_2$ share a common vertex in $G$ (here ${e_i\in E(G), e_i\in V(L(G))}$).
+\end {definition}
+\begin {example}
+\begin {tikzpicture}
+\draw  
+        node[fill=black,circle,inner sep=0pt,minimum size=3pt] (1) at (0,0) {}
+        node[fill=black,circle,inner sep=0pt,minimum size=3pt] (2) at (0,-2) {}
+        node[fill=black,circle,inner sep=0pt,minimum size=3pt] (3) at (2,0) {}
+        node[fill=black,circle,inner sep=0pt,minimum size=3pt] (4) at (-2,-1) {}
+        node[fill=black,circle,inner sep=0pt,minimum size=3pt] (5) at (2,-2) {}
+        node[fill=red,circle,inner sep=0pt,minimum size=3pt] (6) at (6,0) {}
+       node[fill=red,circle,inner sep=0pt,minimum size=3pt] (7) at (8,0) {}
+       node[fill=green,circle,inner sep=0pt,minimum size=3pt] (8) at (6,-2) {}
+         node[fill=blue,circle,inner sep=0pt,minimum size=3pt] (9) at (8,-2) {}
+   node[fill=blue,circle,inner sep=0pt,minimum size=3pt] (10) at (7,-1) {}
+       node[fill=green,circle,inner sep=0pt,minimum size=3pt] (11) at (7,1) {}
+  ; 
+    \draw [color=blue] (1) -- (2) node {} (0,-1) node [text=blue,right] {$c$};
+    \draw [color=red] (1) -- (3) node {} (1,0) node [text=red,above] {$d$};
+    \draw [color=green] (1) -- (4) node {} (-1.5,-0.75) node [text=green,above] {$a$};
+    \draw [color=blue] (3) -- (5) node {} (2,-1) node [text=blue,right] {$e$};
+    \draw [color=green] (5) -- (2) node {} (1,-2.2) node [text=green,below] {$f$};
+    \draw [color=red] (2) -- (4) node {} (-1.5,-1.5) node [text=red,below] {$b$};
+    \draw (-2.3,-1) node [text=black,left] {$G=$};
+\draw [color=black] (7) -- (9) node {};
+\draw [color=black] (9) -- (8) node {};
+\draw [color=black] (8) -- (6) node {};
+\draw [color=black] (6) -- (10) node {};
+\draw [color=black] (8) -- (10) node {};
+\draw [color=black] (11) -- (10) node {};
+\draw [color=black] (11) -- (6) node {};
+\draw [color=black] (11) -- (7) node {};
+\draw [color=black] (10) -- (7) node {};
+	\draw (5.5,-1) node [text=black,left] {$L(G)=$};
+\draw (7,1) node [text=black,above] {a};
+\draw (8.1,0) node [text=black,right] {d};
+\draw (5.8,0) node [text=black,left] {b};
+\draw (5.8,-2) node [text=black,left] {f};
+\draw (8.2,-2) node [text=black,right] {e};
+\draw (7,-1.2) node [text=black,below] {$c$};
+\end{tikzpicture}
+\end {example}
+\bigskip
+\textbf{\underline {Glossary}}
+\newline
+\newline
+{edge in $G\equiv$} {vertex of $L(G)$}
+\newline
+{matching in $G \equiv$} {independent set in {$L(G)$}
+\newline
+{edge-coloring of $G\equiv$} {vertex coloring of {$L(G)$}
+\newline
+{$\chi'(G)$={$\chi(L(G))$}
+\begin {observation}
+$\omega(L(G))\geq \Delta(G)$ because all edges incedent to a fixed vertex $v$, induce a clique in $L(G)$.That implies
+\newline
+$\chi'(G)=\chi(L(G))\geq \omega(L(G))\geq \Delta(G)$ which we already knew. Moreover:
+\newline
+$\Delta(L(G))= \max_{uv\in E(G)}(deg_G(u)+deg_G(v)-2)\leq2\Delta(G)-2$
+\newline
+\begin {center}
+\begin {tikzpicture}
+\draw
+	 node[fill=black,circle,inner sep=0pt,minimum size=3pt] (1) at (0,0) {}
+	  node[fill=black,circle,inner sep=0pt,minimum size=3pt] (2) at (4,0) {}
+	   node[fill=black,circle,inner sep=0pt,minimum size=0pt] (3) at (-1.5,0.75) {}
+	    node[fill=black,circle,inner sep=0pt,minimum size=0pt] (4) at (-1.5,0.25) {}
+	     node[fill=black,circle,inner sep=0pt,minimum size=0pt] (5) at (-1.5,-0.25) {}
+	      node[fill=black,circle,inner sep=0pt,minimum size=0pt] (6) at (-1.5,-0.75) {}
+	       node[fill=black,circle,inner sep=0pt,minimum size=0pt] (7) at (5.5,0.75) {}
+	        node[fill=black,circle,inner sep=0pt,minimum size=0pt] (8) at (5.5,0.25) {}
+	         node[fill=black,circle,inner sep=0pt,minimum size=0pt] (9) at (5.5,-0.25) {}
+	          node[fill=black,circle,inner sep=0pt,minimum size=0pt] (10) at (5.5,-0.75) {};
+	          \draw [color=black] (1) -- (2) node {};
+	          \draw [color=black] (1) -- (3) node {};
+	          \draw [color=black] (1) -- (4) node {};
+	          \draw [color=black] (1) -- (5) node {};
+	          \draw [color=black] (1) -- (6) node {};
+	          \draw [color=black] (2) -- (7) node {};
+	          \draw [color=black] (2) -- (8) node {};
+	          \draw [color=black] (2) -- (9) node {};
+	          \draw [color=black] (2) -- (10) node {};
+	          \draw (0,0) node [text=black,above] {u};
+	          \draw (4,0) node [text=black,above] {v};
+	          \draw (2,-0.2) node [text=black,below] {e};
+	          \draw (-1.5,-0) node [text=black,left] {$deg(u)-1$};
+	          \draw (5.5,0) node [text=black,right] {$deg(v)-1$};
+\end {tikzpicture}
+\end {center}
+Now, greedy coloring gives:
+\newline
+$\chi'(G)=\chi(L(G)) \leq \Delta(L(G))+1\leq 2\Delta(G)-1$
+\newline
+We proved: $\Delta(G)\leq \chi'(G) \leq 2\Delta(G)-1$
+\end {observation}
+\begin {theorem}
+(Vizing '64) For any graph $G$ we have
+$\Delta(G)\leq \chi'(G) \leq \Delta(G)+1$.
+\end {theorem}
+\begin {remark}
+It is NP-hard to recognize if $\chi'(G)=\Delta(G)$ or $\chi'(G)=\Delta(G)+1$, even for graphs with $\Delta(G)=3$.
+\newline
+Graphs with $\chi'(G)=\Delta(G)$ are called $Class\ 1$
+\newline
+Graphs with $\chi'(G)=\Delta(G)+1$ are called $Class\ 2$
+\newline
+But we can still indentify some graph classes for which $\chi'(G)=\Delta(G)$.
+\end {remark}
+\begin {theorem}
+(K\"onig) If $G$ is bipartite then $\chi'(G)=\Delta(G)$
+\end {theorem}
+
+\underline {Hall's marriage theorem}(1935-original version): We have a number of boys and girls, each boy fancies some of the girls. Is it possible to arrange marriages, so that each boy marries some girls he likes?
+\newline
+Obvious necessary condition: "Each set of $k$ boys ($k\geq 1$) likes, altogether, at least $k$ different girls".
+\begin {theorem}
+(Hall) If $G$ is a bipartite graph with parts $V(G)=A\cup B$, such that for every $X\subseteq A$ we have:
+$$|\bigcup_{x\in X}N_G(x)|\geq |X|$$
+then $G$ has a matching of size $|A|$.
+\end {theorem}
+\newpage
+\begin {center}
+\begin {tikzpicture}
+\draw (5,0) ellipse (4cm and 0.5cm);
+\draw
+	 node[fill=black,circle,inner sep=0pt,minimum size=3pt] (1) at (2,0) {};
+	 \draw
+	 node[fill=black,circle,inner sep=0pt,minimum size=3pt] (2) at (5,0) {};
+	 \draw
+	 node[fill=black,circle,inner sep=0pt,minimum size=3pt] (3) at (5.5,0) {};
+	 \draw
+	 node[fill=black,circle,inner sep=0pt,minimum size=3pt] (4) at (6,0) {};
+	 \draw
+	 node[fill=black,circle,inner sep=0pt,minimum size=3pt] (5) at (6.5,0) {};
+	 \draw
+	 node[fill=black,circle,inner sep=0pt,minimum size=3pt] (6) at (7,0) {};
+	 \draw (1,0) node [text=black,left] {$A$};
+	 \draw (2,0.5) node [text=black,above] {$x$};
+	  \draw (6.5,0.8) node [text=black,left] {$X$};
+	   \draw (9.5,0) node [text=black,right] {$boys$};
+\draw (6,0) ellipse (1.3cm and 0.2cm);
+	  
+\draw (5,-2) ellipse (4cm and 0.5cm);
+\draw
+	 node[fill=black,circle,inner sep=0pt,minimum size=3pt] (7) at (2,-2) {};
+	 \draw
+	 node[fill=black,circle,inner sep=0pt,minimum size=3pt] (8) at (2.5,-2) {};
+	 \draw
+	 node[fill=black,circle,inner sep=0pt,minimum size=3pt] (9) at (3,-2) {};
+\draw [color=black] (1) -- (7) node {};
+\draw [color=black] (1) -- (8) node {};
+\draw [color=black] (1) -- (9) node {};
+ \draw (1,-2) node [text=black,left] {$B$};
+ \draw (2,-2.3) node [text=black,below] {$N(x)$};
+ \draw (5.5,-2) node [text=black] {\bf{$\geqslant|X|$}};
+ \draw (9.5,-2) node [text=black,right] {$girls$};
+\draw (2.4,-2) ellipse (0.8cm and 0.2cm);
+\draw  node[fill=black,circle,inner sep=0pt,minimum size=0pt] (10) at (7,-2) {};
+\draw
+	 node[fill=black,circle,inner sep=0pt,minimum size=0pt] (11) at (6.6,-2) {};
+\draw
+	 node[fill=black,circle,inner sep=0pt,minimum size=0pt] (12) at (6.2,-2) {};
+\draw
+	 node[fill=black,circle,inner sep=0pt,minimum size=0pt] (13) at (5.8,-2) {};
+\draw  node[fill=black,circle,inner sep=0pt,minimum size=0pt] (14) at (5.4,-2) {};
+\draw  node[fill=black,circle,inner sep=0pt,minimum size=0pt] (15) at (5,-2) {};
+\draw  node[fill=black,circle,inner sep=0pt,minimum size=0pt] (16) at (4.6,-2) {};
+\draw [color=black] (2) -- (13) node {};
+\draw [color=black] (3) -- (16) node {};
+\draw [color=black] (4) -- (12) node {};
+\draw [color=black] (4) -- (15) node {};
+\draw [color=black] (5) -- (14) node {};
+\draw [color=black] (5) -- (11) node {};
+\draw [color=black] (6) -- (10) node {};
+\draw (5.7,-2) ellipse (1.7cm and 0.4cm);
+\end{tikzpicture}
+\end {center}
+\begin {proof}
+Write $N(X)=N_G(X)=\bigcup_{x\in X} N_G(x)$. Induction on $n=|A|$
+\newline
+\tikz \node[circle,draw] {1}; If $n=1$
+\begin {tikzpicture}
+\draw (0,0) ellipse (1cm and 0.3cm);
+\draw  node[fill=black,circle,inner sep=0pt,minimum size=3pt] (1) at (0.3,0) {};
+ \draw (1,0) node [text=black,right] {$A$};
+\draw (1,-1) ellipse (1cm and 0.3cm);
+\draw  node[fill=black,circle,inner sep=0pt,minimum size=3pt] (2) at (1.3,-1) {};
+ \draw (1.9,-1) node [text=black,right] {$B$};
+  \draw (2.8,-1) node [text=black,right] {the unique vertex of $A$ has at least one edge.};
+ \draw [color=black] (1) -- (2) node {};
+\end {tikzpicture}
+\newline
+\newline
+\tikz \node[circle,draw] {2a}; For any $X\subsetneq A$, $|N_G(X)|\geq|X|+1$.
+\newline
+Then take any $a\in A$, $b\in N_G(a)$, match them and use induction on $G[A-a,B-b]$.
+\newline
+\newline
+\begin {tikzpicture}
+\draw  node[fill=black,circle,inner sep=0pt,minimum size=0pt] (1) at (0,0) {};
+\draw  node[fill=black,circle,inner sep=0pt,minimum size=0pt] (2) at (3,0) {};
+\draw  node[fill=black,circle,inner sep=0pt,minimum size=0pt] (3) at (3,-2) {};
+\draw  node[fill=black,circle,inner sep=0pt,minimum size=0pt] (4) at (0,-2) {};
+\draw  node[fill=black,circle,inner sep=0pt,minimum size=3pt] (5) at (3.6,-0.5) {};
+\draw  node[fill=black,circle,inner sep=0pt,minimum size=3pt] (6) at (3.6,-1.5) {};
+\draw [color=black] (1) -- (2) node {};
+\draw [color=black] (2) -- (3) node {};
+\draw [color=black] (3) -- (4) node {};
+\draw [color=black] (4) -- (1) node {};
+\draw (1.5,0) node [text=black,above] {$G[A-a,B-b]$};
+\draw (3.6,-0.5) node [text=black,right] {$a$};
+\draw (3.6,-1.5) node [text=black,right] {$b$};
+\draw (2.6,-1.5) ellipse (2cm and 0.3cm);
+\draw (4.5,-1.5) node [text=black,right] {$B$};
+\draw (4.5,-0.5) node [text=black,right] {$A$};
+\draw (2.6,-0.5) ellipse (2cm and 0.3cm);
+\end {tikzpicture}
+
+Possible because for any $X\subseteq A-a$ we have 
+$|N(X)|\geq |X|+1-1=|X|$
+\newline
+\tikz \node[circle,draw] {2b}; $N_G(X)=|X|$ for some $X\subsetneq A$.
+\newline
+then: by induction find a matching in $G[X,N(X)]$
+\newline
+Also, there is a matching in $G[A-X,B-N(X)]$
+\newline
+Possible,because for any $Y\subseteq A-X$
+\newline
+\begin{tikzpicture}
+\draw (0,0) ellipse (2cm and 0.4cm);
+\draw (0,-1) ellipse (2cm and 0.4cm);
+\draw (-1.5,0) node [text=black,] {$X$};
+\draw (1.2,0) node [text=black,] {$A-X \ \color{red}Y$};
+\draw (-1.5,-1) node [text=black,] {$N(X)$};
+\draw (1,-1) node [text=black,] {$B-N(X)$};
+\draw  node[fill=black,circle,inner sep=0pt,minimum size=0pt] (1) at (-1.5,-0.8) {};
+\draw  node[fill=black,circle,inner sep=0pt,minimum size=0pt] (2) at (1.6,0) {};
+\draw  node[fill=black,circle,inner sep=0pt,minimum size=0pt] (3) at (1.7,0) {};
+\draw  node[fill=black,circle,inner sep=0pt,minimum size=0pt] (4) at (1.8,0) {};
+\draw  node[fill=black,circle,inner sep=0pt,minimum size=0pt] (5) at (1,-0.8) {};
+\draw  node[fill=black,circle,inner sep=0pt,minimum size=0pt] (6) at (1.1,-0.8) {};
+\draw  node[fill=black,circle,inner sep=0pt,minimum size=0pt] (7) at (1.2,-0.8) {};
+\draw  node[fill=black,circle,inner sep=0pt,minimum size=0pt] (8) at (1.3,-0.8) {};
+\draw [color=red] (1) -- (2) node {};
+\draw [color=red] (3) -- (5) node {};
+\draw [color=red] (4) -- (7) node {};
+\draw [color=red] (2) -- (8) node {};
+\end {tikzpicture}
+\newline
+$|Y|+|X|=|Y\cup X|\leqslant|N_G(Y\cup X)|=|N(X)|+|N_G(Y)\cap(B-N(X))|=|X|+|N_G(Y)\cap(B-N(X))|$
+\newline
+So $|Y|\leqslant |N_G(Y)\cap(B-N(X))|$ and therefore induction applies to $G[A-X,B-N(X)]$
+\end {proof}
+\end{document}

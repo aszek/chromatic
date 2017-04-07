@@ -1,0 +1,55 @@
+%
+\documentclass[a4paper]{article}
+
+
+\usepackage{color}              %Farben, f.r \definecolor{}
+\usepackage{amssymb}            %Mathematische Symbole
+\usepackage{amsthm}             %Besseres \newtheorem
+\usepackage{amsmath}           %Mathematische Umgebungen
+\usepackage{mathtools}          %\xRightarrow, etc
+\usepackage{mathrsfs}           %enthaelt \mathscr
+\usepackage[matrix,arrow,curve]{xy}     %Diagramme
+\usepackage{graphicx}
+\usepackage{enumerate}          % in-place numerations def.
+\usepackage{fullpage}
+
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+
+%% Dokument Beginn %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\pagestyle{empty}
+\begin{center}
+	{\Large\bf Graph coloring}\\
+	{\large\bf Exercise class problems - volume 8}\\
+	\line(1,0){330}
+\end{center}
+
+
+\begin{enumerate}
+\item Can the directed graph formed in the proof of oriented Sperner's lemma really have cycles, or is it just a union of directed paths?
+
+\item Prove that Sperner's lemma and Brouwer's fixed point theorem are equivalent in the following sense: Find a proof of the ``classical'' version of Sperner's lemma from Brouwer's theorem.
+
+\smallskip
+Hint: Construct a continuous map $f:\Delta\to \Delta$ by defining it on the vertices of the triangulation and extending linearly to the interiors of the edges and triangles of the triangulation. Arrange it so that any fixed point of $f$ must lie inside a $3$-colored triangle.
+
+\item Use Sperner's lemma to prove the following classical fact about rectangle dissections:
+
+Suppose a rectangle is partitioned into smaller rectangles, and that each small rectangle has at least one side of integer length. Prove that the big rectangle also has at least one side of integer length.
+
+\smallskip
+Hint: Subdivide each small rectangle with one diagonal to get a triangulation of the big rectangle. Place everything in a coordinate system with one corner at $(0,0)$. Color each vertex $P=(x,y)$ with 
+\begin{itemize}
+\item color $1$ if $x\in\ZZ$,
+\item color $2$ if $x\not\in\ZZ$ and $y\in \ZZ$,
+\item color $3$ if $x,y\not\in\ZZ$.
+\end{itemize}
+Prove that there is no triangle with colors $1,2,3$. Finally show that assuming both sides of the big rectangle are non-integers contradicts Sperner's lemma.
+\end{enumerate}
+
+\end{document}
+
+
+
+

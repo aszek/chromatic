@@ -1,0 +1,70 @@
+%
+\documentclass[a4paper]{article}
+
+
+\usepackage{color}              %Farben, f.r \definecolor{}
+\usepackage{amssymb}            %Mathematische Symbole
+\usepackage{amsthm}             %Besseres \newtheorem
+%\usepackage{amsmath}           %Mathematische Umgebungen
+\usepackage{mathtools}          %\xRightarrow, etc
+\usepackage{mathrsfs}           %enthaelt \mathscr
+%\usepackage{makeidx}           %Index erstellen
+\usepackage[matrix,arrow,curve]{xy}     %Diagramme
+\usepackage{graphicx}
+%\usepackage[T1]{fontenc}
+%\usepackage{paralist}          %
+\usepackage{enumerate}          % in-place numerations def.
+
+
+\theoremstyle{definition}
+\newtheorem{myex}{Problem}
+% -------------------------------------------------------------------------
+
+%% Dokument Beginn %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\pagestyle{empty}
+\begin{center}
+	{\Large\bf Graph coloring}\\
+	{\large\bf Graded homework 1}\\
+	\line(1,0){330}
+\end{center}
+
+
+\begin{myex}(2pt)
+Find the chromatic number of the graph $G$ defined in accompanying file \texttt{graph.sage}. 
+\end{myex}
+
+\begin{myex}(2pt)
+Consider the following algorithm for vertex coloring. Find the largest independent set of vertices, and color them with color $1$. Remove those vertices, find the largest independent set in the remaining graph and color it with color $2$, and so on until there are no more vertices left to color. Prove that there are infinitely many graphs $G$ for which this algorithm will use more than $\chi(G)$ colors.
+\end{myex}
+
+\begin{myex}(2pt) Prove that $\max\{\chi(G),\chi(\overline{G})\}\geq \sqrt{|V(G)|}$ for any graph $G$. 
+\end{myex}
+
+\begin{myex}(2pt)
+Let $G, H$ be two graphs. The \emph{substitution of $H$ into $G$}, denoted $G[H]$, is the graph obtained by replacing every vertex of $G$ with a copy of $H$, and replacing every original edge of $G$ with a complete bipartite graph between the corresponding copies of $H$. Formally $V(G[H])=V(G)\times V(H)$ and $(u,v)(u',v')\in E(G[H])$ iff either $uu'\in E(G)$ or $u=u'$ and $vv'\in E(H)$. Sage calls this operation \texttt{G.lexicographic\_product(H)}.
+
+\smallskip
+\noindent
+Prove that
+$$\omega(G)\chi(H)\leq \chi(G[H])\leq \chi(G)\chi(H).$$
+Find an example with $\chi(G[H])<\chi(G)\chi(H)$.
+\end{myex}
+
+\begin{myex}(2pt)
+Let $\textrm{gcd}(a,b)$ denote the greatest common divisor of $a$ and $b$. Let $n=20162016$. Define $G$ as the graph with vertex set $\{1,\ldots,n\}$ where two numbers $1\leq a<b\leq n$ are adjacent if and only if $\textrm{gcd}(a,b)=1$. Find the exact value of $\chi(G)$.
+\end{myex}
+
+\begin{center}
+	\line(1,0){330}
+\end{center}
+Hints: $\chi(G_1+\cdots+G_k)=\sum_{i=1}^k\chi(G_i)$. All graphs are undirected, finite and simple.
+\begin{center}
+	\line(1,0){330}
+\end{center}
+Deadline: Friday week 9, 04/03/2016, 10:16 am.
+\end{document}
+
+
+
+

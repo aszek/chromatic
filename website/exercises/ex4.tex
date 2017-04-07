@@ -1,0 +1,51 @@
+%
+\documentclass[a4paper]{article}
+
+
+\usepackage{color}              %Farben, f.r \definecolor{}
+\usepackage{amssymb}            %Mathematische Symbole
+\usepackage{amsthm}             %Besseres \newtheorem
+\usepackage{amsmath}           %Mathematische Umgebungen
+\usepackage{mathtools}          %\xRightarrow, etc
+\usepackage{mathrsfs}           %enthaelt \mathscr
+\usepackage[matrix,arrow,curve]{xy}     %Diagramme
+\usepackage{graphicx}
+\usepackage{enumerate}          % in-place numerations def.
+\usepackage{fullpage}
+
+%% Dokument Beginn %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\pagestyle{empty}
+\begin{center}
+	{\Large\bf Graph coloring}\\
+	{\large\bf Exercise class problems - volume 4}\\
+	\line(1,0){330}
+\end{center}
+
+\begin{enumerate}
+\item What is $\min\{P_G(4)~:~G\ \mathrm{is\ planar}\}$\ ?
+\item Find the chromatic polynomial of
+\begin{itemize}
+\item The $2\times n$ grid $K_2\square P_n$.
+\item The wheel $W_n$.
+\item $K_n-e$, the complete graph with one edge removed.
+\item $P_n[K_m]$ (graph substitution, see Homework 1).
+\end{itemize}
+\item Let $P'_G(t)$ denote the number of colorings of $G$ with \emph{exactly} $t$ colors $1,\ldots,t$ appearing, i.e. such that the color assignment $c:V(G)\to\{1,\ldots,t\}$ is surjective. Show that $P'_G(t)$ is not a polynomial for any graph $G$.
+\item If $G$ is a graph with chromatic polynomial $P(t)$, construct a graph with chromatic polynomial
+\begin{itemize}
+\item $tP(t-1)$,
+\item $(t-1)P(t)$,
+\item $P(t)^3$,
+\item $P(t)^2/t$.
+\end{itemize}
+\item Let $G$ be a graph with $n$ vertices, $m$ edges and $r$ triangles. Show that $[t^{n-2}]P_G(t)={m\choose 2}-r$.
+\item Let $G$ be a graph with $n$ vertices, $m$ edges and chromatic polynomial $P_G(t)=\sum_{i=0}^na_it^{n-i}$. Prove that $|a_i|\leq{m\choose i}$.
+\end{enumerate}
+
+
+\end{document}
+
+
+
+

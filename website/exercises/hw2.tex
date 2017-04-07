@@ -1,0 +1,86 @@
+%
+\documentclass[a4paper]{article}
+
+
+\usepackage{color}              %Farben, f.r \definecolor{}
+\usepackage{amssymb}            %Mathematische Symbole
+\usepackage{amsthm}             %Besseres \newtheorem
+%\usepackage{amsmath}           %Mathematische Umgebungen
+\usepackage{mathtools}          %\xRightarrow, etc
+\usepackage{mathrsfs}           %enthaelt \mathscr
+%\usepackage{makeidx}           %Index erstellen
+\usepackage[matrix,arrow,curve]{xy}     %Diagramme
+\usepackage{graphicx}
+%\usepackage[T1]{fontenc}
+%\usepackage{paralist}          %
+\usepackage{enumerate}          % in-place numerations def.
+
+
+\theoremstyle{definition}
+\newtheorem{myex}{Problem}
+% -------------------------------------------------------------------------
+
+%% Dokument Beginn %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\pagestyle{empty}
+\begin{center}
+	{\Large\bf Graph coloring}\\
+	{\large\bf Graded homework 2}\\
+	\line(1,0){330}
+\end{center}
+
+
+
+\begin{myex}(2pt)
+\begin{itemize}
+\item[a)] Prove or disprove: if the only complex roots of $P_G(t)$ are $0$ and $1$ then $G$ is a forest.
+\item[b)] How many non-isomorphic graphs have chromatic polynomial $t^2(t-1)^8$\ ?
+\item[c)] Find all non-isomorphic graphs with chromatic polynomial $t(t-1)^3(t-2)$.
+\end{itemize}
+\end{myex}
+
+\begin{myex}(2pt)
+A vertex coloring of $G$ will be called \emph{brilliant} if (1) every two adjacent vertices have different colors and (2) every two vertices which have a common neighbour also have different colors. Let $\chi_b(G)$ be the minimal number of colors required for a brilliant coloring of a simple graph $G$, and let $P_b(G,t)$ be the number of brilliant colorings of $G$ with colors $\{1,\ldots,t\}$. 
+
+Find all graphs $G$ with $\chi_b(G)\leq 2$ and show that $P_b(G,t)$ is a polynomial in $t$ for every graph $G$.
+\end{myex}
+
+\begin{myex}(2pt)
+Prove that $\chi_l(G)+\chi_l(\overline{G})\leq |V(G)|+1$ for any graph $G$, where $\chi_l$ is the list chromatic number.
+\end{myex}
+
+\begin{myex}(2pt)
+(This is an experimental problem; I am not expecting any proofs.) Let $g(n)$ be the expected number of colors used by the greedy algorithm to color a random graph from $G(n,\frac12)$. 
+\begin{itemize}
+\item Compute and plot an experimental approximation of $g(n)$ for a sequence of reasonably large values of $n$, for example $n=100,200,\ldots,2000$.
+\item Speculate about the asymptotic behaviour of $g(n)$ as $n\to\infty$. In particular, what do you think about $\lim_{n\to\infty}\frac{g(n)}{n/\log_2{n}}$\ ?
+\item Find information about the expected value of $\chi(G)$ for $G\in G(n,\frac12)$. How well does the greedy algorithm perform?
+\end{itemize}
+\end{myex}
+
+\begin{myex}(2pt)
+Choose and solve \emph{one} of these problems.
+\begin{itemize}
+\item[(5.1)]
+Let $G$ be a nonempty graph. Simplify the expression
+$$\sum_I P(G-I, -1)$$
+where the sum runs over all independent sets $I$ in $G$ (including the empty one) and, as always, $G-X$ denotes the subgraph of $G$ induced by the vertex set $V(G)- X$.
+
+Hint: More generally, consider $\sum_I P(G-I, t)$. 
+\item[(5.2)]
+A vertex $v$ of a directed graph is called a \emph{source} if all the edges incident to $v$ are pointing out of $v$. Suppose $G$ is a nonempty graph with $n$ vertices. Prove that the number of acyclic orientations of $G$ having exactly one source equals $n\cdot (-1)^{n-1}\cdot [t]P_G(t)$.
+
+Hint: Find a deletion-contraction rule for $a(G,v_0):=$ the number of acyclic orientations of $G$ in which some prescribed vertex $v_0$ is the unique source.
+\end{itemize}
+\end{myex}
+
+\begin{center}
+	\line(1,0){330}
+\end{center}
+
+Deadline: Friday week 11, 18/03/2016, 10:16am. 
+\end{document}
+
+
+
+

@@ -1,0 +1,45 @@
+%
+\documentclass[a4paper]{article}
+
+
+\usepackage{color}              %Farben, f.r \definecolor{}
+\usepackage{amssymb}            %Mathematische Symbole
+\usepackage{amsthm}             %Besseres \newtheorem
+\usepackage{amsmath}           %Mathematische Umgebungen
+\usepackage{mathtools}          %\xRightarrow, etc
+\usepackage{mathrsfs}           %enthaelt \mathscr
+\usepackage[matrix,arrow,curve]{xy}     %Diagramme
+\usepackage{graphicx}
+\usepackage{enumerate}          % in-place numerations def.
+\usepackage{fullpage}
+
+%% Dokument Beginn %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\pagestyle{empty}
+\begin{center}
+	{\Large\bf Graph coloring}\\
+	{\large\bf Exercise class problems - volume 2}\\
+	\line(1,0){330}
+\end{center}
+
+\begin{enumerate}
+\item Prove that a graph with chromatic number $k$ has at least ${k\choose 2}$ edges.
+\item Prove $\chi(G)\leq |V(G)|-\alpha(G)+1$.
+\item Suppose we have $n$ straight lines in the plane, no three intersecting at the same point. Let $G$ be the graph whose vertices are the intersection points of the lines, and two of them are adjacent if they appear consecutively on one of the lines. Prove that $G$ is $3$-colorable.
+\item Suppose $G$ is $4$-colorable. Prove that $G$ can be written as a union of two bipartite graphs (that means there are subgraphs $H_1,H_2$ of $G$ such that $V(G)=V(H_1)\cup V(H_2)$, $E(G)=E(H_1)\cup E(H_2)$ and $H_1,H_2$ are bipartite).
+\item Prove that if $\overline{G}$ is bipartite then $\chi(G)=\omega(G)$.
+\item Prove that if an $n$-vertex graph is $k$-colorable then it has at most $\frac{k-1}{2k}n^2$ edges.
+\item Show that every graph has a vertex ordering for which the greedy algorithm uses exactly $\chi(G)$ colors.
+\end{enumerate}
+
+\line(1,0){330}
+\begin{enumerate}
+\item Write a function that takes a graph and an ordering of its vertices and produces a greedy vertex coloring for that ordering.
+\item Write a function that does this for 100 random orderings of the vertices and picks the most efficient coloring.
+\end{enumerate}
+
+\end{document}
+
+
+
+

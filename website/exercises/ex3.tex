@@ -1,0 +1,57 @@
+%
+\documentclass[a4paper]{article}
+
+
+\usepackage{color}              %Farben, f.r \definecolor{}
+\usepackage{amssymb}            %Mathematische Symbole
+\usepackage{amsthm}             %Besseres \newtheorem
+\usepackage{amsmath}           %Mathematische Umgebungen
+\usepackage{mathtools}          %\xRightarrow, etc
+\usepackage{mathrsfs}           %enthaelt \mathscr
+\usepackage[matrix,arrow,curve]{xy}     %Diagramme
+\usepackage{graphicx}
+\usepackage{enumerate}          % in-place numerations def.
+\usepackage{fullpage}
+
+%% Dokument Beginn %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\pagestyle{empty}
+\begin{center}
+	{\Large\bf Graph coloring}\\
+	{\large\bf Exercise class problems - volume 3}\\
+	\line(1,0){330}
+\end{center}
+
+\begin{enumerate}
+\item Prove that the Petersen graph is not planar by finding an iterated subdivision of $K_{3,3}$ or $K_5$ as a subgraph.
+\item 
+\begin{itemize}
+\item Prove that any planar graph has a vertex of degree at most $5$.
+\item Use it to deduce the \textbf{6-color theorem}: Every planar graph is $6$-colorable.
+\end{itemize}
+\item How many edges must be removed from the Petersen graph to make the result planar?
+\item Prove that $\overline{Q_3}$ is not planar.
+\item Prove that $Q_4$ is not planar.
+\item Prove that $v-e+f=k+1$ in a planar graph with $k$ connected components.
+\item Prove (without invoking any difficult theorems) that any triangle-free planar graph is $4$-colorable.
+\item Suppose $G$ is planar. Show that we can assign two colors to the vertices of $G$ so that there are no monochromatic triangles. (A monochromatic triangle is a triangle in $G$ with all vertices of the same color) You may use the $4$-color theorem.
+\end{enumerate}
+
+\begin{center}
+	\line(1,0){330}
+\end{center}
+	
+A graph is called $k$-critical if $\chi(G)=k$ and $\chi(H)<k$ for every proper subgraph $H\subseteq G$.
+
+\begin{enumerate}
+\item Prove that a graph is $3$-critical if and only if it is an odd cycle.
+\item Show that a $k$-critical graph $G$ has $\delta(G)\geq k-1$.
+\item Suppose $G$ is $k$-critical and $e\in E(G)$. Show that every $(k-1)$-coloring of $G-e$ assigns different colors to the endpoints of $e$.
+\item Prove that $C_5+K_k$ is $(3+k)$-critical.
+\end{enumerate}
+	
+\end{document}
+
+
+
+
