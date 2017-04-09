@@ -1,0 +1,51 @@
+\chapter{Temporary}
+
+\section{Notation}
+
+A graph is $G=(V,E)$ and it has $n=|V|$, $m=|E|$. If there are more graphs the next one is $H$. A coloring with $c$ colors is a function $f:V\to \{1,\ldots,c\}=C$. The chromatic number is $\chi$. A bipartite graph has parts $A,B$, or $X,Y$.
+
+
+\section{Aha foo bar}
+This is just a testing ground for now.
+
+Here is ade finition
+
+\begin{definition} We say that a \emph{definition} is a definition is
+\begin{equation}
+\label{eq:def-eq-temp}
+\int_M d\omega = \int_{\partial M} \omega
+\end{equation}
+\end{definition}
+
+On the other hand, here is a remark:
+
+\begin{remark}
+I would like the contents of a remark not to be italicised.
+\end{remark}
+
+\section{Section}
+It would be good to split each chapter into 2-4 sections.
+
+\section{Including sage code}
+We include SAGE source code like this:
+
+\begin{verbatim}
+def FunnyGraph(n):
+    c = graphs.CompleteGraph(n)
+    c.delete_edges(graphs.CycleGraph(n).edges())
+    return graphs.MycielskiStep(c).join(graphs.WheelGraph(n+1))
+
+G = FunnyGraph(99)
+\end{verbatim}
+
+At the very end I will implement it using a pygmentize highlighter for python.
+
+Figures can be drawn in tikz or whatever, or included from another file. In any case, it would be good to have every figure inside a figure environment with a label and caption.
+
+\section{TODOs}
+List of todos for MA:
+\begin{itemize}
+\item Remove this file
+\item Add pygmentize
+\item Expand and check bibliography
+\end{itemize}

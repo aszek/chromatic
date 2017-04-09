@@ -1,0 +1,97 @@
+\documentclass[a4paper,oneside]{report}
+\usepackage{color}              %Farben, f.r \definecolor{}
+\usepackage{amssymb}            %Mathematische Symbole
+\usepackage{amsthm}             %Besseres \newtheorem
+\usepackage{amsmath}            %Mathematische Umgebungen
+\usepackage{mathtools}          %\xRightarrow, etc
+\usepackage{mathrsfs}           %enthaelt \mathscr
+\usepackage{graphicx}
+\usepackage{enumerate}          % in-place numerations def.
+\usepackage{fullpage}
+\usepackage{array}
+%\usepackage{multicol}
+%\usepackage[notref,notcite]{showkeys}
+%\usepackage{algorithm,algorithmic}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{xypic}
+\entrymodifiers={+!!<0pt,\fontdimen22\textfont2>}
+\usepackage[all]{xy}
+
+%-----------------------------
+%Hugrún's additions
+\usepackage{hyperref}
+\usepackage{blkarray}
+
+\usepackage{tikz}
+\newcommand{\LD}{\langle}
+\newcommand{\RD}{\rangle}
+\usepackage{tikz}
+\usepackage{tikz,fullpage}
+\usetikzlibrary{arrows,%
+                petri,%
+                topaths}%
+\usepackage{tkz-berge}
+\usepackage[position=top]{subfig}
+
+%------------------------
+
+\newtheoremstyle{myremark} % name
+    {7pt}                    % Space above
+    {7pt}                    % Space below
+    {}  	                 % Body font
+    {}                           % Indent amount
+    {\bf}       	         % Theorem head font
+    {.}                          % Punctuation after theorem head
+    {.5em}                       % Space after theorem head
+    {}  % Theorem head spec (can be left empty, meaning ‘normal’)
+
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}[lemma]{Theorem}
+\newtheorem{fact}[lemma]{Fact}
+\newtheorem{definition}[lemma]{Definition}
+\newtheorem{corollary}[lemma]{Corollary}
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{conjecture}[lemma]{Conjecture}
+\newtheorem{observation}[lemma]{Observation}
+\newtheorem{problem}[lemma]{Problem}
+\newtheorem{notation}[lemma]{Notation}
+
+\theoremstyle{myremark}
+\newtheorem{remark}[lemma]{Remark}
+\newtheorem{example}[lemma]{Example}
+
+%-------------------------
+
+%------------------------
+
+\title{\bf Graph coloring}
+\author{Micha{\l} Adamaszek \and ? \and ?}
+%------------------------
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\input{frontmatter.tex}
+\input{temporary.tex}
+
+\input{1graphs.tex}
+\input{2vertexcoloring.tex}
+\input{3planar.tex}
+\input{4chromaticpolynomial.tex}
+\input{5edgecoloring.tex}
+\input{6euclidean.tex}
+\input{7topology.tex}
+\input{examproblems.tex}
+
+%------------------------
+\begin{thebibliography}{99}
+\bibitem[D]{diestel} R. Diestel, Graph Theory, Graduate Texts in Mathematics 173, Springer--Verlag  
+\end{thebibliography}
+
+\end{document}
+
+%-----------------------
+
