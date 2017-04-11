@@ -2,9 +2,11 @@
 
 \section{Problems}
 
+The number of stars indicates the difficulty level.
+
 \begin{enumerate}
 
-\item Find the chromatic number of the graph $G$ defined below in Sage:
+\item ($\star$) Find the chromatic number of the graph $G$ defined below in Sage:
 \begin{verbatim}
 def FunnyGraph(n):
     c = graphs.CompleteGraph(n)
@@ -15,21 +17,21 @@ G = FunnyGraph(99)
 \end{verbatim}
 
 
-\item Consider the following algorithm for vertex coloring. Find the largest independent set of vertices, and color them with color $1$. Remove those vertices, find the largest independent set in the remaining graph and color it with color $2$, and so on until there are no more vertices left to color. Prove that there are infinitely many graphs $G$ for which this algorithm will use more than $\chi(G)$ colors.
+\item ($\star\star$) Consider the following algorithm for vertex coloring. Find the largest independent set of vertices, and color them with color $1$. Remove those vertices, find the largest independent set in the remaining graph and color it with color $2$, and so on until there are no more vertices left to color. Prove that there are infinitely many graphs $G$ for which this algorithm will use more than $\chi(G)$ colors.
 
 
-\item Prove that $\max\{\chi(G),\chi(\overline{G})\}\geq \sqrt{|V(G)|}$ for any graph $G$.
+\item ($\star$) Prove that $\max\{\chi(G),\chi(\overline{G})\}\geq \sqrt{|V(G)|}$ for any graph $G$.
 
 
-\item Let $G, H$ be two graphs. The \emph{substitution of $H$ into $G$}, denoted $G[H]$, is the graph obtained by replacing every vertex of $G$ with a copy of $H$, and replacing every original edge of $G$ with a complete bipartite graph between the corresponding copies of $H$. Formally $V(G[H])=V(G)\times V(H)$ and $(u,v)(u',v')\in E(G[H])$ iff either $uu'\in E(G)$ or $u=u'$ and $vv'\in E(H)$. Sage calls this operation \texttt{G.lexicographic\_product(H)}. Prove that
+\item ($\star\star$) Let $G, H$ be two graphs. The \emph{substitution of $H$ into $G$}, denoted $G[H]$, is the graph obtained by replacing every vertex of $G$ with a copy of $H$, and replacing every original edge of $G$ with a complete bipartite graph between the corresponding copies of $H$. Formally $V(G[H])=V(G)\times V(H)$ and $(u,v)(u',v')\in E(G[H])$ iff either $uu'\in E(G)$ or $u=u'$ and $vv'\in E(H)$. Sage calls this operation \texttt{G.lexicographic\_product(H)}. Prove that
 $$\omega(G)\chi(H)\leq \chi(G[H])\leq \chi(G)\chi(H).$$
 Find an example with $\chi(G[H])<\chi(G)\chi(H)$.
 
 
-\item Let $\textrm{gcd}(a,b)$ denote the greatest common divisor of $a$ and $b$. Let $n=20162016$. Define $G$ as the graph with vertex set $\{1,\ldots,n\}$ where two numbers $1\leq a<b\leq n$ are adjacent if and only if $\textrm{gcd}(a,b)=1$. Find the exact value of $\chi(G)$.
+\item ($\star\star$) Let $\textrm{gcd}(a,b)$ denote the greatest common divisor of $a$ and $b$. Let $n=20162016$. Define $G$ as the graph with vertex set $\{1,\ldots,n\}$ where two numbers $1\leq a<b\leq n$ are adjacent if and only if $\textrm{gcd}(a,b)=1$. Find the exact value of $\chi(G)$.
 
 
-\item
+\item ($\star$)
 \begin{itemize}
 \item[a)] Prove or disprove: if the only complex roots of $P_G(t)$ are $0$ and $1$ then $G$ is a forest.
 \item[b)] How many non-isomorphic graphs have chromatic polynomial $t^2(t-1)^8$\ ?
@@ -37,10 +39,15 @@ Find an example with $\chi(G[H])<\chi(G)\chi(H)$.
 \end{itemize}
 
 
-\item Prove that $\chi_l(G)+\chi_l(\overline{G})\leq |V(G)|+1$ for any graph $G$, where $\chi_l$ is the list chromatic number.
+\item ($\star$) A vertex coloring of $G$ will be called \emph{brilliant} if (1) every two adjacent vertices have different colors and (2) every two vertices which have a common neighbour also have different colors. Let $\chi_b(G)$ be the minimal number of colors required for a brilliant coloring of a simple graph $G$, and let $P_b(G,t)$ be the number of brilliant colorings of $G$ with colors $\{1,\ldots,t\}$. 
+
+Find all graphs $G$ with $\chi_b(G)\leq 2$ and show that $P_b(G,t)$ is a polynomial in $t$ for every graph $G$.
 
 
-\item 
+\item ($\star\star\star$) Prove that $\chi_l(G)+\chi_l(\compl{G})\leq |V(G)|+1$ for any graph $G$, where $\chi_l$ is the list chromatic number.
+
+
+\item ($\star\star$)
 (This is an experimental problem; formal proofs are not expected.) Let $g(n)$ be the expected number of colors used by the greedy algorithm to color a random graph from $G(n,\frac12)$. 
 \begin{itemize}
 \item Compute and plot an experimental approximation of $g(n)$ for a sequence of reasonably large values of $n$, for example $n=100,200,\ldots,2000$.
@@ -49,30 +56,30 @@ Find an example with $\chi(G[H])<\chi(G)\chi(H)$.
 \end{itemize}
 
 
-\item Let $G$ be a nonempty graph. Simplify the expression
+\item ($\star\star\star$) Let $G$ be a nonempty graph. Simplify the expression
 $$\sum_I P(G-I, -1)$$
 where the sum runs over all independent sets $I$ in $G$ (including the empty one) and, as always, $G-X$ denotes the subgraph of $G$ induced by the vertex set $V(G)- X$.
 
 
-\item A vertex $v$ of a directed graph is called a \emph{source} if all the edges incident to $v$ are pointing out of $v$. Suppose $G$ is a nonempty graph with $n$ vertices. Prove that the number of acyclic orientations of $G$ having exactly one source equals $n\cdot (-1)^{n-1}\cdot [t]P_G(t)$.
+\item ($\star\star\star$) A vertex $v$ of a directed graph is called a \emph{source} if all the edges incident to $v$ are pointing out of $v$. Suppose $G$ is a nonempty graph with $n$ vertices. Prove that the number of acyclic orientations of $G$ having exactly one source equals $n\cdot (-1)^{n-1}\cdot [t]P_G(t)$.
 
 
-\item Find the edge-chromatic number $\chi'$ of \texttt{FunnyGraph(99)} from Problem 1.
+\item ($\star$) Find the edge-chromatic number $\chi'$ of \texttt{FunnyGraph(99)} from Problem 1.
 
 
-\item In the lectures we defined a family of graphs $Q_d(u,s)$, and we used the fact that they are unit distance graphs in $\real^d$. 
+\item ($\star\star$) In the lectures we defined a family of graphs $Q_d(u,s)$, and we used the fact that they are unit distance graphs in $\real^d$. 
 \begin{itemize}
 \item[a)] Show that each $Q_d(u,s)$ is in fact a unit distance graph in $\real^{d-1}$. 
 \item[b)] Use the graphs $Q_{10}(u,s)$ to prove $\chi(\real^9)\geq C$ for a constant $C$ as large as you can. 
 \end{itemize}
 
 
-\item The \emph{supremum metric} (or $\ell_\infty$ metric) in $\real^d$, $d\geq 1$ is given by
+\item ($\star\star$) The \emph{supremum metric} (or $\ell_\infty$ metric) in $\real^d$, $d\geq 1$ is given by
 $$d_\infty((x_1,\ldots,x_d),(y_1,\ldots,y_d))=\max\{|x_1-y_1|,\ldots,|x_d-y_d|\}.$$
 Find the smallest number of colors required to color $\real^d$ so that any two points whose distance in the supremum metric equals $1$ have different colors.
 
 
-\item Let $P_{2\times n}=P_2\square P_n$ be the $2\times n$ grid graph. Find the number of edge-colorings of $P_{2\times n}$ with $3$ colors. ($P_{2\times n}$ is called \texttt{graphs.Grid2dGraph(2,n)} in Sage).
+\item ($\star\star$) Let $P_{2\times n}=P_2\square P_n$ be the $2\times n$ grid graph. Find the number of edge-colorings of $P_{2\times n}$ with $3$ colors. ($P_{2\times n}$ is called \texttt{graphs.Grid2dGraph(2,n)} in Sage).
 \end{enumerate}
 
 
@@ -91,14 +98,22 @@ Find the smallest number of colors required to color $\real^d$ so that any two p
 \item Let $\pi(n)$ be the number of prime numbers up to $n$. The graph contains a clique of size $1+\pi(n)$. There is also a coloring with $1+\pi(n)$ colors: map each number to the smallest prime in its factorization.
 
 \item 
+\begin{itemize}
+\item True, because each connected component has $n_i$ vertices and $n_i-1$ edges.
+\item Count all forests with $10$ vertices, $8$ edges and $2$ connected components. 
+\item Look among connected graphs with $5$ vertices and $5$ edges.
+\end{itemize}
 
-\item
+\item If $\chi_b(G)\leq 2$ then every connected component of $G$ has at most two vertices. Let $G^2$ denote the graph where all pairs originally at distance $2$ are given an edge. Then $P_b(G,t)=P(G^2,t)$.
 
-\item
+\item Induction. 
 
-\item
+\item The expected value of the chromatic number of $G(n,\frac12)$ is $(1+o(1))\frac{n}{2\log_2n}$, while the expected number of colors used by the greedy algorithm is $(1+o(1))\frac{n}{\log_2n}$. It is hard to observe the asymptotics within the bounds of this problem, though.
 
-\item
+\item Prove combinatorially the identity
+$$P(G, t+1) = \sum_I P(G-I, t).$$
+
+\item Prove a deletion-contraction rule for $a(G,v_0)$ defined as the number of acyclic orientations in which the fixed vertex $v_0$ is the unique source.
 
 \item Find the degree sequence. There is only one vertex of maximal degree.
 
