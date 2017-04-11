@@ -1,3 +1,114 @@
 \chapter{Exam problems}
 
-To be written, MA
+\section{Problems}
+
+\begin{enumerate}
+
+\item Find the chromatic number of the graph $G$ defined below in Sage:
+\begin{verbatim}
+def FunnyGraph(n):
+    c = graphs.CompleteGraph(n)
+    c.delete_edges(graphs.CycleGraph(n).edges())
+    return graphs.MycielskiStep(c).join(graphs.WheelGraph(n+1))
+
+G = FunnyGraph(99)
+\end{verbatim}
+
+
+\item Consider the following algorithm for vertex coloring. Find the largest independent set of vertices, and color them with color $1$. Remove those vertices, find the largest independent set in the remaining graph and color it with color $2$, and so on until there are no more vertices left to color. Prove that there are infinitely many graphs $G$ for which this algorithm will use more than $\chi(G)$ colors.
+
+
+\item Prove that $\max\{\chi(G),\chi(\overline{G})\}\geq \sqrt{|V(G)|}$ for any graph $G$.
+
+
+\item Let $G, H$ be two graphs. The \emph{substitution of $H$ into $G$}, denoted $G[H]$, is the graph obtained by replacing every vertex of $G$ with a copy of $H$, and replacing every original edge of $G$ with a complete bipartite graph between the corresponding copies of $H$. Formally $V(G[H])=V(G)\times V(H)$ and $(u,v)(u',v')\in E(G[H])$ iff either $uu'\in E(G)$ or $u=u'$ and $vv'\in E(H)$. Sage calls this operation \texttt{G.lexicographic\_product(H)}. Prove that
+$$\omega(G)\chi(H)\leq \chi(G[H])\leq \chi(G)\chi(H).$$
+Find an example with $\chi(G[H])<\chi(G)\chi(H)$.
+
+
+\item Let $\textrm{gcd}(a,b)$ denote the greatest common divisor of $a$ and $b$. Let $n=20162016$. Define $G$ as the graph with vertex set $\{1,\ldots,n\}$ where two numbers $1\leq a<b\leq n$ are adjacent if and only if $\textrm{gcd}(a,b)=1$. Find the exact value of $\chi(G)$.
+
+
+\item
+\begin{itemize}
+\item[a)] Prove or disprove: if the only complex roots of $P_G(t)$ are $0$ and $1$ then $G$ is a forest.
+\item[b)] How many non-isomorphic graphs have chromatic polynomial $t^2(t-1)^8$\ ?
+\item[c)] Find all non-isomorphic graphs with chromatic polynomial $t(t-1)^3(t-2)$.
+\end{itemize}
+
+
+\item Prove that $\chi_l(G)+\chi_l(\overline{G})\leq |V(G)|+1$ for any graph $G$, where $\chi_l$ is the list chromatic number.
+
+
+\item 
+(This is an experimental problem; formal proofs are not expected.) Let $g(n)$ be the expected number of colors used by the greedy algorithm to color a random graph from $G(n,\frac12)$. 
+\begin{itemize}
+\item Compute and plot an experimental approximation of $g(n)$ for a sequence of reasonably large values of $n$, for example $n=100,200,\ldots,2000$.
+\item Speculate about the asymptotic behaviour of $g(n)$ as $n\to\infty$. In particular, what do you think about $\lim_{n\to\infty}\frac{g(n)}{n/\log_2{n}}$\ ?
+\item Find information about the expected value of $\chi(G)$ for $G\in G(n,\frac12)$. How well does the greedy algorithm perform?
+\end{itemize}
+
+
+\item Let $G$ be a nonempty graph. Simplify the expression
+$$\sum_I P(G-I, -1)$$
+where the sum runs over all independent sets $I$ in $G$ (including the empty one) and, as always, $G-X$ denotes the subgraph of $G$ induced by the vertex set $V(G)- X$.
+
+
+\item A vertex $v$ of a directed graph is called a \emph{source} if all the edges incident to $v$ are pointing out of $v$. Suppose $G$ is a nonempty graph with $n$ vertices. Prove that the number of acyclic orientations of $G$ having exactly one source equals $n\cdot (-1)^{n-1}\cdot [t]P_G(t)$.
+
+
+\item Find the edge-chromatic number $\chi'$ of \texttt{FunnyGraph(99)} from Problem 1.
+
+
+\item In the lectures we defined a family of graphs $Q_d(u,s)$, and we used the fact that they are unit distance graphs in $\real^d$. 
+\begin{itemize}
+\item[a)] Show that each $Q_d(u,s)$ is in fact a unit distance graph in $\real^{d-1}$. 
+\item[b)] Use the graphs $Q_{10}(u,s)$ to prove $\chi(\real^9)\geq C$ for a constant $C$ as large as you can. 
+\end{itemize}
+
+
+\item The \emph{supremum metric} (or $\ell_\infty$ metric) in $\real^d$, $d\geq 1$ is given by
+$$d_\infty((x_1,\ldots,x_d),(y_1,\ldots,y_d))=\max\{|x_1-y_1|,\ldots,|x_d-y_d|\}.$$
+Find the smallest number of colors required to color $\real^d$ so that any two points whose distance in the supremum metric equals $1$ have different colors.
+
+
+\item Let $P_{2\times n}=P_2\square P_n$ be the $2\times n$ grid graph. Find the number of edge-colorings of $P_{2\times n}$ with $3$ colors. ($P_{2\times n}$ is called \texttt{graphs.Grid2dGraph(2,n)} in Sage).
+\end{enumerate}
+
+
+\section{Hints}
+
+\begin{enumerate}
+
+\item The graph is $M(K_n\setminus C_n) + C_n + K_1$ and so its chromatic number is $(1+\lceil\frac{n}{2}\rceil) + (2+(n \mod 2)) + 1$ for $n>3$.
+
+\item Take two $n$-vertex stars and connect their central vertices with an edge.
+
+\item $\chi(G)\chi(\compl{G})\geq \chi(G)\alpha(G)\geq |V(G)|$.
+
+\item For the lower bound $G$ contains an $\omega(G)$-fold join of copies of $H$. For the upper bound take a cartesian product of colorings of $G$ an $H$. For the example take $G=C_5$, $H=K_2$.
+
+\item Let $\pi(n)$ be the number of prime numbers up to $n$. The graph contains a clique of size $1+\pi(n)$. There is also a coloring with $1+\pi(n)$ colors: map each number to the smallest prime in its factorization.
+
+\item 
+
+\item
+
+\item
+
+\item
+
+\item
+
+\item Find the degree sequence. There is only one vertex of maximal degree.
+
+\item All vertices lie in the same $(d-1)$-hyperplane in $\real^d$. We have $\alpha(Q_{10}(4,5))=12$, so $\chi(\real^9)\geq \chi(Q_{10}(4,5))\geq {10 \choose 5}/12 = 21$. This proof comes from \url{http://arxiv.org/abs/1409.1278}.
+
+\item A coloring $c:\real^d\to\{0,1\}^d$ given by
+$$c(x_1,\ldots,x_d)=(\lfloor x_1\rfloor \ \textrm{mod}\ 2,\ldots, \lfloor x_d\rfloor \ \textrm{mod}\ 2 )$$
+uses $2^d$ colors and is optimal.
+
+\item There are many ways to observe inductively that $c_n=2c_{n-1}-6$ for $n\geq 3$, where $c_n=P(L(P_{2\times n}), 3)$.
+
+
+\end{enumerate}
