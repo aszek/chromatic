@@ -4,7 +4,7 @@ Graph coloring lecture notes
 Contents
 --------
 
-This repository contains the lecture notes for *Graph coloring*. The final product is the file ``tex/final.pdf``.
+This repository contains the lecture notes for *Graph coloring*. The final product is the file ``tex/final.pdf``. The website of the spring 2016 course edition is ``http://aszek.net/chromatic``.
 
 
 Files

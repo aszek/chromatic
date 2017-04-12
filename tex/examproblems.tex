@@ -108,7 +108,7 @@ Find the smallest number of colors required to color $\real^d$ so that any two p
 
 \item Induction. 
 
-\item The expected value of the chromatic number of $G(n,\frac12)$ is $(1+o(1))\frac{n}{2\log_2n}$, while the expected number of colors used by the greedy algorithm is $(1+o(1))\frac{n}{\log_2n}$. It is hard to observe the asymptotics within the bounds of this problem, though.
+\item The expected value of the chromatic number of $G(n,\frac12)$ is $(1+o(1))\frac{n}{2\log_2n}$, while the expected number of colors used by the greedy algorithm is $(1+o(1))\frac{n}{\log_2n}$. See \cite{krivelevich} for a nice introduction. It is hard to observe the asymptotics within the bounds of this problem, though.
 
 \item Prove combinatorially the identity
 $$P(G, t+1) = \sum_I P(G-I, t).$$
@@ -117,7 +117,7 @@ $$P(G, t+1) = \sum_I P(G-I, t).$$
 
 \item Find the degree sequence. There is only one vertex of maximal degree.
 
-\item All vertices lie in the same $(d-1)$-hyperplane in $\real^d$. We have $\alpha(Q_{10}(4,5))=12$, so $\chi(\real^9)\geq \chi(Q_{10}(4,5))\geq {10 \choose 5}/12 = 21$. This proof comes from \url{http://arxiv.org/abs/1409.1278}.
+\item All vertices lie in the same $(d-1)$-hyperplane in $\real^d$. We have $\alpha(Q_{10}(4,5))=12$, so $\chi(\real^9)\geq \chi(Q_{10}(4,5))\geq {10 \choose 5}/12 = 21$. This proof comes from \cite{kahletaha}.
 
 \item A coloring $c:\real^d\to\{0,1\}^d$ given by
 $$c(x_1,\ldots,x_d)=(\lfloor x_1\rfloor \ \textrm{mod}\ 2,\ldots, \lfloor x_d\rfloor \ \textrm{mod}\ 2 )$$
