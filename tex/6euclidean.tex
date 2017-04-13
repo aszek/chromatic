@@ -1,3 +1,384 @@
 \chapter{Chromatic number of Euclidean spaces}
 
-Roughly lec11.tex, lec12.tex, lec13.tex
+\section{Chromatic number of Euclidean spaces}
+In this chapter we are going to work with infinite graphs. Let $d(x,y) = \sqrt{\sum_i (x_i - y_i)^2}$ denote the Euclidean distance.
+
+\begin{definition}
+$\chi(\mathbb{R}^d)$ is the minimal number of colors required to color
+all points in $\mathbb{R}^d$ so that if $d(x,y) = 1$ then $x,y$ have
+different colors.
+\end{definition}
+\begin{definition}
+For $X \subset \mathbb{R}^d$ define a graph $U_X$ (U for ``unit'') with
+vertex set $X$ and edges
+\[
+x_1x_2 \in E(U_X) \text{ iff } d(x_1,x_2) = 1.
+\]
+\end{definition}
+Of course this definition is chosen so that 
+$\chi(\mathbb{R}^d) = \chi(U_{\mathbb{R}^d})$
+
+\begin{example}
+$U_{\mathbb{R}}$ is a union of infinitely many (uncountably many)
+bi-infinite paths. As a consequence $\chi(U_{\mathbb{R}}) = \chi(\mathbb{R}) = 2$.
+\end{example}
+\begin{remark}
+All invariants $\omega, \chi, \alpha, \Delta, \ldots$ we defined in previous lectures make sense for infinite graphs, except that they might be equal to
+$\infty$. Inequalities such as $\omega(G) \le \chi(G)$ and $H \subset G \Rightarrow \chi(H)\le \chi(G)$ etc. still hold.
+\end{remark}
+
+\section{Compactness}
+
+Here is a question we should probably address before seriously considering the chromatic number of infinite graphs: how does the chromatic number of $G$ relate to those of its finite subgraphs?
+
+\begin{theorem}
+Suppose $G$ is a graph (which may be infinite).  If every \emph{finite}
+subgraph of $G$ can be colored with $k$ colors, then $G$ can be colored with $k$ colors.
+\end{theorem}
+\begin{proof}
+Let $G = (V,E)$ be a graph and let $X$ be the set of all functions $f
+\colon V \rightarrow \{1,\ldots,k\}$, i.e. $X = \prod_{v \in
+V}\{1,\ldots,k\} = \{1,\ldots,k\}^V$. View $\{1,\ldots,k\}$ as a
+discrete topological space and equip $X$ with the product topology.
+$\{1,\ldots,k\}$ is finite, so it is compact. By Tychonoff's theorem $X$
+is compact. For any $F \subset E$ let $X_F \subset X$ be defined as
+those $f \colon V \rightarrow \{1,\ldots,k\}$ which are proper colorings
+of $(V,F)$.
+\begin{itemize}
+\item $X_{\{e\}}$ is closed in $X$ since
+\[
+X_{\{e\}} = \bigcup_{i\neq j}\{f \in X : f(u) = i, f(v) = j, e = uv \}
+\]
+is a finite union of closed sets.
+\item $X_{F_1} \cap X_{F_2} = X_{F_1 \cup F_2}$.
+\item For any $F \subset E$, $X_F$ is closed since $X_F = \bigcap_{e \in
+F}X_{\{e\}}$, is an intersection of closed sets, hence closed.
+\end{itemize}
+Now: Take the family $\mathcal{F} = \{X_F\}_{\stackrel{F \subset E}{F
+\text{ finite}}}$. All sets in $\mathcal{F}$ are closed, and all
+intersections of finitely many from $\mathcal{F}$ are non-empty (second
+claim: $X_{F_1} \cap \cdots \cap X_{F_n} = X_{F_1 \cup \cdots \cup F_n}
+\neq \emptyset$ because $(V, F_1 \cup \cdots \cup F_n)$ is finite, hence
+$k$-colorable) Then the intersection of all sets in $\mathcal{F}$ is
+non-empty (by compactness of $X$). $f \in \bigcap_{\stackrel{ F \subset
+E}{|F| < \infty }}X_F$ is a proper coloring on \emph{every} edge of $G$.
+\end{proof}
+
+
+\section{Chromatic number of $\real^2$}
+
+Let us now discuss colorings of the unit graph $U_{\real^2}$ of the plane. Here is an easy upper bound.
+
+\begin{lemma}
+$\chi(\mathbb{R}^2) \le 9$.
+\end{lemma}
+\begin{proof}
+Take the $3 \times 3$-square where the length of the diagonal in each
+of the $9$ parts is $0.99$. Color every such square with $9$ colors (choose
+any color on the common edges). Use this square to tile the
+plane. Now take two points $x,y$ of the same color. Then
+\begin{itemize}
+\item either $x,y$ are in the same small square and so $d(x,y) \le 0.99$, or
+\item $x,y$ are in two different big squares and $d(x,y) \ge 2 \cdot
+0.99 \cdot 1/\sqrt{2} > 1$
+\end{itemize}
+so $d(x,y) \neq 1$.
+\end{proof}
+
+Next we prove the state-of-the-art bounds $4\leq\chi(\real^2)\leq 7$.
+
+\begin{proposition}
+$\chi(\RR^2)\leq 7.$
+\end{proposition}
+\begin{proof}
+Consider a covering of $\RR^2$ with squares of diagonal $1$ (that is, of side $1/\sqrt{2}$):
+
+[FIGURE]
+
+Use the colors as indicated, remembering to color the interior of the square, its top-right corner, the top edge without the top-left corner and the right edge without the bottom-right corner.
+\end{proof}
+
+\begin{remark}
+Another coloring uses a covering by hexagons. Each small hexagon should have diameter $0.99$:
+
+[FIGURE]
+\end{remark}
+
+
+\begin{proposition}
+$\chi(\RR^2)\geq 4.$
+\end{proposition}
+\begin{proof}
+Suppose, on the contrary, that $c:\RR^2\to\{1,2,3\}$ is a coloring of $U_{\RR^2}$ with $3$ colors. I claim that 
+$$d(x,y)=\sqrt{3} \implies c(x)=c(y).$$
+Indeed, if $d(x,y)=\sqrt{3}$ then there are points $z,t$ with $d(x,z)=d(y,z)=d(x,t)=d(y,t)=d(z,t)=1$, because $x,y$ are the ``opposite'' vertices of two equilateral triangles joined at one base. Since $c(x),c(z),c(t)$ are all different and so are $c(y),c(z),c(t)$, we conclude $c(x)=c(y)$.
+
+It means that for any $x\in\RR^2$, all points on the circle centered at $x$ of radius $\sqrt{3}$ have the same color. But on that circle we can find two points in distance $1$, contradiction.
+\end{proof}
+
+\begin{remark}
+The proof above can be turned into a construction of a finite subgraph $H$ of $U_{\RR^2}$ with $\chi(H)=4$. It is called the Moser graph, left. Another graph with this property is the Golomb graph, right.
+\begin{center}
+[FIGURE], [FIGURE]
+\end{center}
+\end{remark}
+\begin{remark}
+Surprising as it may sound, the bounds $4\leq\chi(\RR^2)\leq 7$ are all that we know in general about $\chi(\RR^2)$.
+\end{remark}
+
+
+We can now move on to higher dimensions, where the gaps in our knowledge are even bigger. For example, it is only known that
+$$6\leq\chi(\RR^3)\leq 15.$$
+However, the rate of growth of $\chi(\RR^d)$ as $d\to\infty$ is generally understood to be exponential.
+
+\begin{theorem}
+There are constants $1<c_1<c_2$ such that for all $d$:
+$$c_1^d\leq \chi(\RR^d)\leq c_2^d.$$
+\end{theorem}
+The current best are $c_1\approx 1.23$ and $c_2=3+\varepsilon$. We are not going to prove the theorem with the optimal constants, but we are going to show some weaker exponential upper and lower bounds. There will be some especially nice mathematics involved in the lower bounds, in particular!
+
+
+\section{Upper bound on $\chi(\real^d)$}
+
+We start with an upper bound.
+
+\begin{theorem}
+For sufficiently large $d$ we have $\chi(\RR^d)\leq 14^d$.
+\end{theorem}
+\begin{proof}
+We will tile $\RR^d$ with small cubes, and color each cube with one color, similarly to the $3\times 3$ strategy used to show $\chi(\RR^2)\leq 9$. As you can prove in one of the exercises, repetitive coloring may not work for $d\geq 4$. Instead, we will color the small cubes greedily.
+
+For simplicity, suppose first that $d=2k$. We need two prerequisites: the formula for the volume of the $d$-dimensional ball $B_d(x,r)$ with center $x$ and radius $r$ for $d=2k$ is
+$$\vol(B_d(x,r)) = \frac{\pi^k}{k!}r^{2k}.$$
+We will also need the inequality $k!\geq(k/e)^k$, or equivalently $k^k/k!\leq e^k$.
+
+Divide $\RR^d$ into ``small cubes'' of size
+$$0.99\frac{1}{\sqrt{d}}\times 0.99\frac{1}{\sqrt{d}}\times\cdots\times 0.99\frac{1}{\sqrt{d}}.$$
+Each cube has diameter (main diagonal) $0.99<1$ and volume $0.99^dd^{-d/2}=0.99^{2k}(2k)^{-k}$. Denote any such small cube by $C$.
+
+Now we ask: how many small cubes are completely contained in any  ball $B_d(x,3)$ of radius $3$? Comparing volumes gives that this number is \emph{at most}
+\begin{align*}
+\frac{\vol(B_d(x,3))}{\vol(C)} = \frac{3^{2k}\pi^k(2k)^k}{k!0.99^{2k}}=\frac{k^k}{k!}\cdot(\frac{18\pi}{0.99^2})^k\leq (\frac{18\pi e}{0.99^2})^k<163^k<13^d.
+\end{align*}
+
+Now order the (countably many) small cubes into a sequence $C_1,C_2,\ldots$ and let $x_i$ be the center of $C_i$. We color each $C_i$ according to the greedy rule: choose any color that is not used for cubes $C_j$, $j<i$ such that $C_j\subseteq B_d(x_i,3)$. By the previous observation there are at most $13^d-1$ cubes $C_j$ we have to consider, and there always is a spare color so that the greedy algorithm will do with at most $13^d$ colors. (It does not matter which color we use on points common to more than one cube, for example we can color closed cubes and repaint anything that is already colored).
+
+Now, two points inside one small cube are in distance at most $0.99<1$. Consider two points $x,y$ with $d(x,y)=1$ and let $x\in C_i$, $y\in C_j$, with $i>j$. By the triangle inequality we have that for any point $z\in C_j$ 
+$$d(x_i,z)\leq d(x_i,x)+d(x,y)+d(y,z)\leq 0.99+1+0.99<3$$
+so $C_j\subseteq B_d(x_i,3)$. It means that the greedy algorithm used different colors for $x\in C_i$ and $y\in C_j$, and so we showed $\chi(\RR^d)\leq 13^d$.
+
+If $d$ is odd and large enough then $\chi(\RR^d)\leq \chi(\RR^{d+1})\leq 13^{d+1}<14^d$ by what we already showed.
+\end{proof}
+
+
+\section{Cube-line unit distance graphs in $\real^d$}
+We would like to move on to lower bounds. Clearly, we have $\chi(\RR^d)\geq \omega(U_{\RR^d})=d+1$, but that is far from exponential. 
+
+\begin{definition}
+We say a finite graph $G$ is a \emph{unit distance graph in $\RR^d$} if there is a set $X\subseteq \RR^d$  with $|X|=|V(G)|$ for which $G$ is isomorphic to $U_X$.
+\end{definition}
+
+\begin{lemma}
+If $G$ is a unit distance graph in $\RR^d$ then $\chi(\RR^d)\geq \chi(G)$.
+\end{lemma}
+\begin{proof} For $X$ as in the definition, we have
+$U_X\subseteq U_{\RR^d}$, so $\chi(\RR^d)=\chi(U_{\RR^d})\geq \chi(U_X)=\chi(G)$.
+\end{proof}
+
+\begin{example}
+\begin{itemize}
+\item The Moser and Golomb graphs are unit distance graphs in $\RR^2$.
+\item The $d$-cube graph $Q_d$ is a unit distance graph in $\RR^d$. However, $\chi(Q_d)=2$, so it does not provide useful lower bounds.
+\item Take the vertices of the $3$-cube $Q_3$, but this time instead of the edges of the cube, take a graph formed by all the diagonals of the faces of the cube. There are $12$ of them, each of length $\sqrt{2}$, so they form a unit distance graph in $\RR^3$ (after rescaling by $1/\sqrt{2}$). We see that this graph  is isomorphic to $K_4\sqcup K_4$, so it yields $\chi(\RR^3)\geq 4$. We knew that already, but it is better than with the standard cube.
+\end{itemize}
+\end{example}
+
+\begin{definition}
+For $1\leq u\leq d$ let $Q_d(u)$ be the graph whose vertices are all binary sequences of length $d$:
+$$V(Q_d(u))=\{(x_1,\ldots,x_d)~:~x_i\in\{0,1\}\}$$
+and two sequences are adjacent in $Q_d(u)$ if and only if they differ in exactly $u$ positions.
+\end{definition}
+\begin{example}
+\begin{itemize}
+\item $Q_d(1)=Q_d$.
+\item $Q_3(2)=K_4\sqcup K_4$ is the graph from the previous example.
+\item $Q_d(d)$ is a disjoint union of $2^{d-1}$ copies of $K_2$.
+\end{itemize}
+\end{example}
+
+\begin{lemma}
+Each $Q_d(u)$ is a unit distance graph in $\RR^d$.
+\end{lemma}
+\begin{proof}
+Every vertex of $Q_d(u)$ can be treated as a point in $\RR^d$ with the same coordinates. If $(x_1,\ldots,x_d)$ and $(y_1,\ldots,y_d)$ are sequences of $0$s and $1$s which differ in exactly $u$ positions, then their Euclidean distance is $\sqrt{u}$. 
+\end{proof}
+
+The graphs $Q_d(u)$ give pretty good lower bounds on $\chi(\RR^d)$ already for small $d$. Here are results which can be verified using Sage.
+
+[CODE]
+
+\begin{itemize}
+\item $\chi(Q_5(2))=8$. Consequently, $\chi(\RR^5)\geq 8$. The best known lower bound is $9$.
+\item $\alpha(Q_{10}(4))=40$ (this will take about 20min in Sage). Consequently
+$$\chi(\RR^{10})\geq\chi(Q_{10}(4))\geq\frac{|V(Q_{10}(4))|}{\alpha(Q_{10}(4))}=\frac{2^{10}}{40}=25.6,$$
+that is $\chi(\RR^d)\geq 26$. This is the best known bound!
+\end{itemize}
+
+In order to prove some lower bounds valid for all $d$ we need to add a further complication to $Q_d(u)$.
+
+\begin{definition}
+The graph $Q_d(u,s)\subseteq Q_d(u)$ is the subgraph of $Q_d(u)$ induced by the vertices with exactly $s$ coordinates equal to $1$. Precisely:
+$$V(Q_d(u,s))=\{\oo{x}=(x_1,\ldots,x_d)~:~x_i\in\{0,1\},\ \sum_{i=1}^d x_i=s\}$$
+and $\oo{x}$ and $\oo{y}$ are adjacent in $Q_d(u,s)$ iff they differ in exactly $u$ positions.
+\end{definition}
+
+\begin{example}
+$Q_3(2,1)$ has vertex set $\{001,010,100\}$ and it is isomorphic to $K_3$.
+\end{example}
+
+\section{Lower bound on $\chi(\real^d)$}
+
+As in the computational examples above, it is usually easier to say something about the independence number $\alpha$ than directly about the chromatic number $\chi$. Our main theorem, which we will prove in the next part of the lecture, is the following.
+
+\begin{theorem}
+\label{thm:q-prime-alpha}
+If $p$ is a prime then 
+$$\alpha(Q_d(2p,2p-1))\leq {d\choose 0}+{d\choose 1}+\cdots+{d\choose p-1}.$$
+\end{theorem}
+
+We will prove this theorem in a moment. Let us just note that the condition ``$p$ is a prime'' suggests that this fact is somewhat algebraic in nature. For now, let us see what this theorem buys us when it comes to chromatic numbers.
+
+\begin{theorem}
+We have $\chi(\RR^d)\geq 1.05^d$ for sufficiently large $d$.
+\end{theorem}
+\begin{proof}
+For any prime $p\leq d/2$ we have
+$$\chi(\RR^d)\geq\chi(Q_d(2p))\geq\chi(Q_d(2p,2p-1))\geq
+\frac{|V(Q_d(2p,2p-1))|}{\alpha(Q_d(2p,2p-1))}\geq \frac{{d\choose 2p-1}}{p{d\choose p-1}}$$
+where in the last step we used the inequality of Theorem~\ref{thm:q-alpha-prime} and the observation $|V(Q_d(u,s))|={d\choose s}$.
+
+Intuitively, the last fraction will be maximized if the binomial coefficient ${d\choose 2p-1}$ is close to the middle of the $d$-th row of the Pascal triangle, that is when $p\approx d/4$. Since we can only use $p$ primes, we resort to a classical number-theoretic result of Czebyschev: every interval $[n,2n]$ contains a prime. That allows us to choose a prime $p$ such that $\frac{d}{8}\leq p\leq \frac{d}{4}$. By carefully cancelling common factors in the binomial coefficients we obtain:
+
+$$\chi(\RR^d)\geq \frac{1}{p}\cdot\frac{d-p+1}{2p-1}\cdot\frac{d-p}{2p-2}\cdots\frac{d-2p+2}{p}.$$
+Under the condition $d\geq 4p$ each of the last $p$ factors is $\geq \frac{3}{2}$, so:
+$$\chi(\RR^d)\geq\frac{1}{p}\Big(\frac{3}{2}\Big)^p\geq\frac{4}{d}\Big(\Big(\frac{3}{2}\Big)^{\frac{1}{8}}\Big)^d\geq \frac{4}{d}\cdot 1.051^d\geq 1.05^d$$
+where the last inequality holds for sufficiently large $d$.
+\end{proof}
+
+\section{Linear algebra in action}
+Let us now review two combinatorial methods of proving inequalities like $A\leq B$, where $A, B$ are some combinatorially defined quantities.
+
+\smallskip
+\noindent
+\textbf{Method 1 --- set comparison}. If a set of size $B$ contains a subset of size $A$ then $A\leq B$.
+
+\begin{example} We will show that ${n\choose k}\leq 2^n$. The family of all subsets of $\{1,\ldots,n\}$ has size $2^n$, and it contains the family of all $k$-element subsets, the latter of size ${n\choose k}$. Our inequality follows.
+\end{example}
+
+That was an easy and completely standard argument. Our next method is also based on an elementary observation in linear algebra.
+
+\smallskip
+\noindent
+\textbf{Method 2 --- vector space comparison}. If a vector space of dimension $B$ contains $A$ linearly independent vectors then $A\leq B$.
+
+\smallskip
+This may seem like an overkill, but it is actually a  useful strategy in many otherwise complicated situations (like our Theorem 3). Here is an example of how the method works: the (rather classical) problem known as Odd--Town.
+
+\begin{example}
+$n$ people participate in $m$ clubs. Every club has an odd number of members, and every two clubs have an even number of common members. Prove that $m\leq n$.
+
+First let's note that we may have $m=n$, for example when every person forms its own one-element club.
+
+To solve the problem, encode the clubs $C_1,\ldots,C_m$ via ``membership vectors'' $\oo{c_1},\ldots,\oo{c_m}$ of length $n$, where
+$$(\oo{c_i})_j=
+\begin{cases}
+1 & \textrm{if person}\ j\ \textrm{belongs to club}\ i,\\
+0 & \textrm{otherwise},
+\end{cases}
+$$
+for $i=1,\ldots,m$, $j=1,\ldots,n$. If we write $\langle\oo{x},\oo{y}\rangle=\sum_ix_iy_i$ for the standard inner product, then
+\begin{align*}
+\langle \oo{c_i},\oo{c_k}\rangle &= \textrm{number of common members of}\ C_i\ \textrm{and}\ C_k,\\
+\langle \oo{c_i},\oo{c_i}\rangle &= \textrm{number of members of }\ C_i.
+\end{align*}
+We will show that $\oo{c_1},\ldots,\oo{c_m}$ are linearly independent. Suppose, for a contradiction, that it is not true. Then we have a linear relation
+$$\sum_ia_i\oo{c_i}=0$$
+where not all $a_i$ are zero. Since the coordinates of $\oo{c_i}$ are integers, we can assume that all $a_i\in \ZZ$ and moreover $\textrm{gcd}(a_1,\ldots,a_m)=1$. In particular, $a_k$ is odd for some $k$. Now:
+$$0=\langle\sum_ia_i\oo{c_i},\oo{c_k}\rangle=a_k\langle \oo{c_k},\oo{c_k}\rangle+\sum_{i\neq k}a_i\langle \oo{c_i},\oo{c_k}\rangle$$
+which is a contradiction, because $a_k\langle\oo{c_k},\oo{c_k}\rangle$ is odd, while all the other terms are even.
+
+We showed that $\oo{c_1},\ldots,\oo{c_m}$ are linearly independent vectors in $\RR^n$. It follows that $m\leq n$.
+\end{example}
+
+Very similar arguments will now appear in the proof Theorem~\ref{thm:q-prime-alpha}.
+
+\begin{proof}[Proof of Theorem~\ref{thm:q-prime-alpha}]
+As always, we write $\langle \oo{x},\oo{y}\rangle=\sum_{i=1}^dx_iy_i$. Let $\oo{x}$ and $\oo{y}$ be two different vertices of $Q_d(2p,2p-1)$. Using the fact that both $\oo{x}$ and $\oo{y}$ have exactly $2p-1$ coordinates equal to $1$, we easily get 
+$$|\{j~:~x_j\neq y_j\}|=2(2p-1-|\{j~:~x_j=y_j=1\}|)=2(2p-1-\langle\oo{x},\oo{y}\rangle),$$
+hence
+$$\langle \oo{x},\oo{y}\rangle=2p-1-\frac12|\{j~:~x_j\neq y_j\}|.$$
+Now if $\oo{x}$ and $\oo{y}$ are adjacent in $Q_d(2p,2p-1)$ then they differ in exactly $2p$ places, and we get $\langle\oo{x},\oo{y}\rangle=2p-1-p=p-1$. Otherwise we get some other inner product between $0$ and $2p-2$ (because $\oo{x}\neq\oo{y})$. The upshot is that
+$$
+\langle\oo{x},\oo{y}\rangle
+\begin{cases}
+=p-1 & \textrm{if}\ \oo{x}\oo{y}\in E(Q_d(2p,2p-1)),\\
+\not\equiv p-1 \pmod{p} &  \textrm{if}\ \oo{x}\oo{y}\not\in E(Q_d(2p,2p-1)).
+\end{cases}
+$$
+Moreover $\langle \oo{x},\oo{x}\rangle=2p-1$ for all $\oo{x}$.
+
+\smallskip
+Take any independent set $I$ in $Q_d(2p,2p-1)$. For any $\oo{x}\in I$ consider the function $f_{\oo{x}}:\{0,1\}^d\to\RR$ defined for $\oo{t}=(t_1,\ldots,t_d)$ by the formula
+$$f_{\oo{x}}(\oo{t}) = \langle\oo{x},\oo{t}\rangle^{\underline{p-1}}$$
+(recall that $z^{\underline{p-1}}=z(z-1)\cdots(z-(p-2))$ is the falling factorial).
+The functions $f_{\oo{x}}$ are naturally elements of the $\RR$-vector space of all functions $\{0,1\}^d\to\RR$. Let us check that the set $\{f_{\oo{x}}\}_{\oo{x}\in I}$ is linearly independent in that space. If not, then we would have a linear relation
+$$\sum_{\oo{x}\in I}a_{\oo{x}}f_{\oo{x}}=0$$
+for $a_{\oo{x}}$ not all zero. As in the example before, we can assume that $a_{\oo{x}}\in\ZZ$ and $\textrm{gcd}(a_{\oo{x}})=1$. In particular, some $a_{\oo{x_0}}$ is not divisible by $p$. We have
+$$0=\sum_{\oo{x}\in I}a_{\oo{x}}f_{\oo{x}}(\oo{x_0})=
+a_{\oo{x_0}}\langle\oo{x_0},\oo{x_0}\rangle^{\underline{p-1}}+
+\sum_{I\ni \oo{x}\neq\oo{x_0}}a_{\oo{x}}\langle\oo{x},\oo{x_0}\rangle^{\underline{p-1}}.
+$$
+
+We have $\langle\oo{x_0},\oo{x_0}\rangle^{\underline{p-1}}=(2p-1)(2p-2)\cdots(p+1)\neq 0 \pmod{p}$. Here we use that $p$ is a prime! Since $I$ is an independent set, each $\langle\oo{x},\oo{x_0}\rangle$ is different from $p-1 \pmod{p}$, hence one of the factors in the falling factorial formula for $\langle\oo{x},\oo{x_0}\rangle^{\underline{p-1}}$ is divisible by $p$. That is a contradiction, since all the terms in the formula above are now divisible by $p$ except for the first one.
+
+\smallskip
+We would now like to know $\dim(\mathrm{span}\{f_{\oo{x}}\}_{\oo{x}\in I})$. A more explicit representation of $f_{\oo{x}}$
+$$f_{\oo{x}}(t_1,\ldots,t_d)=\Big(\sum x_it_i\Big)\Big(\sum x_it_i-1\Big)\cdots\Big(\sum x_it_i-(p-2)\Big)$$
+reveals, after opening the brackets, that $f_{\oo{x}}$ is a linear combination of monomials of degree at most $p-1$ in the $d$ variables $t_1,\ldots,t_d$. Since $t_i\in\{0,1\}$, we have $t_i^2=t_i$, so $f_{\oo{x}}$ is in fact equal to a linear combination of square-free monomials of degree at most $p-1$ in $d$ variables. The dimension of the vector space of such functions is ${d\choose 0}+\cdots+{d\choose p-1}$, where ${d\choose i}$ is the number of square-free monomials of degree $i$ (that is, products of $i$ out of $d$ variables).
+
+\smallskip
+To conclude, $\{f_{\oo{x}}\}_{\oo{x}\in I}$ is a set of linearly independent vectors in a vector space of dimension ${d\choose 0}+\cdots+{d\choose p-1}$, which means that $|I|\leq {d\choose 0}+\cdots+{d\choose p-1}$, as we wanted to prove.
+\end{proof}
+
+\begin{remark}
+The proof above is based on \cite[Chapter 17]{matousek}.
+\end{remark}
+
+
+\section{Exercises}
+
+
+\begin{enumerate}
+\item What is $\omega(U_{\RR^2})$\ ?
+
+\item What is the length of the side in a $d$-dimensional cube whose main diagonal has length $1$?
+
+\item Recall our naive coloring of $U_{\RR^2}$ by translates of a $9$-colored $3\times 3$ square, where each small square has diameter almost $1$.
+Does the same strategy work in $\RR^3$ and produce a coloring of $U_{\RR^3}$ with $27$ colors by translates of a $27$-colored $3\times 3\times 3$ cube? What about $\RR^d$\ 	?
+
+\item We say that two points $A$ and $B$ of the integer lattice $\ZZ^2$ \emph{see each other} if the line segment $AB$ contains no other point of $\ZZ^2$. Find a $4$-coloring of $\ZZ^2$ so that any two points which see each other have different colors. Hint: use colors $00, 01, 10, 11$.
+
+\item Show that the following are equivalent definitions of $Q_d(u)$:
+
+\begin{itemize}
+\item The vertices are all vertices of $Q_d$. Two vertices are adjacent if their distance in $Q_d$ is exactly $u$.
+\item The vertices are all subsets of $\{1,\ldots,d\}$. Two subsets $A,B$ are adjacent if $|A\triangle B|=u$, where $\triangle$ is the symmetric difference $A\triangle B=(A\cup B)\setminus (A\cap B)$
+\item The vertices are all integers in $\{0,\ldots,2^d-1\}$. Two numbers $x,y$ are adjacent if $x\oplus y$ has exactly $u$ nonzero digits in base $2$, where $\oplus$ is bitwise XOR.
+\item The vertices are the vertices of the cube $[0,1]^d\subseteq \RR^d$. Two of them are adjacent if their Euclidean distance is $\sqrt{u}$.
+\end{itemize}
+
+\item If $u$ is odd then show that $Q_d(u)$ is bipartite (hence $\chi(Q_d(u))=2$).
+\item If $u$ is even then show that $Q_d(u)$ has at least two connected components.
+
+\item If $Q_d(u)$ has two components, we denote any of them by $Q'_d(u)$. Implement your favourite definition of $Q_d(u)$ in Sage and compute $\chi(Q'_5(2))$ and $\alpha(Q'_{10}(4))$ to prove the results mentioned in this chapter.
+\end{enumerate}
