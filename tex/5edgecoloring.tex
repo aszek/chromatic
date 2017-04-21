@@ -1,3 +1,314 @@
 \chapter{Edge coloring}
 
-Roughly lec9.tex, lec10.tex
+\section{Definitions and examples}
+
+Until now we concentrated on coloring vertices of graphs. In this chapter we briefly address the concept of edge-coloring.
+
+\begin{definition}
+An \emph{edge-coloring} of $G=(V,E)$ is a function $f:E\rightarrow C$ (for some set of colors $C$) such that if two edges $e_1$, $e_2$ have a common endpoint then $f(e_1)\neq f(e_2)$. The \emph{edge chromatic number} (\emph{chromatic index}) $\chi'(G)$ is the smallest $k$ such that $G$ has an edge-coloring with colors $\{1,\dots,k\}$.
+\end{definition}
+
+[FIGURE]
+
+\begin{example}[Cycles]
+The $n$-cycle $C_n$ can be edge-colored with $2$ colors when $n$ is even and requires $3$ colors when $n$ is odd, therefore
+$$\chi'(C_n)=
+\begin {cases}
+2 & 2|n\\
+3 & 2\not|n
+\end {cases}$$
+\end{example}
+
+\begin{example}[Scheduling]
+Let $G$ be a bipartite graph whose two parts are $Classes$ and $Teachers$. There is an edge $tc$ if teacher $t$ is supposed to teach class $c$. How many time slots do we need to allocate to schedule all lessons?
+
+[FIGURE]
+
+The answer is $\chi'(G)$. Each color represents one time slot, and the edge-coloring condition guarantees that no teacher and no class is required to show up at two different events at the same time.
+\end{example}
+
+\begin{example}[Complete graphs]
+As we all know a full soccer season in a league with $2k$ teams consists of $2k-1$ rounds. Each team plays exactly once in each round, and each pair meets once. This is just the statement that
+$$\chi'(K_{2k})=2k-1.$$
+Indeed, each color represents one week of the season, and the edges of a particular color determine the pairs of teams playing that week. We can of course make a more general statement about the edge-chromatic numbers of complete graphs:
+$$\chi'(K_n)=
+\begin {cases}
+n-1 & 2|n\\
+n & 2\not|n
+\end {cases}$$
+[FIGURE]
+
+It is not hard to find a coloring. It $n=2k-1$ is odd, arrange the vertices into a regular $n$-gon. Choose a color class consisting of $k$ parallel edges (one vertex is left out). This color class has $n$ possible rotations. These rotations cover all edges of $K_n$. This is an edge-coloring with $n$ colors,so $\chi'(K_n) \leq n$. For an upper bound, take any edge-coloring of $K_n$. The color class $1$ must miss some vertex $v$. Since all edges incident to $v$ require $n-1$ colors, we get at least $1+(n-1)=n$ colors in total.
+
+If $n=2k$ is even arrange $n-1$ vertices in a regular $(n-1)$-gon and place one vertex at the origin. Use $k-1$ parallel edges and one edge from the origin to the vertex on the perimeter being left out. This is one color class, and the $n-1$ rotations of this class form a desired edge-coloring. The upper bound is obvious.
+\end{example}
+
+\begin{lemma} 
+$\chi'(G) \geq \Delta(G)$
+\end{lemma}
+\begin{proof}
+We need at least $\Delta(G)$ colors just to color the edges incident to the vertex of maximum degree.
+\end{proof}
+
+
+\section{Basic properties}
+
+As with vertex-colorings, also edge-colorings can be expressed using other familiar language of graph theory. In fact edge-colorings can be seen as a special case of vertex-colorings.
+
+\begin{definition}
+A \emph{matching} in $G$ is a set of edges, no two of which have a common endpoint.
+\end{definition} 
+
+This is a very important concept in graph theory. Equivalently, a matching in $G$ is a $1$-regular subgraph of $G$. 
+
+\begin{proposition}
+Let $G=(V,E)$ be a graph.
+\begin{itemize}
+\item If $f$ is an edge-coloring of $G$ then every color class $f^{-1}(c)$ is a matching.
+\item An edge-coloring with $k$ colors is the same as a partition of $E$ into $k$ matchings.
+\item For any two colors $c_1,c_2\in C$, $c_1\neq c_2$, the edge set $f^{-1}(c_1)\cup f^{-1}(c_2)$ is a disjoint union of cycles and paths.
+\end{itemize}
+\end{proposition}
+\begin{proof}
+The first two parts are clear. For the last one, note that in $f^{-1}(c_1)\cup f^{-1}(c_2)$ every vertex is of degree at most $2$.
+\end{proof}
+
+\begin{definition}
+Let $G=(V,E)$. The \emph{line graph} $L(G)$ has vertex set $E$, and $e_1$, $e_2$ are adjacent in $L(G)$ if they share a common vertex in $G$.
+\end{definition}
+
+\begin{example}
+The line graph simply keeps track of the incidence relation between the edges of $G$. 
+
+[FIGURE]
+\end{example}
+
+All the entries in the following glossary should now be completely obvious. It translates edge-coloring notions into their vertex-coloring counterparts.
+
+\begin{center}
+\begin{tabular}{l|l}
+Edges of $G$ & Vertices of $L(G)$ \\
+\hline
+{edge in $G$} & {vertex of $L(G)$} \\
+{matching in $G$} & {independent set in $L(G)$} \\
+{edge-coloring of $G$} & {vertex coloring of $L(G)$} \\
+{$\chi'(G)$} &  {$\chi(L(G))$} 
+\end{tabular}
+\end{center}
+
+We have $\omega(L(G))\geq \Delta(G)$ because all edges incident to a fixed vertex $v$ induce a clique in $L(G)$. That implies $\chi'(G)=\chi(L(G))\geq \omega(L(G))\geq \Delta(G)$ which we already knew. Moreover $\Delta(L(G))= \max_{uv\in E(G)}(deg_G(u)+deg_G(v)-2)\leq 2\Delta(G)-2$, so $\chi'(G)=\chi(L(G)) \leq \Delta(L(G))+1\leq 2\Delta(G)-1$. Altogether this shows
+$$\Delta(G)\leq \chi'(G) \leq 2\Delta(G)-1.$$
+In fact the situation is much ``better'', in that the uncertainty interval for $\chi'(G)$ is as short as possible without being trivial. There are only two possibilities for $\chi'(G)$\ !
+\begin{theorem}
+\label{thm:vizing}
+(Vizing '64) For any graph $G$ we have
+$$\Delta(G)\leq \chi'(G) \leq \Delta(G)+1.$$
+\end{theorem}
+\begin{remark}
+In some older literature graphs with $\chi'(G)=\Delta(G)$ are called ``Class 1'' and those with $\chi'(G)=\Delta(G)+1$ are called ``Class 2''. (Un?)surprisingly it is still NP-hard to recognize if $\chi'(G)=\Delta(G)$ or $\chi'(G)=\Delta(G)+1$, even for graphs with $\Delta(G)=3$.
+\end{remark}
+
+In the next section we will prove that bipartite graphs are Class 1. The main tool is one of the most classical results in combinatorics --- Hall's marriage theorem, which we discuss next.
+
+
+\section{Hall's marriage theorem and applications}
+
+Here is a version of the question commonly known as \emph{Hall's marriage problem}, first studied by Hall in the 1930s. We have a number of boys and girls, and each girl fancies some of the boys. We want to pair them up so that each girl is in a couple with a boy she fancies. Under what conditions is such a pairing possible?\footnote{As dictated by the political correctness of the 21st century, we ignore the preferences of the boys and we let some of the boys to leave without a girl.}
+
+There are obvious necessary conditions that must be met for this to work. For example, each girl must fancy at least one boy. Of course this is not enough, because two girls might desire only one and the same boy. We can avoid this situation with a more general necessary condition: every set of $k$ different girls must altogether like at least $k$ different boys, for each $k\geq 1$. Hall's marriage theorem states that this necessary condition is also sufficient. Here it is in the language of bipartite graphs.
+
+\begin{theorem}
+(Hall 1935) Suppose $G$ is a bipartite graph with parts $V(G)=A\cup B$, such that for every $X\subseteq A$ we have:
+$$|\bigcup_{x\in X}N_G(x)|\geq |X|.$$
+Then $G$ has a matching of size $|A|$.
+\end{theorem}
+\begin{proof}
+Write $N_G(X)=\bigcup_{x\in X} N_G(x)$ and let $n=|A|$. The proof is by induction on $n$. If $n=0$ there is clearly nothing to do. Otherwise we split the proof into two cases.
+
+\begin{itemize}
+	\item Suppose that for any $\emptyset\neq X\subsetneq A$, $|N_G(X)|\geq|X|+1$, so the inequality always holds with a surplus. Take any $a\in A$, $b\in N_G(a)$, match them, and use the inductive assumption in the graph $G'=G[A-a,B-b]$. This is possible because for any $X'\subseteq A-a$ we have $|N_{G'}(X)|\geq |N_G(X)|-1 \geq (|X|+1)-1=|X|$.
+
+	\item Now suppose there is a set $\emptyset\neq X\subsetneq A$ with $N_G(X)=|X|$. Then by induction we find appropriate matchings in $G'=G[X,N(X)]$ and $G''=G[A-X,B-N(X)]$ and join them to form a matching in $G$. The only nontrivial fact to be checked is that $G''$ satisfies the inductive assumption. Pick any $Y\subseteq A-X$. Then $$|Y|+|X|=|Y\cup X|\leq|N_G(Y\cup X)|=|N_G(X)|+|N_G(Y)\cap(B-N(X))|=|X|+|N_G(Y)\cap(B-N(X))|.$$ 	It follows that $|Y|\leq |N_G(Y)\cap(B-N(X))| = |N_{G''}(Y)|$ as required.
+\end{itemize}
+[FIGURES]
+\end{proof}
+
+The marriage theorem has many interesting applications, especially to regular configurations, often combined with a counting argument as below.
+
+\begin{example}
+Split the standard 52 card deck into 13 piles of 4 cards each. Regardless of the splitting we can choose 1 card from each pile, so that we have one card of each rank: $A,2,3,\dots,K$.
+
+To see this, construct a bipartite graph $G$ where the two parts are $R$ (ranks) and $P$ (piles). There is an edge $rp\in E(G)$ if pile $p$ contains a card of rank $r$. A matching in $G$ with 13 edges determines a bijection $P\longleftrightarrow R$. All we need to do is find such a matching with Hall's theorem.
+
+[FIGURE]
+
+Take any subset $X\subseteq R$ of ranks. This subset represents $4\cdot|X|$ actual cards. Since each plie has size 4, these $4|X|$ cards must occupy at least $|X|$ piles. But that means that the ranks in $X$ are adjacent to at least $|X|$ piles in $|P|$ in total, which is exactly the statement $|N_G(X)|\geq|X|$.
+\end{example}
+
+Note that in the above example cards of one rank (say all aces) can be distributed to less than 4 piles, so it would be more convenient to represent the situation with a \emph{multigraph}, where multiple edges between vertices are allowed.
+
+[FIGURE]
+
+This is the only part of these notes where we use the concept of a multigraph. Without going into too much formalism let us just note that the multiple edges adjacent to a vertex all contribute to its degree, so in the example above each vertex in $R$ has degree 13 and each vertex in $P$ has degree $4$ (in the multigraph sense).
+
+Repeating a very similar argument yields the next theorem.
+
+\begin{theorem}
+\label{thm:chip-d-regular}
+If $G=(V,E)$ is a $d$-regular bipartite multigraph, then $\chi'(G)=d$.
+\end{theorem}
+\begin{proof}
+Denote by $V=A\cup B$ the parts of the bipartition. Then $|A|=|B|=n$, because $d\cdot |A|=|E|=d\cdot |B|$. 
+
+We prove the theorem by induction. If $d=1$ then $G$ itself is a matching, so we are done. Let $d\geq 2$. We will first use Hall's theorem to show the existence of a matching of size $n$ in $G$. Take any $X\subseteq A$ and let $e_X$ be the number of edges in $G[X,N_G(X)]$. Then $d\cdot |X|=e_X\leq d\cdot |N_G(X)|$, so $|X|\leq |N_G(X)|$. From Hall's theorem, we get a matching $M$ of size $n$ in $G$. Since $G-M$ is a $(d-1)$-regular multigraph, by induction $\chi'(G)\leq 1 + (d-1) = d$.
+\end{proof}
+
+\begin{remark}
+If $G$ is a bipartite miltigraph with both parts of size $n$ then a matching of size $n$ is called a \emph{perfect matching}.
+\end{remark}
+
+We can now prove that all bipartite graphs are of Class 1.
+
+\begin{theorem}(K\"onig)
+If $G=(V,E)$ is a bipartite multigraph, then $\chi'(G)=\Delta (G)$.
+\end{theorem}
+
+\begin{proof}
+Let $V=A\cup B$ be the two parts. We can assume $|A|=|B|=n$. (If not, then add extra isolated vertices to the smaller part). Write $\Delta := \Delta(G)$. If $A$ has a vertex $v$ of degree less than $\Delta$, then $|E|<\Delta n$, therefore also $B$ has some vertex of degree less than $\Delta$, call it $u$. In this case add a new edge $uv$ to the multigraph. Repeat this process until the graph is $\Delta$-regular. By Theorem~\ref{thm:chip-d-regular} we get that the expanded graph (and even more so its original subgraph) is $\Delta$-edge-colorable.
+\end{proof}
+
+
+
+\section{Edge coloring vs. the 4-color theorem.}
+
+Suppose $G$ is a planar triangulation (a planar graph embedded so that all faces are triangles). 
+
+[FIGURE]
+
+\begin{definition}
+The dual graph $G^*$ of $G$ is defined by the conditions: $V(G^*)=$ set of faces of the given embedding of $G$. $F_1F_2\in E(G^*)$ if $F_1,F_2$ share a common edge. (We will usually represent each vertex of $G^*$ as a point inside the corresponding face)
+
+[FIGURE]
+
+\end{definition}
+
+\begin{observation}
+By construction $G^*$ has the following properties
+\begin{enumerate}
+    \item[a)] $G^*$ is 3-regular. (Because every fave has 3 faces neighboring via a common edge)
+    \item[b)] $|E(G^*)|=|E(G)|$
+    
+            In fact every edge $e$ of $G$ determines an edge $e^*$ of $G^*$. 
+            
+[FIGURE]            
+    \item[c)] $G^*$ is planar
+    \item[d)] Every face of $G^*$ contains exactly one vertex of $G$.
+
+[FIGURE]
+
+    \item[e)]   $|V(G^*)|=|F(G)|,\ |E(G^*)|=|E(G)|,\ |F(G^*)|=|V(G)|.$
+\end{enumerate}
+\end{observation}
+
+\begin{theorem}
+\emph{(Tait '1878, Tait's attempt at the four-color problem).}
+
+Suppose $G$ is a planar triangulation. TFAE:
+\begin{enumerate}
+    \item[a)] $G$ is 4-colorable
+    \item[b)] $G^*$ is 3-colorable
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\begin{itemize}
+    \item \emph{a) $\Rightarrow$ b)}
+    
+    Take a 4-coloring $c:V(G)\rightarrow \{00,01,10,11\}$. If $e\in E(G)$, $e=xy$ then we color $e^*$ with color $f(e^*)=c(x)\oplus c(y)$.
+
+[FIGURE]
+
+    $\oplus$ is the coordinate-wise addition mod 2. (XOR = exclusive or)
+    
+\begin{align*}
+     0\oplus 0 &= 0 = 1\oplus 1 & 01 \oplus 11 &= 10 & & \\
+     1\oplus 0 &= 1 = 0\oplus 1 & A\oplus B &= 00 & \text{ iff } A=B
+\end{align*}
+    
+    
+    Let's check that $f$ is an edge 3-coloring.
+    \begin{itemize}
+        \item $f(e^*)\neq 00$ because $c(x)\neq c(y)$, therefore $im(f)	\subseteq\{01,10,11\}$
+        \item Take $e^*,f^*\in E(G^*)$ sharing a common vertex
+
+[FIGURE]
+
+        $f(e^*)=c(x)\oplus c(y)\neq c(y)\oplus c(z)=f(f^*)$, because $c(x)\neq c(z)$
+    \end{itemize}
+    
+    \item \emph{b) $\Rightarrow$ a)}
+    
+    Start with a 3-coloring of $E(G^*)$:
+    $$
+    f:E(G^*)\rightarrow \{1,2,3\}
+    $$
+    Since $G^*$ is 3-regular, every color appears at every vertex of $G^*$. For $i=1,2$ let $H_i \subseteq G^*$ be the subgraph on the edges $f^{-1}(i)\cup f^{-1}(3)$.
+  
+[FIGURE]
+
+    $H_i$ is 2-regular, hence it is a union of cycles.
+    Construct a coloring $c:V(G)\rightarrow \{00,01,10,11\}$ as follows:
+
+    \begin{align*}
+        c(v) & =x_1x_2 &  \\
+         i & =1,2 & x_i=\text{(\# cycles in $H_i$ which contain $v$ inside) }\mod 2 
+    \end{align*}
+    
+[FIGURE]
+
+    \begin{align*}
+            H_1 &= f^{-1}(1)\cup f^{-1}(3)\text{, }\,c(v)=(2 \mod 2)(1\mod 2) \\
+            H_2 &= f^{-1}(2)\cup f^{-1}(3)   
+    \end{align*}
+    
+The two cycles of $H_1$ that contain $v$ inside are shown below, assuming color 1 is orange and color 3 is green:
+[FIGURE]
+
+    \emph{Remember:} A cycle in $H_i$ is a simple polygon in $\mathbb{R}^2$:
+    
+[FIGURE]
+
+    $v$ is inside the polygon if a generic ray from $v$ intersects the polygon an odd number of times.
+    
+    This ends the example. Now we will prove that $c$ is a vertex-coloring of $G$. Take $e=uv\in E(G)$. We want to show $c(u)\neq c(v)$. W.l.o.g. suppose that $f(e^*)=1$
+    
+
+[FIGURE]
+
+We know that $e^*$ belongs to some cycle $C$ of $H_1$
+    \begin{itemize}
+        \item $v$ is inside $C$ and $u$ is outside $C$ or vice versa.
+        \item For any other cycle of $H_1$, both $u,v$ are inside or both $u,v$ are outside.
+    \end{itemize}
+    We can check both caims by counting (mod $2$) the number of times a generic ray from $u$, $v$ intersects a cycle of $H_1$.
+    
+    By the claim $c(v)$ and $c(u)$ differ in $x_1$. Similarly:
+    \begin{enumerate}
+        \item[]If $f(e^*)= 2 \rightarrow c(v)$ and $c(u)$ differ in $x_2$
+        \item[]If $f(e^*)= 3 \rightarrow c(v)$ and $c(u)$ differ in $x_1$ and $x_2$
+    \end{enumerate}
+    In any case $c(u)\neq c(v)$, so $c$ is a 4-coloring
+\end{itemize}
+\end{proof}
+
+
+
+\section{Exercises}
+
+\begin{enumerate}
+\item Prove: if $G$ is connected and $L(G)$ is isomorphic to $G$ then $G$ is a cycle.
+\item Suppose that $G$ has $n$ vertices and $m$ edges. Show that $\chi'(G)\geq m/\lfloor n/2\rfloor$. Use it to show that the $5$-vertex graph below is of Class 2, and to reprove that $\chi'(K_{2k-1})=2k-1$. [FIGURE]
+\item We observed that $\omega(L(G))\geq\Delta(G)$. Find an exact formula for $\omega(L(G))$.
+\item Suppose $G$ is $r$-regular with an odd number of vertices. Prove that $r$ is even and that $\chi'(G)=r+1$.
+\item Find the edge-chromatic number of the Petersen graph.
+\end{enumerate}
