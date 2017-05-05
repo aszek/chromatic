@@ -181,124 +181,78 @@ Let $V=A\cup B$ be the two parts. We can assume $|A|=|B|=n$. (If not, then add e
 
 \section{Edge coloring vs. the 4-color theorem.}
 
-Suppose $G$ is a planar triangulation (a planar graph embedded so that all faces are triangles). 
+With every planar triangulation (that is, a planar graph embedded so that all faces are triangles), we can associate a dual planar graph. This classical construction has tremendous applications in the theory of planar graphs. (In fact the dual graph can be defined for any planar graph, not necessarily a triangulation, but we will not require that generality).
 
 [FIGURE]
+
+Let $G=(V,E)$ be a planar graph together with a planar embedding such that every face (including the unbounded one) is a triangle. We denote the set of faces of the embedding by $F(G)$.
 
 \begin{definition}
-The dual graph $G^*$ of $G$ is defined by the conditions: $V(G^*)=$ set of faces of the given embedding of $G$. $F_1F_2\in E(G^*)$ if $F_1,F_2$ share a common edge. (We will usually represent each vertex of $G^*$ as a point inside the corresponding face)
-
-[FIGURE]
-
+The dual graph $G^*$ of $G$ is defined by the conditions: $V(G^*)=F(G)$ and $f_1f_2\in E(G^*)$ if $f_1,f_2$ are two faces of $G$ that share a common edge. 
 \end{definition}
 
-\begin{observation}
-By construction $G^*$ has the following properties
-\begin{enumerate}
-    \item[a)] $G^*$ is 3-regular. (Because every fave has 3 faces neighboring via a common edge)
-    \item[b)] $|E(G^*)|=|E(G)|$
-    
-            In fact every edge $e$ of $G$ determines an edge $e^*$ of $G^*$. 
-            
-[FIGURE]            
-    \item[c)] $G^*$ is planar
-    \item[d)] Every face of $G^*$ contains exactly one vertex of $G$.
+It is helpful to represent each vertex of $G^*$ as a point inside the corresponding face.
 
 [FIGURE]
 
-    \item[e)]   $|V(G^*)|=|F(G)|,\ |E(G^*)|=|E(G)|,\ |F(G^*)|=|V(G)|.$
-\end{enumerate}
+\begin{observation}
+By construction $G^*$ has the following properties:
+\begin{itemize}
+    \item $G^*$ is 3-regular. (Since every face has 3 neighbours along common edge.)
+    \item $|E(G^*)|=|E(G)|.$ (The bijection is determined by the ``crossing'' relation.)
+    \item $G^*$ is planar.
+    \item Every face of $G^*$ contains exactly one vertex of $G$.
+    \item $|V(G^*)|=|F(G)|$, $|E(G^*)|=|E(G)|$,  $|F(G^*)|=|V(G)|$.
+\end{itemize}
 \end{observation}
 
-\begin{theorem}
-\emph{(Tait '1878, Tait's attempt at the four-color problem).}
+We introduced this concept because of a beautiful relation between vertex $4$-colorings of $G$ and edge $3$-colorings of its dual $G^*$. This was, in fact, what Tait showed in his incomplete proof of the $4$-colour theorem in 1878. 
 
+\begin{theorem}[Tait 1878]
 Suppose $G$ is a planar triangulation. TFAE:
 \begin{enumerate}
-    \item[a)] $G$ is 4-colorable
-    \item[b)] $G^*$ is 3-colorable
+    \item[a)] $G$ is vertex $4$-colorable.
+    \item[b)] $G^*$ is edge $3$-colorable.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
+\emph{a) $\Rightarrow$ b).} Take a 4-coloring $c:V(G)\rightarrow \{00,01,10,11\}$. We will construct an edge coloring of $G^*$ a follows: if $e^*$ is the dual edge of an edge $e=xy$, then we set
+
+$$f(e^*)=c(x)\oplus c(y),$$
+
+where $\oplus$ denotes XOR --- coordinate bitwise exclusive OR.
+
+[FIGURE]
+    
+Let's check that $f$ is an edge 3-coloring.
 \begin{itemize}
-    \item \emph{a) $\Rightarrow$ b)}
-    
-    Take a 4-coloring $c:V(G)\rightarrow \{00,01,10,11\}$. If $e\in E(G)$, $e=xy$ then we color $e^*$ with color $f(e^*)=c(x)\oplus c(y)$.
+    \item $f(e^*)\neq 00$ because $c(x)\neq c(y)$, therefore $im(f)	\subseteq\{01,10,11\}$.
+    \item Take $e_1^*,e_2^*\in E(G^*)$ sharing a common vertex in $G^*$ as in the figure. We must have $e_1=xy$ and $e_2=yz$ for some triangle $xyz$ in $G$. Then $f(e_1^*)\oplus f(e_2^*)=c(x)\oplus c(y) \oplus c(y)\oplus c(z)=c(x)\oplus c(z) \neq 00$, because $c(x)\neq c(z)$.
 
-[FIGURE]
+        [FIGURE]
+\end{itemize}
 
-    $\oplus$ is the coordinate-wise addition mod 2. (XOR = exclusive or)
-    
-\begin{align*}
-     0\oplus 0 &= 0 = 1\oplus 1 & 01 \oplus 11 &= 10 & & \\
-     1\oplus 0 &= 1 = 0\oplus 1 & A\oplus B &= 00 & \text{ iff } A=B
-\end{align*}
-    
-    
-    Let's check that $f$ is an edge 3-coloring.
-    \begin{itemize}
-        \item $f(e^*)\neq 00$ because $c(x)\neq c(y)$, therefore $im(f)	\subseteq\{01,10,11\}$
-        \item Take $e^*,f^*\in E(G^*)$ sharing a common vertex
-
-[FIGURE]
-
-        $f(e^*)=c(x)\oplus c(y)\neq c(y)\oplus c(z)=f(f^*)$, because $c(x)\neq c(z)$
-    \end{itemize}
-    
-    \item \emph{b) $\Rightarrow$ a)}
-    
-    Start with a 3-coloring of $E(G^*)$:
-    $$
-    f:E(G^*)\rightarrow \{1,2,3\}
-    $$
-    Since $G^*$ is 3-regular, every color appears at every vertex of $G^*$. For $i=1,2$ let $H_i \subseteq G^*$ be the subgraph on the edges $f^{-1}(i)\cup f^{-1}(3)$.
+\smallskip    
+\emph{b) $\Rightarrow$ a).} Start with an edge 3-coloring $f:E(G^*)\rightarrow \{1,2,3\}$. Since $G^*$ is $3$-regular, every color appears at every vertex of $G^*$. For $i=1,2$ let $H_i \subseteq G^*$ be the subgraph spanned by the edge set $f^{-1}(i)\cup f^{-1}(3)$.
   
 [FIGURE]
 
-    $H_i$ is 2-regular, hence it is a union of cycles.
-    Construct a coloring $c:V(G)\rightarrow \{00,01,10,11\}$ as follows:
+Each $H_i$ is 2-regular, hence it is a union of cycles. Construct a coloring $c:V(G)\rightarrow \{00,01,10,11\}$ using the following definition. For a vertex $v\in V(G)$ and for $i=1,2$, the $i$-th bit of $c(v)$ is \begin{center}\emph{the parity of the number of cycles in $H_i$ which contain $v$ inside}\end{center}.
 
-    \begin{align*}
-        c(v) & =x_1x_2 &  \\
-         i & =1,2 & x_i=\text{(\# cycles in $H_i$ which contain $v$ inside) }\mod 2 
-    \end{align*}
-    
-[FIGURE]
+[FIGURE-EXAMPLE]
 
-    \begin{align*}
-            H_1 &= f^{-1}(1)\cup f^{-1}(3)\text{, }\,c(v)=(2 \mod 2)(1\mod 2) \\
-            H_2 &= f^{-1}(2)\cup f^{-1}(3)   
-    \end{align*}
-    
-The two cycles of $H_1$ that contain $v$ inside are shown below, assuming color 1 is orange and color 3 is green:
-[FIGURE]
-
-    \emph{Remember:} A cycle in $H_i$ is a simple polygon in $\mathbb{R}^2$:
-    
-[FIGURE]
-
-    $v$ is inside the polygon if a generic ray from $v$ intersects the polygon an odd number of times.
-    
-    This ends the example. Now we will prove that $c$ is a vertex-coloring of $G$. Take $e=uv\in E(G)$. We want to show $c(u)\neq c(v)$. W.l.o.g. suppose that $f(e^*)=1$
-    
+Note that each $H-i$ is just a simple polygon in $\mathbb{R}^2$ and $v$ is inside a polygon if a generic ray from $v$ intersects the polygon an odd number of times. With this observation we can prove that $c$ is a vertex-coloring of $G$. Take an edge $e=uv\in E(G)$. We want to show $c(u)\neq c(v)$. 
 
 [FIGURE]
 
-We know that $e^*$ belongs to some cycle $C$ of $H_1$
-    \begin{itemize}
-        \item $v$ is inside $C$ and $u$ is outside $C$ or vice versa.
-        \item For any other cycle of $H_1$, both $u,v$ are inside or both $u,v$ are outside.
-    \end{itemize}
-    We can check both caims by counting (mod $2$) the number of times a generic ray from $u$, $v$ intersects a cycle of $H_1$.
-    
-    By the claim $c(v)$ and $c(u)$ differ in $x_1$. Similarly:
-    \begin{enumerate}
-        \item[]If $f(e^*)= 2 \rightarrow c(v)$ and $c(u)$ differ in $x_2$
-        \item[]If $f(e^*)= 3 \rightarrow c(v)$ and $c(u)$ differ in $x_1$ and $x_2$
-    \end{enumerate}
-    In any case $c(u)\neq c(v)$, so $c$ is a 4-coloring
+W.l.o.g. suppose that $f(e^*)=1$. Then the dual edge $e^*$, which belongs to some cycle $C$ of $H_1$, intuitively ``separates'' $u$ and $v$. More precisely, counting the intersections between generic rays from $u$ and $v$ with $H_1$ we prove the following two claims:
+
+\begin{itemize}
+    \item $v$ and $u$ are on the opposite sides of $C$,
+    \item for any other cycle of $H_1$, both $u,v$ are inside or both $u,v$ are outside that cycle.
 \end{itemize}
+As a consequence $c(v)$ and $c(u)$ differ at position $i=1$. The proof when $f(e^*)=2$ and $f(e^*)=3$ is similar. That shows $c$ is a vertex coloring.
 \end{proof}
 
 
