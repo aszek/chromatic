@@ -1,3 +1,463 @@
 \chapter{Chromatic polynomial}
 
-Roughly lec7.tex, lec8.tex
+\section{Definitions and simple properties}
+
+In the last chapter we discussed the $4$-coloring problem for planar graphs. In the 1930s Birkhoff and Whitney had the idea that, instead of constructing one $4$-colouring for a planar graph, one could instead find a formula for the \emph{number} of $4$-colourings, and then use algebraic, analytical or whatever other tools to somehow prove that the formula always returns a strictly positive answer. The plan didn't work; but it lead to the notion of the chromatic polynomial.
+
+\begin{definition} For a graph $G$ we define the chromatic function $P_G(t)$, $P(G,t)$ or $P(t)$, as 
+\begin{align*}
+P_G(t)&=\#\text{ of vertex colourings of G with colours }\lbrace 1,\dots ,t\rbrace\\
+&=\left|\left\lbrace c:V(G)\to \lbrace 1,\dots ,t\rbrace : c\text{ is a colouring}\right\rbrace\right|
+\end{align*}
+\end{definition}
+
+Note that the definition does not require that all the colors actually appear in the coloring, i.e. $c$ need not be surjective.
+
+\begin{example}
+\begin{enumerate}
+\item[$\circ$] If $G=\overline{K_n}$, $P_G(t)=t^n$.
+\item[$\circ$] If $G=K_n$, $P_G(t)=t(t-1) \cdots (t-(n-1))=t^{\underline{n}}$. (FIGURE)
+\item[$\circ$] If $G=P_n$, $P_G(t)=t(t-1)^{n-1}$.
+\item[$\circ$] If $G=\emptyset$, $P_G(t)=1$.
+\item[$\circ$] Consider cycles, for instance $G=C_5$. (FIGURE) The direct method ends up with a small complication: we didn't keep track of whether $1$ and $4$ are coloured differently. We will return to this example later.
+\item[$\circ$] The chromatic number can now be redefined as $\chi(G)=\min \lbrace k\in\mathbb{N} : P_G(k)>0\rbrace$.
+\item[$\circ$] The $4$-colour theorem is equivalent to the statement that $P_G(4)>0$ for a planar graph $G$.
+\end{enumerate}
+\end{example}
+
+Let us now try to generalize some of those examples.
+
+\begin{lemma}
+If $G$ is a tree with $n$ vertices, then
+\begin{align*}
+P_G(t)=t(t-1)^{n-1}.
+\end{align*}
+\end{lemma}
+\begin{proof}
+If $G$ is a single vertex, then $P_G(t)=t$. Pick a leaf $x\in V(G)$. After $G\setminus x$ has been coloured we can pick the color for $x$ in $t-1$ ways, so
+\begin{align*}
+P_G(t)=P_{G-x}(t)(t-1) = t(t-1)^{n-2}(t-1)=t(t-1)^{n-1}
+\end{align*}
+by induction.
+\end{proof}
+
+\begin{lemma}
+The chromatic polynomial of a disjoint union is $P(G\sqcup H,t)=P(G,t)P(H,t)$.
+\end{lemma}
+\begin{proof}
+Any pair (colouring of $G$, colouring of $H$) gives a colouring of $G\sqcup H$.
+\end{proof}
+
+Next we show that the chromatic function is indeed a polynomial.
+\begin{proposition}
+\label{prop:chromatic-partition}
+Let $\pi_i(G)$ be the number of ways to partition $V(G)$ into exactly $i$ non-empty independent sets. For any graph $G$ with $n>0$ vertices
+\begin{align*}
+P_G(t)=\sum_{i=0}^n \pi_i(G) t^{\underline{i}}.
+\end{align*}
+\end{proposition}
+\begin{proof}
+The choice of a colouring with colours from $\lbrace 1,\dots , t\rbrace$ is the same as 
+\begin{enumerate}
+\item[$\circ$] choosing the number $i$ of colours that will actually be used,
+\item[$\circ$] partitioning $G$ into $i$ independent sets; there are $\pi_i(G)$ ways to do this,
+\item[$\circ$] colouring each part with a different colour; there are $t(t-1) \cdots  (t-(i-1))=t^{\underline{i}}$ ways.
+\end{enumerate}
+\end{proof}
+\begin{example}
+Let $G=P_3$. (FIGURE)
+\begin{align*}
+\pi_1 &=0\\
+\pi_2 &= 1\quad ,\qquad 1-2-1\\
+\pi_3 &= 1\quad ,\qquad 1-2-3\\
+\pi_{\ge 4} &= 0
+\end{align*}
+Then
+\begin{align*}
+P_{P_3}(t)=\pi_2t^{\underline{2}}+\pi_3 t^{\underline{3}}=t(t-1)+t(t-1)(t-2)=t(t-1)^2
+\end{align*}
+\end{example}
+
+From now on we call $P_G(t)$ the \emph{chromatic polynomial}. There are other ways to express $P_G(t)$ which also certify that the function is polynomial.
+
+\begin{proposition}
+\label{prop:chromatic-inclusion}
+Suppose $G=(V,E)$ is a nonempty graph. Then
+\begin{align*}
+P_G(t)=\sum_{F\subseteq E} (-1)^{|F|} t^{c(F)}
+\end{align*}
+where $c(F)$ is the number of connected components of $(V,F)$.
+\end{proposition}
+
+Before the proof we quickly recall the Inclusion-Exclusion principle.
+
+\begin{fact}
+Suppose $A$ is a set, and $A_1,\dots, A_k$ are subsets of $A$. For any $X\subseteq \lbrace 1,\dots , k\rbrace$ define
+\begin{align*}
+A_X=\bigcap_{i\in X} A_i
+\end{align*}
+Then
+\begin{align*}
+\left| \overline{\bigcup_{i=1}^k A_i}\right| = \sum_{X\subseteq \lbrace 1,\dots , k\rbrace} (-1)^{|X|}|A_X|
+\end{align*}
+\end{fact}
+
+\begin{example} Assume we have some ambient set $\mathcal{A}$, with  $A,B,C \subset \mathcal{A}$. (FIGURE)
+Then we have
+\begin{align*}
+|A\cup B \cup C| &= |A|+|B|+|C| -|A\cap B|-|B\cap C|-|C\cap A| + |A\cap B\cap C|\\\\
+|\overline{A\cup B\cup C}|&= |\mathcal{A} | - |A|-|B|-|C| +|A\cap B|+|B\cap C|+|A\cap C| -|A\cap B\cap C|
+\end{align*}
+\end{example}
+
+\begin{proof}[Proof of Proposition~\ref{prop:chromatic-inclusion}]
+Define $A=\lbrace g:V\to \lbrace 1,\dots ,t\rbrace\rbrace$ (this is the set of all functions, not just colourings). For every $e=xy\in E$, let $A_e=\lbrace g\in A : g(x)=g(y)\rbrace$. Now for $F\subseteq E$, let $A_F= \bigcap_{e\in F} A_e$. Clearly $|A_F|=t^{c(F)}$, because $g\in A_F$ must be constant on every component of $(V,F)$. But then we're done, as 
+\begin{align*}
+P_G(t)= \left| \overline{\bigcup_{e\in E} A_e}\right| \overset{Incl.-excl.}{=} \sum_{F\subseteq E} (-1)^{|F|} |A_F|
+\end{align*}
+\end{proof}
+
+This will help us understand some coefficients of the chromatic polynomial.
+
+\begin{notation}
+If $P(t)$ is a polynomial, we write $[t^k]P(t)$ for the coefficient of $t^k$ in $P(t)$.
+\end{notation}
+\begin{lemma}
+If $G$ is a graph with $n$ vertices and $m$ edges, then $P_G(t)$ is a polynomial of degree $n$, with
+\begin{align*}
+[t^n]P_G(t)=1\quad , \qquad [t^{n-1}]P_G(t)=-m
+\end{align*}
+\end{lemma}
+\begin{proof}
+By Proposition~\ref{prop:chromatic-inclusion} we have $c(F)\le n \Rightarrow \deg P_G \le n$. Now then $c(F)=n $ if and only if $F=\emptyset$, which implies $t^n$ appears exactly once in $P_G(t)$ with coefficient $(-1)^{|\emptyset|}=1$. Also, $c(F)=n-1$ if and only if $F=\lbrace e\rbrace$ is a single edge, which implies $t^{n-1}$ appears with coefficient $(-1)^{-1}m=-m$.
+\end{proof}
+
+\section{Deletion--contraction}
+
+\begin{notation}
+For $e\in E(G)$ we write: $G-e$ for $G$ with $e$ removed, and $G/e$ for $G$ with $e$ contracted. \\
+(FIGURE)
+\end{notation}
+\begin{proposition}
+(Deletion--contraction rule). If $e\in E(G)$, then
+\begin{align*}
+P_G(t)=P_{G-e}(t)-P_{G/e}(t)
+\end{align*}
+\end{proposition}
+\begin{proof}
+Let $e=xy\in E(G)$.
+\begin{align*}
+P_{G-e}(t)&=\#\text{ colourings with } c(x)\neq c(y) + \# \text{ colourings with } c(x)=c(y) \\
+&= P_G(t)+P_{G/e}(t)
+\end{align*}
+\end{proof}
+\begin{remark}
+$|E(G-e)|=|E(G)|-1$ and $|V(G/e)|=|V(G)|-1$, so we could define $P_G(t)$ recursively
+\begin{align*}
+P_G(t) = \left\lbrace \begin{array}{ll}
+t^{|V(G)|} & \text{if } G \text{ has no edges}\\
+ & \\
+P_{G-e}(t)-P_{G/e}(t) & \text{if } e\in E(G)
+\end{array} \right.
+\end{align*}
+\end{remark}
+
+\begin{example} $G$ is a graph on $5$ vertices, and we run the above.
+(FIGURE)
+\begin{align*}
+= t(t-1)^3-2t(t-1)^2(t-2)(t-2)+t(t-1)(t-2)
+\end{align*}
+\end{example}
+\begin{example}
+$P(C_n,t)=P(P_n,t)-P(C_{n-1},t)$. We have
+\begin{align*}
+P(P_n,t)&= t(t-1)^{n-1}\\
+P(C_3,t)&=t(t-1)(t-2)
+\end{align*}
+Now one can prove by induction that $P(C_n)=(t-1)^n+(-1)^n(t-1)$. In particular
+\begin{align*}
+P(C_n,2)=1+(-1)^n= \left\lbrace \begin{array}{ll}
+2, & 2\mid n\\
+0, & 2\nmid n
+\end{array}\right.
+\end{align*}
+which agrees with what we know about $\chi(C_n)$.
+\end{example}
+
+The deletion-contraction rule has many interesting consequences. 
+
+===================================================
+
+\begin{proposition}
+Let $G\neq \emptyset$ be a graph with $n$ vertices, $m$ edges and $c$ connected components. The coefficients of $P_G(t)$ alternate in signs, i.e.
+\begin{align*}
+P_G(t)=\sum_{i=0}^n (-1)^i c_i(G)t^{n-i}
+\end{align*}
+where $c_i(G)\ge 0$. Moreover $c_i(G)=0$ for $i>n-c$ and $c_{n-c}(G)\neq 0$.
+\end{proposition}
+\underline{Simply put:}
+\begin{align*}
+P_G(t)=t^n-mt^{n-1}+c_2(G)t^{n-2}-\cdots + (-1)^{n-c}c_{n-c}(G)t^c
+\end{align*}
+the last term $t^c$ is with $t$ to the power of the number of connected components. Exercise: do a proof by induction.
+\begin{proof} Deleting keeps the sign, and contracting changes the sign.\\
+\begin{center}
+\begin {tikzpicture}
+\draw
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n1) at (0,2) {}
+	(0,2) node [text=black,above] {$G$}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n2) at (-2,0) {}
+	(-2,0) node [text=black,left] {$G'$}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n3) at (2,0) {}
+	(2,0) node [text=black,right] {$G''$}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n4) at (-3,-2) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n5) at (-1,-2) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n6) at (1,-2) {}
+node[fill,circle,inner sep=0pt,minimum size=3pt] (n7) at (3,-2) {}
+node[fill,circle,inner sep=0pt,minimum size=0pt] (n8) at (-3,-2.5) {}
+node[fill,circle,inner sep=0pt,minimum size=0pt] (n9) at (-1,-2.5) {}
+node[fill,circle,inner sep=0pt,minimum size=0pt] (n10) at (1,-2.5) {}
+node[fill,circle,inner sep=0pt,minimum size=0pt] (n11) at (3,-2.5) {}
+
+[line width = 1 pt, black, -] (n1) edge (n2)
+(-1,1) node [left] {$G-e$}
+(-2,0) node [right] {$\cdot 1$}
+[line width = 1 pt, black, -] (n1) edge (n3)
+(1,1) node [right] {$G/e$}
+(2,0) node [left] {$\cdot (-1)$}
+[line width = 1 pt, black, -] (n2) edge (n4)
+(-2.5,-1) node [left] {$G-e$}
+(-3,-2) node [left] {$\cdot 1$}
+[line width = 1 pt, black, -] (n2) edge (n5)
+(-1.5,-1) node [right] {$G/e$}
+(-1,-2) node [right] {$\cdot (-1)$}
+[line width = 1 pt, black, -] (n3) edge (n6)
+(1.5,-1) node [left] {$G-e$}
+(1,-2) node [left] {$\cdot 1$}
+[line width = 1 pt, black, -] (n3) edge (n7)
+(2.5,-1) node [right] {$G/e$}
+(3,-2) node [right] {$\cdot (-1)$}
+[line width = 1 pt, black, -] (n4) edge (n8)
+(-3,-2.5) node [below] {$\overline{K_i}$}
+[line width = 1 pt, black, -] (n5) edge (n9)
+(-1,-2.5) node [below] {$\overline{K_j}$}
+[line width = 1 pt, black, -] (n6) edge (n10)
+[line width = 1 pt, black, -] (n7) edge (n11)
+; 
+\end {tikzpicture}
+\end{center}
+Every branch of the deletion-contraction tree ends with some $\overline{K_i}$, $1\le i \le n$. Every branch ending with $\overline{K_i}$ contributes
+\begin{align*}
+(-1)^{n-i}t^i
+\end{align*}
+because the path from $G$ to $\overline{K_i}$ contains $n-i$ contractions, i.e. $n-i$ sign changes. The proposition holds with
+\begin{align*}
+c_i(G)=\# \text{ of branches ending with } \overline{K_i}
+\end{align*}
+and clearly $c_i(G)\geq 0$.
+
+To prove that $c_i(G)=0$ for $i>n-c$ note no branch of the tree ends with with a graph on less than $c$ vertices. Moreover, there is at least one branch with ends exactly with $K_c$ (apply contractions all the time), so $c_{n-c}(G)>0$.
+\end{proof}
+
+
+
+
+
+In the next pages, $G$ is always a graph, $V(G)$ its set of vertices and $E(G)$ its set of edges. 
+
+\begin{lemma} Let $G,G_1,G_2$ be graphs such that $G=G_1 \cup G_2$ and $G_1 \cap G_2 \simeq K_k$ for some $k\geqslant 0$. Then
+$$P_G(t)=\frac{1}{t^{\underline{k}}}P_{G_1}(t)P_{G_2}(t).$$
+(FIGURE)
+\end{lemma}
+
+\begin{proof}
+Colour $G_1$ and colour $G_2$. Since $G_1 \cap G_2 \simeq K_k$, $G_1 \cap G_2$ uses $k$ different colours. It means that the colourings of $G_1$ and $G_2$ agree in $\frac{1}{P_{K_k}(t)}$ fraction of pairs.
+\end{proof}
+
+\begin{example}
+\begin{enumerate}
+\item $G=G_1 \sqcup G_2$ ($k=0$), then $$P_G(t)=P_{G_1}(t)P_{G_2}(t),$$
+\item $v$ is a leaf in $G$ ($k=1$), then $$P_G(t)=\frac{1}{t}P_{K_2}(t)P_{G-v}(t)=\frac{1}{t}t(t-1)P_{G-v}(t)=(t-1)P_{G-v}(t),$$
+(FIGURE)
+\item $G= K_2 \square P_n= C_4 \cup K_2 \square P_{n-1}$ ($k=2$), then $$P_G(t)=\frac{1}{t(t-1)}P_{C_4}(t)P_{K_2 \square P_{n-1}}(t),$$ and we can use this method recursively.
+(FIGURE)
+\end{enumerate}
+\end{example}
+
+Let us summarize some facts. $G$ is a graph with chromatic polynomial $P_G(t)$.
+\begin{itemize}
+\item $n=|V(G)|=deg(P_G)$,
+\item $m=|E(G)|=-[t^{n-1}]P_G(t)$,
+\item The number of connected components is $=max \{c: \ t^c \mid P_G(t) \}$,
+\item $\chi(G) = 1+ max \{k: \ (t-k) \mid P_G(t) \}=1+ max \{k: \ t^{\underline{k}} \mid P_G(t) \}$,
+\item The number of triangles is $={m \choose 2}-[t^{n-2}]P_G(t)$ (will be proved during the next exercise session),
+\item The coefficients of the polynomial are integers with alternating signs.
+\end{itemize}
+
+\begin{remark} It is hard to computer $P_G(t)$, otherwise we could easily compute $\chi(G)$. It is also hard to recognize chromatic polynomials.
+\end{remark}
+
+\begin{theorem} \emph{(June Huh, 2010)}
+Suppose $G$ is connected with chromatic polynomial
+$$P_G(t)=t^n-c_1t^{n-1}+c_2t^{n-2}-\cdots +(-1)^{n-1}c_{n-1}t.$$
+Then the sequence $(1,c_1,c_2,\dots,c_{n-1})$ is log-concave, which means
+$$c_{i-1}c_{i+1}\leqslant c_i^2 \quad \text{for all } i.$$
+In particular, it is unimodal, which means
+$$1 \leqslant c_1 \leqslant c_2 \leqslant \cdots \leqslant c_{k-1} \leqslant c_k \geqslant c_{k+1} \geqslant \cdots \geqslant c_{n-1}, \quad \text{for some } k.$$
+\end{theorem}
+
+\begin{proof}
+This theorem proves a conjecture of Read from 1968. We will not prove the theorem (the proof involves algebraic geometry and singularity theory).
+\end{proof}
+
+\begin{enumerate}
+\item Why the name \textit{log-concave}?
+\item Prove that a log-concave sequence of positive real numbers is unimodal.
+\end{enumerate}
+
+\begin{remark} We can prove $1 \leqslant c_1 \leqslant c_2 \leqslant \cdots \leqslant c_{\lfloor \frac{1}{2}(n-1)\rfloor}$.
+\\ If $G$ is a tree, then
+$$P_G(t)=t(t-1)^{n-1}=\sum_{i=0}^{n-1} {n-1 \choose i}(-1)^it^{n-i}\cdot t=t^n-{n-1 \choose 1}t^{n-1}+{n-1 \choose 2}t^{n-2}-\cdots.$$
+The sequence $(1,c_1,c_2,\dots)$ is $(1,{n-1 \choose 1},{n-1 \choose 2},\cdots)$, and it is increasing up to the middle term.
+\\ Now suppose that $G$ is connected, but not a tree. Then, by definition of a tree, there is an edge $e\in E(G)$ such that $G-e$ is still connected. For $i\leqslant \frac{1}{2}(n-1)$ we notice that
+$$P_G(t)=P_{G-e}(t)-P_{G/e}(t) \Longrightarrow c_{i-1}(G)=c_{i-1}(G-e)-(-c_{i-2}(G/e))=c_{i-1}(G-e)+c_{i-2}(G/e).$$
+We know $i\leqslant \frac{1}{2}(n-1)$ and $i-1 \leqslant \frac{1}{2}(n-2)=\frac{1}{2}(|V(G/e)|-1)$, hence by induction 
+ $$c_{i-1}(G)\leqslant c_i(G-e)+c_{i-1}(G/e)=c_i(G)$$
+which ends the induction step.
+\end{remark}
+
+
+What else does the chromatic polynomial count? And how?
+
+\begin{definition} An \emph{orientation} of $G$ is a choice  of direction for every edge. This gives a directed graph. If $G$ has $m$ edges, then it has $2^m$ possible orientations (which might also be isomorphic).
+\end{definition}
+
+\begin{definition} An orientation is \emph{acyclic} if it has no closed directed walk. Let $a(G)$ be the number of acyclic orientations of $G$.
+\end{definition}
+
+\begin{theorem} \emph{(Stanley, 1973)}
+If $G$ has $n$ vertices, then $a(G)=(-1)^nP_G(-1)$.
+\end{theorem}
+
+\begin{example}
+\begin{itemize}
+\item $G$ is a tree with $n$ vertices, then
+$$a(G)=2^{n-1}=(-1)^n(-1)(-1-1)^{n-1}=(-1)^nP_G(-1),$$
+\item $G$ is a cycle on $n$ vertices, then
+\begin{align*}
+a(G)&=2^n-2, \\
+(-1)^nP_G(-1)&=(-1)^n[(-2)^n+(-1)^n(-2)]=(-1)^n[(-1)^n(2^n-2)]=a(G),
+\end{align*}
+\item $G=K_n$, then
+\begin{align*}
+(-1)^nP_G(-1)&=(-1)^n(-1)^{\underline{n}}=(-1)^n(-1)(-1-1)(-1-2)\cdots (-1-(n-1))=(-1)^n(-1)^nn!.
+\end{align*}
+An acyclic orientation is the same as ordering the vertices $v_1,v_2,\dots,v_n$ (there are $n!$ possibilities to do this) and then choosing the orientation
+$$v_i\longrightarrow v_j, \quad \text{whenever } i>j.$$
+\end{itemize}
+\end{example}
+
+\begin{proof}
+Take $e=xy \in E(G)$. Write $a^+(G-e),a^-(G-e),a^0(G-e)$ for the number of acyclic orientations of $G-e$ such that:
+\begin{itemize}
+\item There is a directed walk in $G-e$ from $x$ to $y$ ($a^+$),
+\item There is a directed walk in $G-e$ from $y$ to $x$ ($a^-$),
+\item There is no directed walk either way ($a^0$).
+\end{itemize}
+
+We prove a few claims about these quantities:
+\begin{itemize} 
+\item $a(G-e)=a^+(G-e)+a^-(G-e)+a^0(G-e)$. 
+An acyclic orientation in $G-e$ cannot have directed walks $x\longrightarrow y$ and $y\longrightarrow x$ at the same time. These three sets are therefore disjoint and they give all the possibilities.
+
+\item $a(G/e)=a^0(G-e)$. 
+Take an orientation of $G-e$ with no walk $x\longrightarrow y$ or $y\longrightarrow x$. For any $z\in N_{G-e}(x)\cap N_{G-e}(y)$, the edges $xz$ and $yz$ have the same orientation (if not, there would be a walk $x\longrightarrow z\longrightarrow y$ or $y\longrightarrow z\longrightarrow x$), hence either  
+$$x\longrightarrow z \text{ and } y\longrightarrow z$$
+or
+$$z\longrightarrow x \text{ and } z\longrightarrow y.$$
+The orientation of $G-e$ determines then an orientation of $G/e$ (the edges $xz$ and $yz$ are compatible under the contraction). This orientation is also acyclic (a directed walk from $xy$ to itself would imply a directed walk in $G-e$ from $x$ or $y$ to $y$ or $x$). This also works vice versa.
+\\ The idea here was that 
+$$\text{Closed walks in } G/e = \text{Walks } x\longrightarrow y \text{ or } y\longrightarrow x \text { in } G-e.$$
+
+\item $a(G)=a^+(G-e)+a^-(G-e)+2a^0(G-e)$. 
+For the first two terms there is only one way to extend the orientation of $G-e$ without closing a cycle in $G$. In the last case the edge $xy$ can be oriented both ways, since we don't have a walk from $x$ to $y$ or from $y$ to $x$.
+\end{itemize}
+
+By these three claims we obtain
+\begin{align*}
+a(G)&=a^+(G-e)+a^-(G-e)+2a^0(G-e)= \\
+&= a^+(G-e)+a^-(G-e)+a^0(G-e)+a^0(G-e)= \\
+&= a(G-e)+a^0(G-e)= \\
+&= a(G-e)+a(G/e)
+\end{align*}
+We complete the proof by using induction:
+\begin{itemize}
+\item $G=K_1$, then $a(G)=1=(-1)^1P_{K_1}(-1)$,
+\item Pick an edge $e\in E(G)$, then (by induction assumption)
+\begin{align*}
+a(G)&=a(G-e)+a(G/e)= \\
+&= (-1)^nP_{G-e}(-1)+(-1)^{n-1}P_{G/e}(-1)= \\
+&= (-1)^n[P_{G-e}(-1)-P_{G/e}(-1)]= \\
+&= (-1)^nP_G(-1)
+\end{align*}
+\end{itemize}
+\end{proof}
+
+\begin{definition} $\alpha \in \mathbb{C}$ is a \emph{chromatic root} if $P_G(\alpha)=0$ for some graph $G$.
+\end{definition}
+
+\begin{observation}
+\begin{enumerate}
+\item Every natural number is a chromatic root,
+\item For any $G$ different from the empty graph, $P_G(0)=0$,
+\item For any $G$ with at least one edge, $P_G(1)=0$,
+\item If $\alpha$ is a chromatic root, then so is $\alpha+1$,
+\begin{proof}
+We proved in the exercise session that $P_{G+K_1}(\alpha+1)=(\alpha+1)P_G(\alpha)$,
+\end{proof}
+\item The set of chromatic roots is countable (it is a subset of the algebraic numbers).
+\end{enumerate}
+\end{observation}
+
+
+
+\begin{proposition} There is no chromatic root in $(- \infty, 0)\cup (0,1)$.
+\end{proposition}
+
+\begin{proof}
+$\alpha <0$ is not a root of $P_G(t)$, since the coefficients of the polynomial have alternating signs.
+\\
+\\ Take $\alpha \in (0,1)$. Because $P_{G\sqcup H}(t)=P_G(t)P_H(t)$, it suffices to prove that $P_G(\alpha)\neq 0$ for any connected graph. Apply the deletion-contraction rule to $G$, in such a way that all the intermediate graphs are connected. At each step, either $G$ is a tree (and we stop splitting) or there is an edge $e\in E(G)$ such that $G-e$ is still connected.
+\\
+\\ A branch of this splitting process with $i$ contractions
+\begin{itemize}
+\item ends with an $(n-i)$-vertex tree,
+\item introduces a sign of $(-1)^i$,
+\item contributes $t(t-1)^{n-i-1}$ to $P_G(t)$.
+\end{itemize}
+Define $d_i$ as the number of branches ending with an $(n-i)$-vertex tree, then
+$$P_G(t)=\sum d_i(-1)^it(t-1)^{n-i-1},$$
+and of course we have $d_i\geqslant 0$.
+Evaluate $P_G(\alpha)$ for $\alpha \in (0,1)$:
+$$sgn\{d_i(-1)^i\alpha (\alpha-1)^{n-i-1} \}=(-1)^i\cdot 1\cdot (-1)^{n-i-1}=(-1)^{n-1},$$
+which means that all monomials in $P_G(\alpha)$  evaluate to positive or all evaluate to negative, hence $P_G(\alpha) \neq 0$ as $d_i>0$ for at least one $i$. 
+\end{proof}
+
+\begin{remark} We used the deletion-contraction principle, but only until we reached trees (since we already know their chromatic polynomial).
+\end{remark}
+
+
+\begin{theorem} \emph{(Jackson, Thomassen)}
+There are no chromatic roots in $(- \infty, 0)\cup (0,1)\cup (1,\frac{32}{27}).$ Moreover, the constant $\frac{32}{27}$ is optimal. 
+\end{theorem}
+
+\begin{theorem} \emph{(Sokal)}
+The chromatic roots are dense in $\mathbb{C}$.
+\end{theorem}
+
+\begin{theorem} \emph{(Birkhoff, Lewis)}
+If $G$ is planar, then $P_G(t)>0$ for all $t\in [5,\infty)$.
+\end{theorem}
+
+\begin{remark} Moreover, it is conjectured that if $G$ is planar, then $P_G(t)>0$ for all $t\in [4,\infty)$.
+\end{remark}
