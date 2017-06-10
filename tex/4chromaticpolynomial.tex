@@ -186,116 +186,39 @@ which agrees with what we know about $\chi(C_n)$.
 
 The deletion-contraction rule has many interesting consequences. 
 
-===================================================
-
 \begin{proposition}
-Let $G\neq \emptyset$ be a graph with $n$ vertices, $m$ edges and $c$ connected components. The coefficients of $P_G(t)$ alternate in signs, i.e.
+Let $G$ be a graph with $n>0$ vertices, $m$ edges and $c$ connected components. The coefficients of $P_G(t)$ alternate in signs, i.e.
 \begin{align*}
 P_G(t)=\sum_{i=0}^n (-1)^i c_i(G)t^{n-i}
 \end{align*}
 where $c_i(G)\ge 0$. Moreover $c_i(G)=0$ for $i>n-c$ and $c_{n-c}(G)\neq 0$.
 \end{proposition}
-\underline{Simply put:}
+Simply put, this proposition states that the chromatic polynomial has the form
 \begin{align*}
-P_G(t)=t^n-mt^{n-1}+c_2(G)t^{n-2}-\cdots + (-1)^{n-c}c_{n-c}(G)t^c
+P_G(t)=t^n-mt^{n-1}+c_2(G)t^{n-2}-\cdots + (-1)^{n-c}c_{n-c}(G)t^c.
 \end{align*}
-the last term $t^c$ is with $t$ to the power of the number of connected components. Exercise: do a proof by induction.
-\begin{proof} Deleting keeps the sign, and contracting changes the sign.\\
-\begin{center}
-\begin {tikzpicture}
-\draw
-node[fill,circle,inner sep=0pt,minimum size=3pt] (n1) at (0,2) {}
-	(0,2) node [text=black,above] {$G$}
-node[fill,circle,inner sep=0pt,minimum size=3pt] (n2) at (-2,0) {}
-	(-2,0) node [text=black,left] {$G'$}
-node[fill,circle,inner sep=0pt,minimum size=3pt] (n3) at (2,0) {}
-	(2,0) node [text=black,right] {$G''$}
-node[fill,circle,inner sep=0pt,minimum size=3pt] (n4) at (-3,-2) {}
-node[fill,circle,inner sep=0pt,minimum size=3pt] (n5) at (-1,-2) {}
-node[fill,circle,inner sep=0pt,minimum size=3pt] (n6) at (1,-2) {}
-node[fill,circle,inner sep=0pt,minimum size=3pt] (n7) at (3,-2) {}
-node[fill,circle,inner sep=0pt,minimum size=0pt] (n8) at (-3,-2.5) {}
-node[fill,circle,inner sep=0pt,minimum size=0pt] (n9) at (-1,-2.5) {}
-node[fill,circle,inner sep=0pt,minimum size=0pt] (n10) at (1,-2.5) {}
-node[fill,circle,inner sep=0pt,minimum size=0pt] (n11) at (3,-2.5) {}
+It is very easy to come up with a proof by induction, and we leave it as an exercise. It will be instructive for the future to phrase the proof slightly differently.
+\begin{proof} Deleting an edge keeps the sign, and contracting an edge changes the sign. Successive contraction--deletion splittings produce a tree which looks like this:
 
-[line width = 1 pt, black, -] (n1) edge (n2)
-(-1,1) node [left] {$G-e$}
-(-2,0) node [right] {$\cdot 1$}
-[line width = 1 pt, black, -] (n1) edge (n3)
-(1,1) node [right] {$G/e$}
-(2,0) node [left] {$\cdot (-1)$}
-[line width = 1 pt, black, -] (n2) edge (n4)
-(-2.5,-1) node [left] {$G-e$}
-(-3,-2) node [left] {$\cdot 1$}
-[line width = 1 pt, black, -] (n2) edge (n5)
-(-1.5,-1) node [right] {$G/e$}
-(-1,-2) node [right] {$\cdot (-1)$}
-[line width = 1 pt, black, -] (n3) edge (n6)
-(1.5,-1) node [left] {$G-e$}
-(1,-2) node [left] {$\cdot 1$}
-[line width = 1 pt, black, -] (n3) edge (n7)
-(2.5,-1) node [right] {$G/e$}
-(3,-2) node [right] {$\cdot (-1)$}
-[line width = 1 pt, black, -] (n4) edge (n8)
-(-3,-2.5) node [below] {$\overline{K_i}$}
-[line width = 1 pt, black, -] (n5) edge (n9)
-(-1,-2.5) node [below] {$\overline{K_j}$}
-[line width = 1 pt, black, -] (n6) edge (n10)
-[line width = 1 pt, black, -] (n7) edge (n11)
-; 
-\end {tikzpicture}
-\end{center}
-Every branch of the deletion-contraction tree ends with some $\overline{K_i}$, $1\le i \le n$. Every branch ending with $\overline{K_i}$ contributes
+(FIGURE)
+
+We chose to continue with the splittings until we reach a graph with no edges, that is one of the $\overline{K_i}$, $1\le i \le n$. Every branch ending with $\overline{K_i}$ contributes
 \begin{align*}
 (-1)^{n-i}t^i
 \end{align*}
-because the path from $G$ to $\overline{K_i}$ contains $n-i$ contractions, i.e. $n-i$ sign changes. The proposition holds with
+to the chromatic polynomial. That is because the path from $G$ to $\overline{K_i}$ contains $n-i$ contractions, i.e. $n-i$ sign changes. It means that the proposition holds with
 \begin{align*}
 c_i(G)=\# \text{ of branches ending with } \overline{K_i}
 \end{align*}
 and clearly $c_i(G)\geq 0$.
 
-To prove that $c_i(G)=0$ for $i>n-c$ note no branch of the tree ends with with a graph on less than $c$ vertices. Moreover, there is at least one branch with ends exactly with $K_c$ (apply contractions all the time), so $c_{n-c}(G)>0$.
+To prove that $c_i(G)=0$ for $i>n-c$ note that no branch of the tree ends with a graph on less than $c$ vertices. Moreover, there is at least one branch with ends exactly with $K_c$ (apply contractions all the time), so $c_{n-c}(G)>0$.
 \end{proof}
 
 
+\section{Coefficient sequence}
 
-
-
-In the next pages, $G$ is always a graph, $V(G)$ its set of vertices and $E(G)$ its set of edges. 
-
-\begin{lemma} Let $G,G_1,G_2$ be graphs such that $G=G_1 \cup G_2$ and $G_1 \cap G_2 \simeq K_k$ for some $k\geqslant 0$. Then
-$$P_G(t)=\frac{1}{t^{\underline{k}}}P_{G_1}(t)P_{G_2}(t).$$
-(FIGURE)
-\end{lemma}
-
-\begin{proof}
-Colour $G_1$ and colour $G_2$. Since $G_1 \cap G_2 \simeq K_k$, $G_1 \cap G_2$ uses $k$ different colours. It means that the colourings of $G_1$ and $G_2$ agree in $\frac{1}{P_{K_k}(t)}$ fraction of pairs.
-\end{proof}
-
-\begin{example}
-\begin{enumerate}
-\item $G=G_1 \sqcup G_2$ ($k=0$), then $$P_G(t)=P_{G_1}(t)P_{G_2}(t),$$
-\item $v$ is a leaf in $G$ ($k=1$), then $$P_G(t)=\frac{1}{t}P_{K_2}(t)P_{G-v}(t)=\frac{1}{t}t(t-1)P_{G-v}(t)=(t-1)P_{G-v}(t),$$
-(FIGURE)
-\item $G= K_2 \square P_n= C_4 \cup K_2 \square P_{n-1}$ ($k=2$), then $$P_G(t)=\frac{1}{t(t-1)}P_{C_4}(t)P_{K_2 \square P_{n-1}}(t),$$ and we can use this method recursively.
-(FIGURE)
-\end{enumerate}
-\end{example}
-
-Let us summarize some facts. $G$ is a graph with chromatic polynomial $P_G(t)$.
-\begin{itemize}
-\item $n=|V(G)|=deg(P_G)$,
-\item $m=|E(G)|=-[t^{n-1}]P_G(t)$,
-\item The number of connected components is $=max \{c: \ t^c \mid P_G(t) \}$,
-\item $\chi(G) = 1+ max \{k: \ (t-k) \mid P_G(t) \}=1+ max \{k: \ t^{\underline{k}} \mid P_G(t) \}$,
-\item The number of triangles is $={m \choose 2}-[t^{n-2}]P_G(t)$ (will be proved during the next exercise session),
-\item The coefficients of the polynomial are integers with alternating signs.
-\end{itemize}
-
-\begin{remark} It is hard to computer $P_G(t)$, otherwise we could easily compute $\chi(G)$. It is also hard to recognize chromatic polynomials.
-\end{remark}
+As a small side remark, the behaviour of the coefficient sequences of chromatic polynomials is the subject of active research and is the topic of many conjectures and theorems. Most of that work takes place in the general context of \emph{matroids} and their \emph{characteristic polynomials}, of which the chromatic polynomial is a special case. Here is a very fresh result which proves a conjecture of Read from 1968. The proof uses techniques from algebraic geometry and singularity theory.
 
 \begin{theorem} \emph{(June Huh, 2010)}
 Suppose $G$ is connected with chromatic polynomial
@@ -306,14 +229,6 @@ In particular, it is unimodal, which means
 $$1 \leqslant c_1 \leqslant c_2 \leqslant \cdots \leqslant c_{k-1} \leqslant c_k \geqslant c_{k+1} \geqslant \cdots \geqslant c_{n-1}, \quad \text{for some } k.$$
 \end{theorem}
 
-\begin{proof}
-This theorem proves a conjecture of Read from 1968. We will not prove the theorem (the proof involves algebraic geometry and singularity theory).
-\end{proof}
-
-\begin{enumerate}
-\item Why the name \textit{log-concave}?
-\item Prove that a log-concave sequence of positive real numbers is unimodal.
-\end{enumerate}
 
 \begin{remark} We can prove $1 \leqslant c_1 \leqslant c_2 \leqslant \cdots \leqslant c_{\lfloor \frac{1}{2}(n-1)\rfloor}$.
 \\ If $G$ is a tree, then
@@ -326,6 +241,8 @@ We know $i\leqslant \frac{1}{2}(n-1)$ and $i-1 \leqslant \frac{1}{2}(n-2)=\frac{
 which ends the induction step.
 \end{remark}
 
+
+\section{Counting acyclic orientations}
 
 What else does the chromatic polynomial count? And how?
 
@@ -403,33 +320,39 @@ a(G)&=a(G-e)+a(G/e)= \\
 \end{itemize}
 \end{proof}
 
+Stanley's theorem is, again, just the tip of an iceberg known as \emph{duality} in matroid theory. It has many generalizations.
+
+
+\section{Chromatic roots}
+
+Let's try to wrap up this chapter by going back to the original question of Birkhoff and Whitney: is there something interesting to say about the set of points where the chromatic polynomial is positive? Or, alternatively, is there something interesting to say about their roots?
+
 \begin{definition} $\alpha \in \mathbb{C}$ is a \emph{chromatic root} if $P_G(\alpha)=0$ for some graph $G$.
 \end{definition}
+
+Here are some very simple observations about chromatic roots.
 
 \begin{observation}
 \begin{enumerate}
 \item Every natural number is a chromatic root,
 \item For any $G$ different from the empty graph, $P_G(0)=0$,
 \item For any $G$ with at least one edge, $P_G(1)=0$,
-\item If $\alpha$ is a chromatic root, then so is $\alpha+1$,
-\begin{proof}
-We proved in the exercise session that $P_{G+K_1}(\alpha+1)=(\alpha+1)P_G(\alpha)$,
-\end{proof}
-\item The set of chromatic roots is countable (it is a subset of the algebraic numbers).
+\item If $\alpha$ is a chromatic root, then so is $\alpha+1$ (because $P_{G+K_1}(\alpha+1)=(\alpha+1)P_G(\alpha)$),
+\item The set of chromatic roots is countable (as a subset of the algebraic numbers).
 \end{enumerate}
 \end{observation}
 
-
+The next proposition is less obvious (at least one of its parts). The proof is an appropriate adaptation of the deletion-contraction principle (again).
 
 \begin{proposition} There is no chromatic root in $(- \infty, 0)\cup (0,1)$.
 \end{proposition}
 
 \begin{proof}
 $\alpha <0$ is not a root of $P_G(t)$, since the coefficients of the polynomial have alternating signs.
-\\
-\\ Take $\alpha \in (0,1)$. Because $P_{G\sqcup H}(t)=P_G(t)P_H(t)$, it suffices to prove that $P_G(\alpha)\neq 0$ for any connected graph. Apply the deletion-contraction rule to $G$, in such a way that all the intermediate graphs are connected. At each step, either $G$ is a tree (and we stop splitting) or there is an edge $e\in E(G)$ such that $G-e$ is still connected.
-\\
-\\ A branch of this splitting process with $i$ contractions
+
+Take $\alpha \in (0,1)$. Because $P_{G\sqcup H}(t)=P_G(t)P_H(t)$, it suffices to prove that $P_G(\alpha)\neq 0$ for any connected graph. Apply the deletion-contraction rule to $G$, in such a way that all the intermediate graphs are connected. At each step, either $G$ is a tree (and we stop splitting) or there is an edge $e\in E(G)$ such that $G-e$ is still connected.
+
+A branch of this splitting process with $i$ contractions
 \begin{itemize}
 \item ends with an $(n-i)$-vertex tree,
 \item introduces a sign of $(-1)^i$,
@@ -443,21 +366,46 @@ $$sgn\{d_i(-1)^i\alpha (\alpha-1)^{n-i-1} \}=(-1)^i\cdot 1\cdot (-1)^{n-i-1}=(-1
 which means that all monomials in $P_G(\alpha)$  evaluate to positive or all evaluate to negative, hence $P_G(\alpha) \neq 0$ as $d_i>0$ for at least one $i$. 
 \end{proof}
 
-\begin{remark} We used the deletion-contraction principle, but only until we reached trees (since we already know their chromatic polynomial).
-\end{remark}
+This time we applied the deletion-contraction principle until we reached trees, and not edge-less graphs.
 
+It actually gets much better.
 
 \begin{theorem} \emph{(Jackson, Thomassen)}
 There are no chromatic roots in $(- \infty, 0)\cup (0,1)\cup (1,\frac{32}{27}).$ Moreover, the constant $\frac{32}{27}$ is optimal. 
 \end{theorem}
 
-\begin{theorem} \emph{(Sokal)}
-The chromatic roots are dense in $\mathbb{C}$.
-\end{theorem}
+It is also known (Sokal) that chromatic roots are a dense subset of the complex numbers. In the context of planar graphs the best we have now is:
 
 \begin{theorem} \emph{(Birkhoff, Lewis)}
 If $G$ is planar, then $P_G(t)>0$ for all $t\in [5,\infty)$.
 \end{theorem}
 
-\begin{remark} Moreover, it is conjectured that if $G$ is planar, then $P_G(t)>0$ for all $t\in [4,\infty)$.
-\end{remark}
+It is conjectured that if $G$ is planar, then $P_G(t)>0$ for all $t\in [4,\infty)$. Even with the $4$-color theorem ($P_G(4)>0$) we still don't know if there is a \emph{planar} chromatic root in $(4,5)$. So, in a sense, Birkhoff's and Whitney's analytic--algebraic plan turned out to be much harder than the original combinatorial problem.
+
+\section{Exercises}
+
+\begin{enumerate}
+\item What is $\min\{P_G(4)~:~G\ \mathrm{is\ planar}\}$\ ?
+\item Find the chromatic polynomial of
+\begin{itemize}
+\item The $2\times n$ grid $K_2\square P_n$.
+\item The wheel $W_n$.
+\item $K_n-e$, the complete graph with one edge removed.
+\item $P_n[K_m]$ (graph substitution, see TODO).
+\item The disjoint union of two graphs.
+\item $K_2 \square P_n$.
+\end{itemize}
+\item  Let $G,G_1,G_2$ be graphs such that $G=G_1 \cup G_2$ and $G_1 \cap G_2 \simeq K_k$ for some $k\geqslant 0$. Then
+$$P_G(t)=\frac{1}{t^{\underline{k}}}P_{G_1}(t)P_{G_2}(t).$$
+\item Let $P'_G(t)$ denote the number of colorings of $G$ with \emph{exactly} $t$ colors $1,\ldots,t$ appearing, i.e. such that the color assignment $c:V(G)\to\{1,\ldots,t\}$ is surjective. Show that $P'_G(t)$ is not a polynomial for any graph $G$.
+\item If $G$ is a graph with chromatic polynomial $P(t)$, construct a graph with chromatic polynomial
+\begin{itemize}
+\item $tP(t-1)$,
+\item $(t-1)P(t)$,
+\item $P(t)^3$,
+\item $P(t)^2/t$.
+\end{itemize}
+\item Let $G$ be a graph with $n$ vertices, $m$ edges and $r$ triangles. Show that $[t^{n-2}]P_G(t)={m\choose 2}-r$.
+\item Let $G$ be a graph with $n$ vertices, $m$ edges and chromatic polynomial $P_G(t)=\sum_{i=0}^na_it^{n-i}$. Prove that $|a_i|\leq{m\choose i}$.
+\item Where does the term \textit{log-concave} sequence come from? Prove that a log-concave sequence of positive real numbers is unimodal.
+\end{enumerate}
