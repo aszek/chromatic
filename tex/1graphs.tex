@@ -1,3 +1,393 @@
 \chapter{Basic graph theory}
 
-Roughly lex1.tex and lec2.tex without defining chromatic number.
+Graph theory as we know it begins with the problem of \textit{Seven Bridges of K\"onigsberg} (now Kaliningrad, Russia), solved by Euler 1736. The problem asks if one can take a our of the city (see map) passing through each bridge exactly once? The answer is (of course) \emph{no}: the reason is that the graph representing the problem has $4$ vertices of odd degree, whereas the existence of said tour imples there can be at most two of those. See if you can turn this into a proof by the end of the chapter.
+
+\section{Introduction}
+
+The purpose of this chapter is to introduce and standardize basic notions and language of graph theory and make sure everyone is on the same page. In this course we mainly study simple graphs:
+
+\begin{definition}
+A \emph{simple, undirected graph} is a pair $G=(V,E)$ where $V$ is the set of \emph{vertices} and 
+$E \subseteq {V\choose 2}$, is the set of \emph{edges}. 
+\end{definition}
+
+We will be using the following notation, sometimes dropping part of the decorations when it is clear what object is referred to:
+
+\begin{itemize}
+    \item $xy\in E(G)$ for $\{x,y\}\in E(G)$,
+    \item $N_G(x)=\{y: xy\in E(G)\}$ is the \emph{neighborhood} of $x$ in $G$.,
+    \item if $xy\in E(G)$ we say $x,y$ are \emph{adjacent} or \emph{neigbors} in G,
+    \item a vertex is \emph{incident} to the edges that contain it,
+\end{itemize}
+
+Unless otherwise noted, the word \textbf{graph} always denotes an \textbf{undirected, simple} and \textbf{finite} graph.
+
+Other types of graphs appear in the literature and we may use them sporadically. They are, for example:
+
+\begin{itemize}
+    \item A multi-graph (multiple edges between a specific pair of vertices).
+    \item A directed graph (the edges have a direction, i.e. $E\subseteq V\times V$).
+    \item A graph with loops (possible edge from a vertex to itself).
+    \item A labelled graph (a labelled version of any other graph type where the edges carry some more information).
+\end{itemize}
+
+
+\begin{example}
+Some key examples of families of graphs.
+\begin{itemize}
+    \item \emph{Cycles:} $C_n,\ n\geq 3$.\newline
+    $V=\{1,\dots,n\}$\newline
+    $E=\{12,23,\dots,(n-1)n,n1\}$
+    \item \emph{Paths:} A subset of a cycle, $P_n,\ n\geq 1$
+    \item \emph{Complete graphs:} $K_n,\ n\geq 1$\newline 
+    $V=\{1,\dots,n\}$\newline
+    $E={V \choose 2}$, all possible pairs of $V$\newline
+    Note! $|E(K_n)|={n \choose 2}=\frac{n(n-1)}{2}$
+    \item $\overline{K_n},\ n\geq 1$ (the complement of a complete graph)\newline 
+    $V=\{1,\dots,n\}$\newline
+    $E=\varnothing$
+    \item \emph{The Empty Graph:} denoted $\varnothing$;\newline 
+    $V(\varnothing)=\varnothing$\newline
+    $E(\varnothing)=\varnothing$
+\end{itemize}
+\end{example}
+
+\begin{definition}
+The complement of $G$ is the graph $\overline{G}$ such that
+$$
+V(\overline{G})=V(G),\quad E(\overline{G})= {V(G)\choose 2}\setminus E(G)
+$$
+\end{definition}
+
+\begin{example}
+$Q_n,\ n\geq 1$\newline
+$V(Q_n)=\{(x_1,\dots,x_n):\ x_i\in\{0,1\}\}$, all binary sequences of length $n$.\newline
+$(x_1,\dots x_n)(y_1,\dots,y_n)\in E(Q_n)$ iff $(x_1,\dots x_n)(y_1,\dots,y_n)$ are different in exactly one position.\newline
+\begin{itemize}
+    \item $n=1$\newline
+    $V(Q_1)=\{0,1\}$\newline
+    $E(Q_1)=\{01\}$
+    \item $n=2$\newline
+    $V(Q_2)=\{00,01,10,11\}$\newline
+    $E(Q_2)=\{\{00,10\},\{00,01\},\{01,11\},\{10,11\}\}$
+    \item $n=3$\newline
+    $V(Q_3)=\{000,001,010,100,011,101,110,111\}$\newline
+    $E(Q_3)=\{\{000,001\},\{000,010\},\dots,\{011,111\}\}$
+\end{itemize}
+\end{example}
+
+\begin{definition}
+$G=(V,E)$. For a vertex $v\in V$, the \emph{degree} of $v$, denoted $\deg(v)$, is the number of edges incident to $v$. In other words $\deg(v)=|N(v)|$. A vertex $v$ is called \emph{isolated} if $\deg(v)=0$ and \emph{a leaf} if $\deg(v)=1$.
+\end{definition}
+
+\begin{lemma}
+$$
+\sum_{v\in V(G)} \deg(v)=2\cdot|E(G)|
+$$
+\end{lemma}
+\begin{proof}
+This is clear, because the sum counts every edge twice. However, once in a while we can prove something with excessive formalism. For this, let $M$ be a matrix of size $|V|\times |E|$ defined by
+\[
+    M_{v,e}= 
+\begin{cases}
+    1,  & \text{if $v$ is incident to $e$}\\
+    0,  & \text{otherwise}
+\end{cases}
+\]
+It is called the \emph{incidence matrix} of $G$.
+
+\begin{example}
+$V=\{a,b,c,d\}$ and $E=\{ab,bc,cd\}$.
+\[
+M=
+\begin{blockarray}{cccc}
+ & ab & bc & cd \\
+\begin{block}{c(ccc)}
+  a & 1 & 0 & 0\\
+  b & 1 & 1 & 0\\
+  c & 0 & 1 & 1\\
+  d & 0 & 0 & 1\\
+\end{block}
+\end{blockarray}
+ \]
+\end{example}
+
+To continue the proof, note that we can count the number of $1's$ in $M$ in two different ways:
+\[
+\begin{cases}
+    2\times |E|,  & \text{(two $1's$ in each column)}\\
+    \sum_{v}^{} \deg(v),  & \text{($\deg(v)\, 1's$ in $n$-th row)}
+\end{cases}
+\]
+What we did is a formal proof using \emph{double counting}.
+\end{proof}
+
+\begin{corollary}
+The number of vertices of odd degree in every graph is even.
+\end{corollary}
+
+Some notions related to vertex degrees deserve their own name.
+
+\begin{itemize}
+        \item $\Delta (G)$ is the maximum vertex degree in $G$.
+        \item $\delta (G)$ is the minimal vertex degree in $G$.
+        \item $G$ is called $d$-regular if all vertices have degree $d$, or equivalently if $\Delta(G)=\delta(G)=d$. (Example: $Q_n$ is $n$-regular)
+\end{itemize}
+
+\begin{definition}
+A graph $H$ is a called a \emph{subgraph} of $G$ if $V(H)\subseteq V(G)$ and $E(H)\subseteq E(G) $. A subgraph $H$ is called \emph{induced} (by a vertex set $W$) if $V(H)=W$ and $E(G[W])=\{xy; xy\in E(G), x,y\in W\}$.
+\end{definition}
+
+We write $H=G[W]$ for the subgraph of $G$ induced by $W\subseteq V(G)$.
+
+\begin{definition}
+$f:G\rightarrow H$ is a \emph{graph homomorphism} if $f:V(G)\rightarrow V(H)$, \newline s.t. $xy\in E(G)\Rightarrow f(x)f(y)\in E(H)$
+\end{definition}
+
+\begin{lemma}
+$1_G:G\rightarrow G$ is homomorphism. $f:G\rightarrow H$, $g:H\rightarrow K$ are homomorphisms, then so is $gf:G\rightarrow K$.
+\end{lemma}
+
+\begin{definition}
+$G$ and $H$ are \emph{isomorphic} if $\exists\,f:G\rightarrow H$ and $g:H\rightarrow G$ s.t. $gf=1_G, fg=1_H$.
+\end{definition}
+
+Deciding if two graphs are isomorphic is computationally hard. Proving non-isomorphism is usually about finding some invariant that distinguishes the two graphs.
+
+
+\section{Walks, cycles and connectedness}
+
+\begin{definition}
+A \emph{walk} in $G$ from $u$ to $v$ ($u,v, \in V(G)$) is a sequence
+$$u=x_1,x_2,\dots,x_k=v,$$
+such that $x_ix_{i+1} \in E(G)$ for all $i$. This walk is called closed if $u=v$. Moreover:
+\begin{enumerate}
+\item $G$ s called \emph{connected} if there is a walk between any two vertices,
+\item $G$ is called \emph{disconnected} otherwise.
+\end{enumerate}
+\end{definition}
+
+\begin{definition} The \emph{distance} between $u$ and $v$ ($u,v, \in V(G)$) is
+$$d(u,v):=
+\begin{cases} 
+\text{length of the shortest walk from $u$ to $v$}, & \text{if $\exists$ a walk between $u$ and $v$}\\ 
+\infty, & \text{if $\nexists$ a walk between $u$ and $v$}\\
+0, & \text{if } u=v
+\end{cases}.$$
+Moreover the \emph{diameter} of $G$ is
+$$diam(G):= \max_{u,v\in V(G)}(d(u,v)).$$
+\end{definition}
+
+
+\begin{lemma} $G$ is disconnected $\Longleftrightarrow \exists$ non-empty sets $X,Y$ with $V(G)=X \cup Y$, $X \cap Y=\emptyset$ such that there is no edge from $X$ to $Y$.
+\end{lemma}
+
+\begin{proof}
+\emph{$(\Leftarrow)$} Take $u\in X$ and $v \in Y$, then clearly $d(u,v)=\infty$ and $G$ is disconnected.
+\\ \emph{$(\Rightarrow)$} If $G$ is disconnected, then we can find $u,v\in V(G)$ with $d(u,v)=\infty$. We define
+$$X:=\{x\in V(G): \ d(u,x)<\infty \},$$
+$$Y:=V(G) \backslash X.$$
+Since $u\in X$ and $v\in Y$, these two sets are non-empty. Moreover there is no edge between these two sets: assume there exist $w\in X,\ z\in Y$ such that $wz \in E(G)$, then $d(u,z)\leqslant d(u,w)+1 <\infty$, which is a contradiction.
+
+(FIGURE)
+\end{proof}
+
+\section{Trees and bipartite graphs}
+
+\begin{definition} A \emph{tree} is a connected graph without cycles. A \emph{forest} is a graph, whose every connected component is a tree.
+(FIGURE)
+\end{definition}
+
+\begin{theorem} The following are equivalent:
+\begin{enumerate}
+\item $G$ is a tree,
+\item $G$ is connected and $|E(G)|=|V(G)|-1$,
+\item Every two vertices of $G$ are connected by exactly one path.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{$(3\Rightarrow 1)$} $G$ is already connected by assumption, hence we must only show that $G$ has no cycles. Assume that we an find one, then all vertices $u,v$ from that cycle are connected by $\geqslant 2$ paths, which is a contradiction.
+\\ \emph{$(1\Rightarrow 2)$} We work with induction on the number of vertices (let $|V(G)|=n$). For $n=1$ we clearly have no edges. Assume $n\geqslant 2$. Since $G$ is connected we can choose an edge $e\in E(G)$. Let us take a look at $G-e$ ($G$ without $e$):
+
+(FIGURE)
+
+
+Removing an edge generates at most $2$ connected components (call them $G_1$ and $G_2$), both without cycles. Since $G$ was a tree, $G_1$ and $G_2$ are connected and $G-e$ is a forest with two components. We can compute
+\begin{align*}
+|E(G)|&=1+|E(G_1)|+|E(G_2)|\overbrace{=}^{\text{i.a.}}1+|V(G_1)|-1+|V(G_2)|-1=\\
+&=|V(G_1)|+|V(G_2)|-1 = |V(G)|-1.
+\end{align*}
+
+\emph{$(2\Rightarrow 3)$} Assume we already proved Lemma \ref{Lemma 7}, then we can find a leaf $v\in V(G)$. Let $w$ be the only neighbour of $v$. $G-v$ is again connected and we have
+$$|E(G-v)|=|V(G-v)|-1.$$
+Working with induction (whose initial step is obvious) we can say that every two vertices in $G-v$ are connected by exactly one path, hence there is also a unique path $x,w,v$ for every $x\in V(G-v)$.
+\end{proof}
+
+\begin{lemma} \label{Lemma 7}
+Any tree has at least $2$ leaves, provided that it has at least $2$ vertices.
+\end{lemma}
+
+\begin{proof}
+Let $G$ be a tree with $n$ vertices and $n-1$ edges. Since $G$ is connected, then 
+$$\forall v\in V(G): \ deg(v)\geqslant 1.$$
+Suppose that we only have $1$ leaf, then
+$$\underbrace{2(n-1)}_{\substack{\text{all other vertices}\\ \text{have degree} \geqslant 2}} +\underbrace{1}_{\text{leaf}} \leqslant \sum_{v\in V(G)}deg(v)=2(n-1),$$
+which is a contradiction. The same follows if we allow no leaves.
+\end{proof}
+
+
+\begin{definition} $G$ is \emph{bipartite} if there are two sets $A$ and $B$ with $V(G)=A\cup B$, $A\cap B=\emptyset$ such that every edge of $G$ has one end in each part.
+\end{definition}
+
+\begin{example} We can use bipartite graph to illustrate a scheduling problem.
+(FIGURE)
+\end{example}
+
+\begin{example}
+\begin{itemize}
+\item Complete bipartite graphs ($K_{n,m}$): two sets $A$ and $B$ (with $|A|=n$ and $|B|=m$) with all the possible edges in between.
+\item Trees are bipartite. 
+\item $n$-cubes graphs ($Q_n$): $V_n:=\{(x_1,\dots,x_n): \ x_i \in \{0,1\}\}$ and then define 
+$$A_n:=\{(x_1,\dots,x_n) \in V_n: 2 \mid \sum_{i=1}^n x_i\},$$
+$$B_n:=\{(x_1,\dots,x_n) \in V_n: 2 \not| \ \sum_{i=1}^n x_i\}.$$
+Moving on one edge clearly changes the parity of the sequence, hence $V_n=A_n\cup B_n$ defines a bipartite graph.
+\item Cycles: $C_{2n}$ is bipartite, $C_{2n+1}$ is not bipartite (for $n\in \mathbb{N}$).
+\end{itemize}
+\end{example}
+
+\begin{theorem} \emph{(K\"{o}nig)}
+$G$ is bipartite iff there is no closed walk of odd length.
+\end{theorem}
+
+\begin{proof}
+\emph{$(\Leftarrow)$} If we start in $A$, after an odd number of steps we will be in $B$ (since each step brings to the other side of the graph).
+\\ \emph{$(\Rightarrow)$} Assume that $G$ is connected (if not, work separately in each connected component). Pick $v\in V(G)$ and define
+$$A:=\{w\in V(G): \exists \text{ an even-length walk } v\rightarrow w\},$$
+$$B:=\{w\in V(G): \exists \text{ an odd-length walk } v\rightarrow w\}.$$
+\begin{itemize}
+\item $A\cup B=V(G)$, since $G$ is connected.
+\item $A\cap B=\emptyset$, since otherwise we could find the following situation for a $w\in A\cap B$:
+
+(FIGURE)
+
+This means we would have an odd closed walk.
+\item There is no edge between two vertices in $A$ (resp. $B$), otherwise we would have the following situation:
+
+(FIGURE)
+
+\end{itemize}
+\end{proof}
+
+\section{Cliques and independent sets}
+\begin{definition}
+\begin{itemize}
+\item $W\subseteq V(G)$ is a \emph{clique} if for all $x,y\in W$, $x\neq y$, we have $xy\in E(G)$,
+\item $W\subseteq V(G)$ is an \emph{independent set} if for all $x,y\in W, \ xy\notin E(G)$.
+\end{itemize}
+\end{definition}
+
+\begin{remark} A clique is a subgraph that is a complete graph.
+\end{remark}
+
+\begin{example} The followings are examples of cliques.
+(FIGURE)
+\end{example}
+
+\begin{example} The followings are examples of independent sets.
+(FIGURE)
+\end{example}
+
+\begin{definition}
+\begin{itemize}
+\item The \emph{clique number} of $G$, $\omega(G)$, is the cardinality of the biggest clique in $G$,
+\item The \emph{independence number} of $G$, $\alpha(G)$, is the cardinality of the biggest independent set in $G$.
+\end{itemize}
+\end{definition}
+
+\begin{observation}
+\begin{enumerate}
+\item $\alpha(G)=\omega(\overline{G})$.
+\begin{proof}
+A clique in $G$ is an independent set in $\overline{G}$ and vice versa.
+\end{proof}
+\item If $G$ is bipartite, then $\omega(G)\leqslant 2$.
+\begin{proof}
+If there is a triangle, then two of the vertices have to be in the same part of the bipartite graph, which is impossible by definition.
+\end{proof}
+\item $\omega(G)\leqslant 2$ does not imply that $G$ is bipartite.
+\begin{proof}
+$C_5$ (which is not bipartite since it is an odd cycle) has $\omega(C_5)=2$.
+\end{proof}
+\end{enumerate}
+\end{observation}
+
+\begin{definition} Graphs with $\omega(G)\leqslant 2$ are usually called triangle-free.
+\end{definition}
+
+\begin{example}
+\begin{itemize}
+\item $\omega(C_n)=
+\begin{cases} 
+3, & \text{if } n=3\\ 
+2, & \text{if } n\geqslant 4
+\end{cases}.$
+\item $\alpha(C_n)=
+\begin{cases} 
+\frac{n}{2}, & \text{if } 2\mid n\\ 
+\frac{n-1}{2}, & \text{if } 2\not| \ n
+\end{cases}.$
+\item $G$ bipartite (i.e. $V(G)=A\cup B$), then $\alpha(G)\geqslant max\{|A|,|B|\}$.
+\item $\omega(K_n)=n$ and $\alpha(K_n)=1$.
+\end{itemize}
+\end{example}
+
+\begin{remark} $\alpha$ and $\omega$ are hard (meaning $NP$-hard) to compute.
+\end{remark}
+
+\begin{lemma}
+$\alpha(G)\geqslant \frac{|V(G)|}{1+\Delta(G)}$.
+\end{lemma}
+
+\begin{proof} We must find an independent set of size at least $\frac{|V(G)|}{1+\Delta(G)}$ and we will work by induction in order to do that. Take an arbitrary vertex $v\in V(G)$ and consider the graph 
+$$G':=G-v-N_G(V).$$
+Clearly $\Delta(G')\leqslant \Delta(G)$. Using the induction assumption, $G'$ has an independent set $X$ of size at least
+$$\frac{|V(G')|}{1+\Delta(G')}.$$
+Consider $X\cup \{v\}$, which (by construction) is an independent set in $G$.
+$$|X\cup \{v\}|=|X|+1\geqslant\frac{|V(G')|}{1+\Delta(G')}+1\geqslant \frac{|V(G)|-(1+\Delta(G))}{1+\Delta(G)}+1=\frac{|V(G)|}{1+\Delta(G)},$$
+thanks to $\Delta(G')\leqslant \Delta(G)$ and considering that $1+\Delta(G)$ is the biggest number of vertices we can take away while defining $G'$.
+\end{proof}
+
+(The greedy algorithm) The following loop iterates $\geqslant \frac{|V(G)|}{1+\Delta(G)}$ times.
+\begin{enumerate}
+\item Take $v\in V(G)$,
+\item Remove $v$ and $N_G(v)$ (at most $1+\Delta(G)$ vertices),
+\item Iterate using $G':=G-v-N_G(V)$.
+\end{enumerate}
+
+\begin{lemma} If $f:G\longrightarrow H$ is a graph homomorphism, then $f^{-1}(v)$ is an independent set for all $v\in V(H)$.
+\end{lemma}
+
+\begin{proof}
+Suppose that $x,y\in f^{-1}(v)$ and $xy\in E(G)$. Then, since $f$ is a graph homomorphism, we would have $f(x)f(y)\in E(H)$, which is impossible since $f(x)=f(y)=v$.
+\end{proof}
+
+
+
+
+\section{Exercises}
+
+\begin{enumerate}
+\item Show that in the definition of connectedness and distance we can replace \emph{walk} with \emph{path}, and that in K\"onig's theorem we can replace \emph{closed walk} with \emph{cycle} (and even \emph{induced cycle}).
+
+\item Prove that every graph has two vertices of the same degree.
+\item In a class with $19$ students each person sends a Valentine's Day card to exactly three other students. Is it possible that each student receives cards from the same three students to whom he/she sent cards?
+\item Draw all isomorphism classes of trees on $n=1,2,3,4,5$ vertices.
+\item What is the maximal possible number of edges in a disconnected graph on $n$ vertices?
+\item Let $G$ be a graph with minimum vertex degree $d\geq 2$. Prove that $G$ contains a cycle of length at least $d+1$.
+\item Prove that if $G$ is disconnected then its complement $\overline{G}$ is connected.
+\item Classify all connected $2$-regular graphs.
+\item Find $\alpha(Q_k)$.
+\item For which $n$ is there a homomorphism $C_n\to K_2$\ ?
+\item For which $n,m$ is there a homomorphism $C_n\to C_m$\ ?
+\end{enumerate}
